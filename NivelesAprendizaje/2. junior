@@ -1,0 +1,6673 @@
+
+# NIVEL: JUNIOR BACKEND
+
+## Formación profunda para desarrolladores backend en transición a responsabilidad real
+
+---
+
+## Introducción general al nivel JUNIOR
+
+### Contexto general
+
+Un desarrollador backend **nivel junior** aparece cuando el sistema deja de ser pequeño.
+
+No cuando:
+
+- sabe hacer CRUD
+    
+- conoce un framework
+    
+- responde endpoints
+    
+
+Sino cuando:
+
+- el sistema empieza a crecer
+    
+- aparecen dependencias
+    
+- cambian los requerimientos
+    
+- el código deja de ser solo suyo
+    
+- los errores empiezan a ser costosos
+    
+
+Este nivel **no reemplaza Trainee**.  
+Este nivel **parte de Trainee completo** y asume que:
+
+- sabes OOP
+    
+- entiendes capas
+    
+- sabes qué es dominio
+    
+- conoces REST
+    
+- usas un framework
+    
+- trabajas con base de datos
+    
+- escribes tests básicos
+    
+
+A partir de aquí, el foco cambia de:
+
+> **“cómo hacer que funcione”**  
+> a  
+> **“cómo evitar que el sistema se rompa cuando cambie”**
+
+---
+
+## Qué diferencia realmente al nivel JUNIOR
+
+Un junior backend **ya no es evaluado solo por lo que implementa**, sino por:
+
+- las decisiones que toma
+    
+- las decisiones que evita
+    
+- la complejidad que introduce
+    
+- la deuda que deja
+    
+- el impacto que genera en el sistema completo
+    
+
+Por eso este material:
+
+- no gira alrededor de herramientas
+    
+- no gira alrededor de sintaxis
+    
+- gira alrededor de **criterio técnico**
+    
+
+---
+
+# BLOQUE 1 – Dominio Junior Profundo
+
+_(Cuando el dominio deja de ser cómodo)_
+
+Este bloque es el **núcleo del nivel junior**.  
+Aquí es donde los conceptos aprendidos en Trainee **empiezan a tensionarse**.
+
+---
+
+## 1. Cuando el dominio deja de ser autosuficiente
+
+### 1.1 Contexto
+
+En Trainee, el dominio suele ser autosuficiente:
+
+- las reglas viven dentro
+    
+- las entidades tienen todo lo que necesitan
+    
+- las validaciones son locales
+    
+- las decisiones son inmediatas
+    
+
+Ejemplo típico Trainee:
+
+- “Un usuario debe ser mayor de edad”
+    
+- “Un pedido no puede tener total negativo”
+    
+
+Estas reglas:
+
+- dependen solo de datos locales
+    
+- se validan en el momento
+    
+- no requieren información externa
+    
+
+Pero en sistemas reales, esto **deja de ser cierto**.
+
+---
+
+### 1.2 Qué significa que un dominio sea autosuficiente
+
+Un dominio es **autosuficiente** cuando:
+
+- puede decidir sin consultar a otros módulos
+    
+- puede validar reglas sin esperar eventos externos
+    
+- puede garantizar consistencia solo con su estado interno
+    
+- puede completar una operación dentro de una sola transacción
+    
+
+Esto **no es un defecto**.  
+Es una **condición inicial saludable**.
+
+El problema aparece cuando el sistema crece.
+
+---
+
+### 1.3 Por qué el dominio deja de ser autosuficiente en nivel junior
+
+En nivel junior aparecen situaciones como:
+
+- una regla depende de otro sistema
+    
+- una decisión depende de un evento que llega después
+    
+- una validación depende del tiempo
+    
+- una operación depende de un tercero (pagos, envíos, validaciones externas)
+    
+
+Ejemplo real:
+
+> “Un pedido solo se confirma si el pago fue aprobado por un proveedor externo.”
+
+Aquí el dominio:
+
+- ya no controla el pago
+    
+- no decide inmediatamente
+    
+- no puede garantizar el resultado en el mismo momento
+    
+
+El dominio **pierde control total**, y eso es normal.
+
+---
+
+### 1.4 Definición extensa del problema
+
+En nivel junior, el dominio empieza a enfrentarse a reglas que:
+
+- no puede validar en el momento
+    
+- no puede resolver solo
+    
+- no puede proteger completamente
+    
+- no puede encapsular en una sola entidad
+    
+
+Esto genera una tensión clave:
+
+> **El dominio sigue siendo el centro del negocio,  
+> pero ya no es el único actor.**
+
+---
+
+### 1.5 Descomposición del concepto (conceptos dentro del concepto)
+
+Para entender este punto completo, hay que separar varios conceptos internos:
+
+#### a) Regla del negocio
+
+Una regla expresa una **condición que debe cumplirse** para que algo sea válido.
+
+#### b) Invariante
+
+Una regla que **nunca debe romperse**, aunque el sistema esté en un estado intermedio.
+
+#### c) Dependencia externa
+
+Una regla que necesita información que **no vive dentro del dominio**.
+
+#### d) Decisión diferida
+
+Una decisión que **no puede tomarse inmediatamente**, aunque el comando ya ocurrió.
+
+En Trainee:
+
+- regla = invariante = decisión inmediata
+    
+
+En Junior:
+
+- estas cosas **se separan**
+    
+
+---
+
+### 1.6 Modelo mental incorrecto (junior temprano)
+
+> “El dominio debería poder validarlo todo.”
+
+Este pensamiento lleva a:
+
+- lógica forzada
+    
+- llamadas sincrónicas innecesarias
+    
+- transacciones enormes
+    
+- acoplamiento extremo
+    
+
+---
+
+### 1.7 Modelo mental correcto (junior real)
+
+> “El dominio define qué es válido,  
+> pero no siempre puede decidir cuándo.”
+
+El junior maduro entiende que:
+
+- hay estados intermedios
+    
+- hay decisiones incompletas
+    
+- hay reglas que se cumplen **eventualmente**
+    
+- hay consistencia que se logra con el tiempo
+    
+
+---
+
+### 1.8 Ejemplo conceptual correcto
+
+Un dominio junior correcto **no fuerza** la validación:
+
+```text
+Pedido creado → Pendiente de pago
+Pago confirmado → Pedido confirmado
+Pago rechazado → Pedido cancelado
+```
+
+El dominio:
+
+- define estados
+    
+- define transiciones válidas
+    
+- no asume resultados inmediatos
+    
+
+---
+
+### 1.9 Ejemplo conceptual incorrecto
+
+Forzar una validación inmediata:
+
+```text
+Crear pedido
+→ llamar sistema de pagos
+→ si falla, rollback total
+```
+
+Esto:
+
+- acopla el dominio a un externo
+    
+- rompe escalabilidad
+    
+- hace frágil el sistema
+    
+
+---
+
+### 1.10 Errores típicos del junior en este punto
+
+- Forzar consistencia inmediata
+    
+- Llamar servicios externos desde el dominio
+    
+- Aumentar transacciones “para estar seguro”
+    
+- Meter lógica externa dentro del modelo
+    
+
+---
+
+### 1.11 Señales de comprensión real
+
+Sabes que entiendes este tema cuando:
+
+- aceptas estados intermedios sin pánico
+    
+- distingues entre “regla” y “momento de validación”
+    
+- entiendes que no todo se puede decidir ya
+    
+- no intentas resolver todo con una transacción
+    
+
+---
+
+### 1.12 Ejercicio práctico de diseño (obligatorio)
+
+Diseña mentalmente un flujo donde:
+
+- una regla depende de un sistema externo
+    
+- la respuesta puede tardar
+    
+- el usuario necesita feedback inmediato
+    
+
+Responde:
+
+- ¿qué decide el dominio ahora?
+    
+- ¿qué decide después?
+    
+- ¿qué estados intermedios existen?
+    
+
+---
+
+## 2. Reglas del negocio que ya no caben en una sola entidad
+
+---
+
+### 2.1 Contexto
+
+En Trainee aprendiste algo fundamental:
+
+> “Las reglas del negocio viven en el dominio.”
+
+Y eso es **correcto**, pero **incompleto**.
+
+En Trainee, la mayoría de las reglas:
+
+- afectaban a **una sola entidad**
+    
+- se validaban con **sus propios datos**
+    
+- se podían encapsular en **un método**
+    
+- se podían proteger con **un constructor o una operación**
+    
+
+Ejemplos típicos Trainee:
+
+- `User` valida edad
+    
+- `Order` valida total
+    
+- `Product` valida precio
+    
+
+Pero en sistemas reales, cuando el dominio empieza a crecer, aparece un tipo de regla distinta:
+
+> **Reglas que existen, son reales, son críticas…  
+> pero NO pertenecen a una sola entidad.**
+
+Ahí empieza el verdadero nivel junior.
+
+---
+
+### 2.2 Qué significa exactamente “una regla del negocio”
+
+Antes de avanzar, hay que **desarmar el concepto de regla**, porque muchos juniors lo usan de forma vaga.
+
+Una **regla del negocio** tiene siempre estos componentes internos:
+
+1. **Condición**
+    
+    - Algo que debe cumplirse
+        
+2. **Contexto**
+    
+    - En qué situación aplica
+        
+3. **Alcance**
+    
+    - A qué objetos afecta
+        
+4. **Consecuencia**
+    
+    - Qué pasa si se cumple o se rompe
+        
+
+En Trainee, estos cuatro elementos suelen vivir **en el mismo lugar**.  
+En Junior, **se separan**.
+
+---
+
+### 2.3 Qué pasa cuando una regla cruza entidades
+
+Ejemplo realista:
+
+> “Un usuario no puede tener más de 3 pedidos activos al mismo tiempo.”
+
+Analicemos esta regla:
+
+- No pertenece solo a `User`
+    
+- No pertenece solo a `Order`
+    
+- Depende de la relación entre ambos
+    
+- Depende del estado de varios pedidos
+    
+
+Esta regla:
+
+- **no cabe en una sola entidad**
+    
+- **no puede validarse con un solo objeto**
+    
+- **no es un simple `if`**
+    
+
+---
+
+### 2.4 Error común del junior temprano
+
+El junior temprano intenta resolver esto así:
+
+- Pone la lógica en el `Service`
+    
+- Hace consultas directas
+    
+- Junta datos manualmente
+    
+- Decide fuera del dominio
+    
+
+Ejemplo conceptual incorrecto:
+
+```text
+service:
+  obtener pedidos activos
+  contar
+  si > 3 → error
+```
+
+Esto **funciona**, pero introduce varios problemas:
+
+- La regla queda dispersa
+    
+- El dominio no la conoce
+    
+- Es fácil romperla desde otro flujo
+    
+- No hay un punto único de verdad
+    
+
+---
+
+### 2.5 Definición extensa del problema
+
+Cuando una regla:
+
+- involucra múltiples entidades
+    
+- depende de relaciones
+    
+- depende de estados combinados
+    
+- depende de información que no vive en un solo objeto
+    
+
+entonces estamos ante una **regla compuesta**.
+
+Las reglas compuestas son inevitables en nivel junior.
+
+El error no es tenerlas.  
+El error es **no reconocerlas como tales**.
+
+---
+
+### 2.6 Descomposición interna del concepto (conceptos dentro del concepto)
+
+Para manejar reglas que cruzan entidades, hay que distinguir claramente:
+
+#### a) Entidad
+
+Representa identidad y comportamiento propio.
+
+#### b) Relación
+
+Representa cómo dos entidades se vinculan.
+
+#### c) Contexto de decisión
+
+El “momento” en que la regla debe evaluarse.
+
+#### d) Fuente de verdad
+
+Dónde vive la información que valida la regla.
+
+En Trainee:
+
+- entidad = fuente de verdad
+    
+
+En Junior:
+
+- la fuente de verdad **puede ser distribuida**
+    
+
+---
+
+### 2.7 Modelo mental incorrecto
+
+> “Si no cabe en la entidad, entonces no es dominio.”
+
+Este pensamiento empuja al junior a:
+
+- mover reglas a servicios
+    
+- usar SQL como lógica
+    
+- duplicar validaciones
+    
+- perder cohesión del dominio
+    
+
+---
+
+### 2.8 Modelo mental correcto
+
+> “Sigue siendo dominio,  
+> pero necesita una forma distinta de expresarse.”
+
+El dominio junior:
+
+- ya no es solo entidades
+    
+- incluye **conceptos de coordinación**
+    
+- incluye **reglas de interacción**
+    
+- incluye **políticas del negocio**
+    
+
+---
+
+### 2.9 Ejemplo conceptual correcto
+
+La regla se expresa como una **política del dominio**:
+
+```text
+Política: LímiteDePedidosActivos
+- observa usuario
+- observa pedidos
+- decide si se permite crear uno nuevo
+```
+
+No es:
+
+- un método de `User`
+    
+- un método de `Order`
+    
+
+Es una **regla del dominio**, expresada como tal.
+
+---
+
+### 2.10 Ejemplo conceptual incorrecto
+
+Esconder la regla en:
+
+- una consulta SQL
+    
+- un `if` en el controller
+    
+- un método utilitario
+    
+
+Esto hace que:
+
+- el negocio no sea explícito
+    
+- la regla sea invisible
+    
+- el sistema sea frágil
+    
+
+---
+
+### 2.11 Errores típicos del junior en este punto
+
+- Creer que “dominio = entidades”
+    
+- Resolver reglas compuestas con queries
+    
+- Duplicar la misma lógica en varios flujos
+    
+- No nombrar la regla como concepto
+    
+
+---
+
+### 2.12 Señales de comprensión real
+
+Sabes que entiendes este tema cuando:
+
+- Identificas reglas que no pertenecen a un solo objeto
+    
+- Puedes nombrar la regla como concepto del negocio
+    
+- Buscas un punto único de decisión
+    
+- Dejas de meter lógica “por comodidad”
+    
+
+---
+
+### 2.13 Ejercicio práctico de diseño (obligatorio)
+
+Piensa en una regla real que:
+
+- involucre al menos dos entidades
+    
+- dependa de un estado combinado
+    
+- tenga impacto en varias operaciones
+    
+
+Responde:
+
+- ¿qué entidades participan?
+    
+- ¿qué información se necesita?
+    
+- ¿dónde debería vivir la decisión?
+    
+
+No escribas código.  
+Solo **razona el diseño**.
+
+---
+
+
+## 3. Invariantes que cruzan agregados
+
+### 3.1 Contexto
+
+Hasta aquí, incluso en un dominio junior bien trabajado, todavía existe una suposición implícita muy fuerte:
+
+> _“Cada agregado protege sus propias invariantes.”_
+
+Y eso **es correcto… hasta que deja de serlo**.
+
+En sistemas reales, especialmente cuando:
+
+- el negocio crece,
+    
+- aparecen múltiples flujos,
+    
+- hay procesos largos,
+    
+- hay dependencias entre áreas,
+    
+
+empiezan a surgir **invariantes que ningún agregado puede garantizar por sí solo**.
+
+Este es uno de los puntos donde muchos juniors se bloquean, porque aquí **ya no hay soluciones limpias**.
+
+---
+
+### 3.2 Qué es exactamente una invariante (desarmada de verdad)
+
+Una **invariante** no es:
+
+- un `if`
+    
+- una validación
+    
+- una restricción técnica
+    
+
+Una invariante es:
+
+> **Una condición del negocio que debe mantenerse verdadera a lo largo del tiempo, incluso mientras el sistema cambia de estado.**
+
+Componentes internos de una invariante:
+
+1. **Condición**
+    
+    - Lo que debe mantenerse verdadero
+        
+2. **Duración**
+    
+    - Durante cuánto tiempo debe cumplirse
+        
+3. **Alcance**
+    
+    - Qué partes del sistema están involucradas
+        
+4. **Responsabilidad**
+    
+    - Quién debe protegerla
+        
+
+En Trainee:
+
+- alcance pequeño
+    
+- responsabilidad clara
+    
+- duración corta
+    
+
+En Junior:
+
+- alcance amplio
+    
+- responsabilidad difusa
+    
+- duración extendida
+    
+
+---
+
+### 3.3 Qué es un agregado (redefinido en nivel Junior)
+
+Un **agregado** no es simplemente:
+
+- un conjunto de entidades
+    
+- un root con hijos
+    
+
+Un agregado es:
+
+> **Una frontera de consistencia fuerte.**
+
+Eso significa:
+
+- dentro del agregado, las invariantes se cumplen inmediatamente
+    
+- fuera del agregado, no hay garantías inmediatas
+    
+
+Esto es clave.
+
+---
+
+### 3.4 El problema real: invariantes inter-agregado
+
+Ejemplo realista:
+
+> “Un usuario no puede tener más de un contrato activo.”
+
+Supongamos:
+
+- `Usuario` es un agregado
+    
+- `Contrato` es otro agregado
+    
+
+La invariante:
+
+- depende del estado de múltiples contratos
+    
+- depende de su relación con un usuario
+    
+- no vive completamente en ninguno
+    
+
+Aquí aparece la pregunta incómoda:
+
+> **¿Quién garantiza esta invariante?**
+
+---
+
+### 3.5 Error común del junior temprano
+
+El junior temprano intenta **forzar la regla dentro de un agregado**.
+
+Ejemplos de decisiones incorrectas:
+
+- hacer que `Usuario` conozca todos los contratos
+    
+- hacer que `Contrato` consulte a otros contratos
+    
+- agrandar artificialmente un agregado
+    
+
+Esto suele llevar a:
+
+- agregados gigantes
+    
+- cargas innecesarias
+    
+- problemas de performance
+    
+- acoplamiento fuerte
+    
+
+---
+
+### 3.6 Por qué DDD “puro” empieza a doler aquí
+
+En teoría:
+
+- _“Una invariante debe estar dentro de un agregado.”_
+    
+
+En la práctica:
+
+- algunas invariantes **no caben** en un solo agregado
+    
+- forzarlas rompe otras cosas
+    
+
+Esto no es un error del desarrollador.  
+Es una **limitación natural del modelo**.
+
+El nivel junior empieza cuando entiendes que:
+
+> **los modelos son aproximaciones, no verdades absolutas.**
+
+---
+
+### 3.7 Opciones reales (no ideales) para manejar invariantes cruzadas
+
+Aquí no hay una solución perfecta.  
+Hay **opciones**, cada una con costos.
+
+#### Opción 1: Agrandar el agregado
+
+- Mover entidades bajo un mismo root
+    
+- Garantizar consistencia fuerte
+    
+
+Costos:
+
+- agregados pesados
+    
+- transacciones grandes
+    
+- menor escalabilidad
+    
+
+---
+
+#### Opción 2: Validación coordinada fuera del agregado
+
+- Introducir una política o servicio de dominio
+    
+- Evaluar el estado combinado
+    
+
+Costos:
+
+- consistencia no inmediata
+    
+- mayor complejidad conceptual
+    
+- necesidad de manejar estados intermedios
+    
+
+---
+
+#### Opción 3: Consistencia eventual
+
+- Permitir estados temporales inválidos
+    
+- Corregir con procesos posteriores
+    
+
+Costos:
+
+- mayor complejidad mental
+    
+- necesidad de compensaciones
+    
+- mayor responsabilidad en diseño
+    
+
+---
+
+### 3.8 Modelo mental incorrecto
+
+> “Esto está mal diseñado porque no puedo garantizar todo en un agregado.”
+
+Ese pensamiento bloquea al junior.
+
+---
+
+### 3.9 Modelo mental correcto
+
+> “Tengo que decidir **qué invariante** vale consistencia fuerte  
+> y cuál puede tolerar eventualidad.”
+
+Aquí empieza el criterio técnico real.
+
+---
+
+### 3.10 Ejemplo conceptual correcto
+
+Un sistema acepta que:
+
+- dos contratos puedan estar activos momentáneamente
+    
+- un proceso posterior corrija el estado
+    
+- el dominio modele explícitamente esa posibilidad
+    
+
+Nada está escondido.  
+Nada se fuerza.
+
+---
+
+### 3.11 Ejemplo conceptual incorrecto
+
+Forzar bloqueo global o validación sincrónica en todos los flujos “para estar seguro”.
+
+Eso suele:
+
+- matar performance
+    
+- romper escalabilidad
+    
+- introducir dependencias peligrosas
+    
+
+---
+
+### 3.12 Errores típicos del junior en este punto
+
+- Creer que eventual = mal diseño
+    
+- Forzar transacciones gigantes
+    
+- Ocultar reglas en SQL
+    
+- No documentar decisiones incómodas
+    
+
+---
+
+### 3.13 Señales de comprensión real
+
+Sabes que entiendes este tema cuando:
+
+- aceptas decisiones imperfectas
+    
+- puedes explicar por qué una invariante no es inmediata
+    
+- sabes qué riesgo estás asumiendo
+    
+- puedes justificar el trade-off
+    
+
+---
+
+### 3.14 Ejercicio práctico de diseño (obligatorio)
+
+Piensa en una regla que:
+
+- afecte a más de un agregado
+    
+- no pueda validarse en una sola transacción
+    
+
+Responde:
+
+- ¿qué opciones tienes?
+    
+- ¿qué rompe cada opción?
+    
+- ¿cuál elegirías y por qué?
+    
+
+---
+
+## 4. Consistencia fuerte vs consistencia eventual (desarmada por dentro)
+
+### 4.1 Contexto
+
+Hasta este punto ya aceptamos algo incómodo pero real:
+
+- Hay invariantes que cruzan agregados
+    
+- No todas pueden garantizarse de forma inmediata
+    
+- Forzar consistencia fuerte en todo **rompe sistemas**
+    
+
+Aquí aparece uno de los conceptos **más mal entendidos en nivel junior**:  
+**consistencia eventual**.
+
+Muchos juniors escuchan el término y piensan que significa:
+
+- “Datos incorrectos”
+    
+- “Sistema desordenado”
+    
+- “Arquitectura distribuida compleja”
+    
+
+Eso es falso.  
+El problema no es la consistencia eventual.  
+El problema es **no entender qué se vuelve inconsistente, cuándo y por qué**.
+
+---
+
+### 4.2 Qué significa realmente “consistencia” (concepto base)
+
+Antes de comparar tipos, hay que entender **qué es consistencia**.
+
+Un sistema está **consistente** cuando:
+
+> **Las reglas del negocio se cumplen según lo que el sistema promete en ese momento.**
+
+Importante:
+
+- Consistencia **no significa** “todos los datos iguales en todos lados”
+    
+- Consistencia **sí significa** “el sistema no miente sobre su estado”
+    
+
+La consistencia es siempre:
+
+- contextual
+    
+- relativa al tiempo
+    
+- relativa a una promesa explícita
+    
+
+---
+
+### 4.3 Qué es consistencia fuerte (descompuesta)
+
+La **consistencia fuerte** implica que:
+
+- La regla se valida inmediatamente
+    
+- El estado nunca es observable como inválido
+    
+- La decisión ocurre dentro de una frontera controlada
+    
+- El sistema garantiza “todo o nada”
+    
+
+Internamente, la consistencia fuerte requiere:
+
+1. **Una única fuente de verdad**
+    
+2. **Un límite transaccional claro**
+    
+3. **Bloqueo o coordinación**
+    
+4. **Respuesta inmediata**
+    
+
+En Trainee, casi todo era así.  
+En Junior, **no siempre es posible**.
+
+---
+
+### 4.4 Qué es consistencia eventual (descompuesta)
+
+La **consistencia eventual** NO significa:
+
+- “Da igual si está mal”
+    
+- “Después vemos”
+    
+- “El sistema es incorrecto”
+    
+
+Significa:
+
+> **El sistema puede estar temporalmente en un estado intermedio,  
+> pero existe un mecanismo explícito que garantiza que llegará a un estado válido.**
+
+Componentes internos de la consistencia eventual:
+
+1. **Estado intermedio reconocido**
+    
+    - No se esconde
+        
+    - Se modela
+        
+2. **Mecanismo de corrección**
+    
+    - Evento
+        
+    - Proceso
+        
+    - Reintento
+        
+3. **Garantía de convergencia**
+    
+    - No es opcional
+        
+4. **Comunicación clara**
+    
+    - El sistema no promete más de lo que puede cumplir
+        
+
+---
+
+### 4.5 Error mental común del junior temprano
+
+> “Eventual significa inconsistente.”
+
+No.  
+Eventual significa **consistente en el tiempo**, no instantáneamente.
+
+El junior temprano también suele pensar:
+
+> “Eventual = microservicios”
+
+Falso.  
+Esto aplica también en monolitos.
+
+---
+
+### 4.6 Comparación real (no teórica)
+
+Consistencia fuerte:
+
+- Más simple mentalmente
+    
+- Más costosa técnicamente
+    
+- Menos escalable
+    
+- Más frágil ante fallos externos
+    
+
+Consistencia eventual:
+
+- Más compleja mentalmente
+    
+- Más robusta ante fallos
+    
+- Más flexible
+    
+- Requiere diseño explícito
+    
+
+El junior no elige por gusto.  
+Elige por **necesidad del negocio**.
+
+---
+
+### 4.7 Ejemplo conceptual correcto (consistencia eventual bien aplicada)
+
+Flujo:
+
+- Pedido creado → estado `PENDIENTE_CONFIRMACION`
+    
+- Evento de pago llega más tarde
+    
+- Estado cambia a `CONFIRMADO` o `RECHAZADO`
+    
+
+Durante el tiempo intermedio:
+
+- El sistema **sabe** que no está confirmado
+    
+- El usuario **sabe** que está pendiente
+    
+- No se viola ninguna promesa
+    
+
+Nada está oculto.
+
+---
+
+### 4.8 Ejemplo conceptual incorrecto
+
+Flujo:
+
+- Pedido creado
+    
+- El sistema asume que el pago saldrá bien
+    
+- Marca pedido como confirmado
+    
+- Luego falla el pago
+    
+
+Aquí:
+
+- El sistema mintió
+    
+- La inconsistencia no es eventual
+    
+- Es un bug de diseño
+    
+
+---
+
+### 4.9 Qué partes del sistema pueden ser eventualmente consistentes
+
+No todo puede ser eventual.
+
+Generalmente **NO** deben ser eventuales:
+
+- Saldos críticos
+    
+- Límites legales
+    
+- Reglas de seguridad
+    
+- Autorizaciones
+    
+
+Pueden ser eventuales:
+
+- Estados informativos
+    
+- Confirmaciones externas
+    
+- Procesos largos
+    
+- Notificaciones
+    
+- Reportes
+    
+
+El junior aprende a **clasificar reglas**, no a aplicar recetas.
+
+---
+
+### 4.10 Error grave: mezclar consistencias sin saberlo
+
+Uno de los peores errores junior es:
+
+- Diseñar algo como fuerte
+    
+- Implementarlo como eventual
+    
+- Comunicarlo como inmediato
+    
+
+Esto rompe:
+
+- confianza
+    
+- contratos
+    
+- expectativas
+    
+
+---
+
+### 4.11 Señales de comprensión real
+
+Sabes que entiendes este tema cuando:
+
+- puedes decir **qué** es eventual
+    
+- puedes decir **por cuánto tiempo**
+    
+- puedes decir **cómo converge**
+    
+- puedes decir **qué pasa si falla**
+    
+
+Si no puedes responder esas cuatro cosas, no entendiste aún.
+
+---
+
+### 4.12 Ejercicio práctico de diseño (obligatorio)
+
+Piensa en una operación real de tu sistema y responde:
+
+- ¿qué parte debe ser consistente de inmediato?
+    
+- ¿qué parte puede ser eventual?
+    
+- ¿qué estado intermedio necesitas modelar?
+    
+- ¿qué promesa le haces al usuario?
+    
+
+---
+
+## 5. El dominio dependiente del tiempo (cuando el reloj rompe el diseño)
+
+### 5.1 Contexto
+
+Hasta ahora, incluso en nivel junior, muchas decisiones del dominio siguen basándose en una suposición silenciosa:
+
+> _“Las reglas se evalúan en el momento en que ocurre la acción.”_
+
+Esa suposición **se rompe** en cuanto el tiempo se vuelve parte explícita del negocio.
+
+Ejemplos reales donde el tiempo **no es un detalle**, sino una regla:
+
+- una oferta vence
+    
+- una reserva expira
+    
+- un pago debe confirmarse antes de X horas
+    
+- una cancelación solo es válida dentro de una ventana temporal
+    
+- una penalización depende de cuándo ocurrió algo, no solo de qué ocurrió
+    
+
+En estos casos, el dominio **ya no puede ignorar el reloj**.
+
+---
+
+### 5.2 Qué significa que el tiempo sea parte del dominio
+
+Decir que el dominio depende del tiempo **no significa**:
+
+- usar `Date.now()`
+    
+- comparar timestamps
+    
+- agregar campos `createdAt`
+    
+
+Significa:
+
+> **El paso del tiempo cambia qué acciones son válidas y cuáles no.**
+
+El tiempo deja de ser un dato pasivo  
+y se convierte en **un factor decisional**.
+
+---
+
+### 5.3 Descomposición interna del concepto (conceptos dentro del concepto)
+
+Para entender el dominio dependiente del tiempo, hay que separar:
+
+#### a) Momento
+
+Un punto específico en el tiempo.
+
+#### b) Duración
+
+Un intervalo durante el cual una regla aplica.
+
+#### c) Ventana temporal
+
+Un rango donde una acción es válida.
+
+#### d) Expiración
+
+Un momento después del cual algo deja de ser válido.
+
+#### e) Retraso
+
+Un tiempo esperado antes de que algo ocurra.
+
+En Trainee:
+
+- casi todo depende del **momento**
+    
+
+En Junior:
+
+- muchas reglas dependen de **duraciones y ventanas**
+    
+
+---
+
+### 5.4 Error común del junior temprano
+
+El junior temprano intenta resolver reglas temporales así:
+
+- compara fechas directamente en el service
+    
+- usa `if (now > fecha)`
+    
+- dispersa la lógica temporal en varios lugares
+    
+
+Esto lleva a:
+
+- reglas duplicadas
+    
+- comportamiento inconsistente
+    
+- bugs difíciles de reproducir
+    
+- código imposible de testear bien
+    
+
+---
+
+### 5.5 Modelo mental incorrecto
+
+> “El tiempo es solo un dato más.”
+
+Ese pensamiento ignora que:
+
+- el tiempo **no se puede controlar**
+    
+- el tiempo **avanza aunque el sistema falle**
+    
+- el tiempo **afecta estados aunque no haya eventos**
+    
+
+---
+
+### 5.6 Modelo mental correcto
+
+> “El tiempo es un actor silencioso del dominio.”
+
+El junior maduro entiende que:
+
+- el sistema debe **modelar** el paso del tiempo
+    
+- las reglas temporales deben ser explícitas
+    
+- el dominio debe saber **cuándo algo deja de ser válido**
+    
+
+---
+
+### 5.7 Ejemplo conceptual correcto
+
+Regla:
+
+> “Un pedido puede cancelarse dentro de las primeras 24 horas,  
+> siempre que no haya sido enviado.”
+
+Dominio correcto:
+
+- reconoce el estado
+    
+- reconoce la ventana temporal
+    
+- encapsula la decisión en un método explícito
+    
+
+Conceptualmente:
+
+```text
+pedido.puedeCancelarse(enEsteMomento)
+```
+
+El dominio **no pregunta fechas crudas**,  
+evalúa una **condición temporal del negocio**.
+
+---
+
+### 5.8 Ejemplo conceptual incorrecto
+
+Resolver la regla así:
+
+```text
+if (now - createdAt < 24h && status != SHIPPED)
+```
+
+Problemas:
+
+- lógica duplicable
+    
+- difícil de testear
+    
+- dependiente del reloj del sistema
+    
+- oculta la intención del negocio
+    
+
+---
+
+### 5.9 Problema avanzado: el tiempo no se evalúa una sola vez
+
+Uno de los errores más sutiles del junior es pensar:
+
+> “Evalúo la regla cuando ocurre el evento y listo.”
+
+Pero el tiempo sigue pasando aunque:
+
+- no haya requests
+    
+- no haya usuarios
+    
+- el sistema esté idle
+    
+
+Ejemplo:
+
+- una reserva expira sola
+    
+- un estado cambia sin acción humana
+    
+
+Aquí aparece la pregunta incómoda:
+
+> **¿Quién “dispara” la regla cuando el tiempo pasa?**
+
+---
+
+### 5.10 Opciones reales (con costos)
+
+#### Opción 1: Evaluar al acceder
+
+- La regla se evalúa cuando alguien consulta
+    
+
+Costos:
+
+- estados “mentirosos” hasta que alguien accede
+    
+- lógica repetida
+    
+- comportamiento inconsistente
+    
+
+---
+
+#### Opción 2: Procesos programados
+
+- Un proceso revisa y corrige estados
+    
+
+Costos:
+
+- complejidad operativa
+    
+- latencia
+    
+- necesidad de tolerar fallos
+    
+
+---
+
+#### Opción 3: Eventos temporales explícitos
+
+- El tiempo genera eventos de dominio
+    
+
+Costos:
+
+- mayor complejidad conceptual
+    
+- mayor responsabilidad de diseño
+    
+
+No hay solución perfecta.  
+Hay **decisiones conscientes**.
+
+---
+
+### 5.11 Error grave: esconder el tiempo
+
+Un error común y peligroso es:
+
+- no modelar el tiempo
+    
+- dejar que “pase”
+    
+- corregir inconsistencias manualmente
+    
+
+Eso convierte:
+
+- reglas claras
+    
+- en bugs intermitentes
+    
+
+---
+
+### 5.12 Señales de comprensión real
+
+Sabes que entiendes este tema cuando:
+
+- puedes explicar **qué regla cambia con el tiempo**
+    
+- puedes decir **cuándo deja de ser válida**
+    
+- puedes decir **quién detecta ese cambio**
+    
+- no dependes de `now()` disperso
+    
+
+---
+
+### 5.13 Ejercicio práctico de diseño (obligatorio)
+
+Piensa en una regla real de tu sistema que:
+
+- cambie solo porque pasa el tiempo
+    
+- no requiera acción del usuario
+    
+
+Responde:
+
+- ¿qué estado cambia?
+    
+- ¿cuándo?
+    
+- ¿cómo se detecta?
+    
+- ¿qué pasa si el sistema estuvo caído?
+    
+
+---
+
+
+## 6. El dominio dependiente de eventos externos (cuando el sistema ya no manda)
+
+### 6.1 Contexto
+
+Hasta aquí ya aceptamos dos realidades incómodas del nivel junior:
+
+- el dominio no siempre puede decidir inmediatamente
+    
+- el tiempo puede cambiar el estado sin que nadie haga nada
+    
+
+Ahora aparece una tercera fuente de tensión aún más fuerte:
+
+> **El dominio depende de cosas que ocurren fuera del sistema.**
+
+Ejemplos reales:
+
+- confirmación de pagos
+    
+- validación de identidad
+    
+- respuesta de un proveedor
+    
+- notificación de un servicio externo
+    
+- callbacks, webhooks, mensajes
+    
+
+En estos casos:
+
+- el dominio **no controla el evento**
+    
+- el dominio **no controla el momento**
+    
+- el dominio **no controla si el evento llega**
+    
+
+Y aun así, el dominio **debe seguir siendo coherente**.
+
+---
+
+### 6.2 Qué es realmente un evento (desarmado)
+
+Un **evento** no es:
+
+- un método
+    
+- una llamada
+    
+- un request
+    
+
+Un evento es:
+
+> **La notificación de que algo ya ocurrió,  
+> independientemente de quién lo observe.**
+
+Componentes internos de un evento:
+
+1. **Hecho**
+    
+    - Algo que ya pasó
+        
+2. **Origen**
+    
+    - Quién lo produjo
+        
+3. **Momento**
+    
+    - Cuándo ocurrió (no cuándo llegó)
+        
+4. **Inmutabilidad**
+    
+    - No se puede “deshacer”
+        
+5. **Desacoplamiento**
+    
+    - El emisor no espera al receptor
+        
+
+En Trainee, casi no hay eventos reales.  
+En Junior, aparecen todo el tiempo.
+
+---
+
+### 6.3 Evento interno vs evento externo
+
+Es clave distinguirlos:
+
+**Evento interno**
+
+- ocurre dentro del dominio
+    
+- el sistema lo genera
+    
+- el sistema lo controla
+    
+
+**Evento externo**
+
+- ocurre fuera del dominio
+    
+- el sistema solo lo recibe
+    
+- puede llegar tarde, duplicado o nunca
+    
+
+El error junior común es tratarlos igual.
+
+---
+
+### 6.4 Error común del junior temprano
+
+El junior temprano piensa:
+
+> “Cuando llegue el evento, ejecuto la lógica y listo.”
+
+Ese pensamiento ignora:
+
+- eventos duplicados
+    
+- eventos fuera de orden
+    
+- eventos tardíos
+    
+- eventos que nunca llegan
+    
+
+Resultado:
+
+- estados corruptos
+    
+- reglas rotas
+    
+- bugs intermitentes
+    
+
+---
+
+### 6.5 Modelo mental incorrecto
+
+> “El evento dispara una acción.”
+
+Ese modelo es peligroso porque:
+
+- asume orden
+    
+- asume unicidad
+    
+- asume confiabilidad
+    
+
+---
+
+### 6.6 Modelo mental correcto
+
+> “El evento es información,  
+> el dominio decide qué hacer con ella.”
+
+El junior maduro entiende que:
+
+- el evento **no manda**
+    
+- el dominio **interpreta**
+    
+- la decisión depende del estado actual
+    
+
+---
+
+### 6.7 Descomposición del problema (conceptos dentro del concepto)
+
+Para manejar eventos externos, el dominio debe considerar:
+
+#### a) Idempotencia
+
+Procesar el mismo evento más de una vez sin romper estado.
+
+#### b) Orden
+
+Aceptar que los eventos pueden llegar fuera de secuencia.
+
+#### c) Retraso
+
+Aceptar que la información llega tarde.
+
+#### d) Ausencia
+
+Aceptar que algunos eventos nunca llegan.
+
+Estos cuatro puntos **no son edge cases**.  
+Son la norma.
+
+---
+
+### 6.8 Ejemplo conceptual correcto
+
+Flujo realista:
+
+- Pedido creado → estado `PENDIENTE_PAGO`
+    
+- Llega evento “pago aprobado”
+    
+- Dominio verifica:
+    
+    - ¿el pedido sigue pendiente?
+        
+    - ¿este pago ya fue procesado?
+        
+    - ¿el estado actual permite transición?
+        
+
+Solo entonces decide:
+
+- confirmar
+    
+- ignorar
+    
+- rechazar
+    
+
+El evento **no fuerza** el cambio.  
+El dominio **lo evalúa**.
+
+---
+
+### 6.9 Ejemplo conceptual incorrecto
+
+Evento recibido → cambiar estado sin verificar nada.
+
+Esto lleva a:
+
+- estados imposibles
+    
+- pagos duplicados
+    
+- cancelaciones inválidas
+    
+
+---
+
+### 6.10 Problema avanzado: eventos que llegan tarde
+
+Ejemplo:
+
+- pedido cancelado
+    
+- horas después llega “pago aprobado”
+    
+
+Pregunta junior clave:
+
+> **¿Qué debe hacer el sistema?**
+
+Opciones reales:
+
+- reabrir pedido
+    
+- rechazar pago
+    
+- crear compensación
+    
+- notificar manualmente
+    
+
+No hay respuesta universal.  
+Hay **decisiones de negocio** que el dominio debe modelar.
+
+---
+
+### 6.11 Error grave: esconder la complejidad
+
+Un error frecuente es:
+
+- asumir que los eventos siempre llegan bien
+    
+- no modelar duplicados
+    
+- no modelar retrasos
+    
+
+Eso no simplifica.  
+Solo **pospone el bug**.
+
+---
+
+### 6.12 Señales de comprensión real
+
+Sabes que entiendes este tema cuando:
+
+- no confías ciegamente en eventos
+    
+- diseñas estados que toleran retrasos
+    
+- puedes explicar qué pasa si el evento llega dos veces
+    
+- sabes qué hacer si no llega
+    
+
+---
+
+### 6.13 Ejercicio práctico de diseño (obligatorio)
+
+Piensa en un evento externo real que tu sistema consume y responde:
+
+- ¿qué pasa si llega duplicado?
+    
+- ¿qué pasa si llega tarde?
+    
+- ¿qué pasa si nunca llega?
+    
+- ¿qué estados intermedios necesitas?
+    
+
+---
+
+
+## 6. El dominio dependiente de eventos externos (cuando el sistema ya no manda)
+
+### 6.1 Contexto
+
+Hasta aquí ya aceptamos dos realidades incómodas del nivel junior:
+
+- el dominio no siempre puede decidir inmediatamente
+    
+- el tiempo puede cambiar el estado sin que nadie haga nada
+    
+
+Ahora aparece una tercera fuente de tensión aún más fuerte:
+
+> **El dominio depende de cosas que ocurren fuera del sistema.**
+
+Ejemplos reales:
+
+- confirmación de pagos
+    
+- validación de identidad
+    
+- respuesta de un proveedor
+    
+- notificación de un servicio externo
+    
+- callbacks, webhooks, mensajes
+    
+
+En estos casos:
+
+- el dominio **no controla el evento**
+    
+- el dominio **no controla el momento**
+    
+- el dominio **no controla si el evento llega**
+    
+
+Y aun así, el dominio **debe seguir siendo coherente**.
+
+---
+
+### 6.2 Qué es realmente un evento (desarmado)
+
+Un **evento** no es:
+
+- un método
+    
+- una llamada
+    
+- un request
+    
+
+Un evento es:
+
+> **La notificación de que algo ya ocurrió,  
+> independientemente de quién lo observe.**
+
+Componentes internos de un evento:
+
+1. **Hecho**
+    
+    - Algo que ya pasó
+        
+2. **Origen**
+    
+    - Quién lo produjo
+        
+3. **Momento**
+    
+    - Cuándo ocurrió (no cuándo llegó)
+        
+4. **Inmutabilidad**
+    
+    - No se puede “deshacer”
+        
+5. **Desacoplamiento**
+    
+    - El emisor no espera al receptor
+        
+
+En Trainee, casi no hay eventos reales.  
+En Junior, aparecen todo el tiempo.
+
+---
+
+### 6.3 Evento interno vs evento externo
+
+Es clave distinguirlos:
+
+**Evento interno**
+
+- ocurre dentro del dominio
+    
+- el sistema lo genera
+    
+- el sistema lo controla
+    
+
+**Evento externo**
+
+- ocurre fuera del dominio
+    
+- el sistema solo lo recibe
+    
+- puede llegar tarde, duplicado o nunca
+    
+
+El error junior común es tratarlos igual.
+
+---
+
+### 6.4 Error común del junior temprano
+
+El junior temprano piensa:
+
+> “Cuando llegue el evento, ejecuto la lógica y listo.”
+
+Ese pensamiento ignora:
+
+- eventos duplicados
+    
+- eventos fuera de orden
+    
+- eventos tardíos
+    
+- eventos que nunca llegan
+    
+
+Resultado:
+
+- estados corruptos
+    
+- reglas rotas
+    
+- bugs intermitentes
+    
+
+---
+
+### 6.5 Modelo mental incorrecto
+
+> “El evento dispara una acción.”
+
+Ese modelo es peligroso porque:
+
+- asume orden
+    
+- asume unicidad
+    
+- asume confiabilidad
+    
+
+---
+
+### 6.6 Modelo mental correcto
+
+> “El evento es información,  
+> el dominio decide qué hacer con ella.”
+
+El junior maduro entiende que:
+
+- el evento **no manda**
+    
+- el dominio **interpreta**
+    
+- la decisión depende del estado actual
+    
+
+---
+
+### 6.7 Descomposición del problema (conceptos dentro del concepto)
+
+Para manejar eventos externos, el dominio debe considerar:
+
+#### a) Idempotencia
+
+Procesar el mismo evento más de una vez sin romper estado.
+
+#### b) Orden
+
+Aceptar que los eventos pueden llegar fuera de secuencia.
+
+#### c) Retraso
+
+Aceptar que la información llega tarde.
+
+#### d) Ausencia
+
+Aceptar que algunos eventos nunca llegan.
+
+Estos cuatro puntos **no son edge cases**.  
+Son la norma.
+
+---
+
+### 6.8 Ejemplo conceptual correcto
+
+Flujo realista:
+
+- Pedido creado → estado `PENDIENTE_PAGO`
+    
+- Llega evento “pago aprobado”
+    
+- Dominio verifica:
+    
+    - ¿el pedido sigue pendiente?
+        
+    - ¿este pago ya fue procesado?
+        
+    - ¿el estado actual permite transición?
+        
+
+Solo entonces decide:
+
+- confirmar
+    
+- ignorar
+    
+- rechazar
+    
+
+El evento **no fuerza** el cambio.  
+El dominio **lo evalúa**.
+
+---
+
+### 6.9 Ejemplo conceptual incorrecto
+
+Evento recibido → cambiar estado sin verificar nada.
+
+Esto lleva a:
+
+- estados imposibles
+    
+- pagos duplicados
+    
+- cancelaciones inválidas
+    
+
+---
+
+### 6.10 Problema avanzado: eventos que llegan tarde
+
+Ejemplo:
+
+- pedido cancelado
+    
+- horas después llega “pago aprobado”
+    
+
+Pregunta junior clave:
+
+> **¿Qué debe hacer el sistema?**
+
+Opciones reales:
+
+- reabrir pedido
+    
+- rechazar pago
+    
+- crear compensación
+    
+- notificar manualmente
+    
+
+No hay respuesta universal.  
+Hay **decisiones de negocio** que el dominio debe modelar.
+
+---
+
+### 6.11 Error grave: esconder la complejidad
+
+Un error frecuente es:
+
+- asumir que los eventos siempre llegan bien
+    
+- no modelar duplicados
+    
+- no modelar retrasos
+    
+
+Eso no simplifica.  
+Solo **pospone el bug**.
+
+---
+
+### 6.12 Señales de comprensión real
+
+Sabes que entiendes este tema cuando:
+
+- no confías ciegamente en eventos
+    
+- diseñas estados que toleran retrasos
+    
+- puedes explicar qué pasa si el evento llega dos veces
+    
+- sabes qué hacer si no llega
+    
+
+---
+
+### 6.13 Ejercicio práctico de diseño (obligatorio)
+
+Piensa en un evento externo real que tu sistema consume y responde:
+
+- ¿qué pasa si llega duplicado?
+    
+- ¿qué pasa si llega tarde?
+    
+- ¿qué pasa si nunca llega?
+    
+- ¿qué estados intermedios necesitas?
+    
+
+---
+
+
+## 7. Estados que ya no se controlan solo con código
+
+### 7.1 Contexto
+
+Hasta ahora, incluso aceptando:
+
+- consistencia eventual,
+    
+- tiempo como actor,
+    
+- eventos externos,
+    
+
+todavía existe una ilusión común en nivel junior temprano:
+
+> _“El estado del sistema es el valor que tiene ahora en la base de datos.”_
+
+Esa idea **deja de ser cierta** cuando el sistema empieza a depender de:
+
+- procesos largos,
+    
+- eventos asincrónicos,
+    
+- correcciones posteriores,
+    
+- proyecciones parciales.
+    
+
+Aquí aparece un cambio conceptual clave:
+
+> **El estado deja de ser una verdad absoluta  
+> y pasa a ser una interpretación del sistema en un momento dado.**
+
+---
+
+### 7.2 Qué es realmente un “estado” (desarmado por dentro)
+
+Un **estado** no es:
+
+- un enum
+    
+- un campo
+    
+- un string
+    
+- una columna
+    
+
+Un estado es:
+
+> **La forma en que el sistema comunica qué es válido hacer ahora.**
+
+Componentes internos de un estado:
+
+1. **Capacidad**
+    
+    - Qué acciones están permitidas
+        
+2. **Restricción**
+    
+    - Qué acciones están prohibidas
+        
+3. **Promesa**
+    
+    - Qué garantiza el sistema
+        
+4. **Expectativa**
+    
+    - Qué puede esperar quien lo consume
+        
+
+En Trainee:
+
+- estado = dato
+    
+
+En Junior:
+
+- estado = **contrato dinámico**
+    
+
+---
+
+### 7.3 Error común del junior temprano
+
+El junior temprano modela estados así:
+
+- enum con muchos valores
+    
+- cambios directos
+    
+- sin validar transición
+    
+- sin pensar en observabilidad
+    
+
+Esto lleva a:
+
+- estados que no representan la realidad
+    
+- transiciones imposibles
+    
+- reglas duplicadas
+    
+- lógica dispersa
+    
+
+---
+
+### 7.4 Modelo mental incorrecto
+
+> “Cambio el estado cuando ocurre algo.”
+
+Ese modelo asume:
+
+- orden perfecto
+    
+- información completa
+    
+- eventos confiables
+    
+
+Nada de eso está garantizado.
+
+---
+
+### 7.5 Modelo mental correcto
+
+> “El estado es una proyección del conocimiento actual del sistema.”
+
+Eso implica:
+
+- puede estar incompleto
+    
+- puede cambiar sin acción directa
+    
+- puede necesitar corrección
+    
+- debe ser explícito en sus límites
+    
+
+---
+
+### 7.6 Descomposición del concepto (conceptos dentro del concepto)
+
+Para entender estados complejos, hay que separar:
+
+#### a) Estado fuente
+
+El estado “real” del negocio (a veces inaccesible).
+
+#### b) Estado observado
+
+Lo que el sistema cree que está pasando.
+
+#### c) Estado derivado
+
+Un estado calculado a partir de otros.
+
+#### d) Estado intermedio
+
+Un estado explícito que reconoce incertidumbre.
+
+En sistemas junior reales:
+
+- **el estado observado nunca es perfecto**
+    
+- y eso debe ser aceptado y modelado
+    
+
+---
+
+### 7.7 Ejemplo conceptual correcto
+
+Pedido con estados explícitos:
+
+- `PENDIENTE_PAGO`
+    
+- `PAGO_CONFIRMADO`
+    
+- `PAGO_RECHAZADO`
+    
+- `CANCELADO`
+    
+- `INCONSISTENTE` (estado explícito de problema)
+    
+
+El estado `INCONSISTENTE` no es un bug.  
+Es un **reconocimiento honesto** de que algo no cuadra.
+
+---
+
+### 7.8 Ejemplo conceptual incorrecto
+
+Sistema que:
+
+- no tiene estados intermedios
+    
+- asume éxito o fracaso inmediato
+    
+- corrige “por detrás” sin modelarlo
+    
+
+Eso genera:
+
+- datos que “saltan”
+    
+- comportamientos inexplicables
+    
+- pérdida de confianza
+    
+
+---
+
+### 7.9 Problema avanzado: estados derivados que mienten
+
+Un error muy sutil del junior es:
+
+- calcular estado “en tiempo real”
+    
+- mezclar datos no sincronizados
+    
+- presentar una ilusión de certeza
+    
+
+Ejemplo:
+
+- mostrar “confirmado” porque una parte lo está
+    
+- ignorar otra que aún no llegó
+    
+
+Eso es peor que mostrar “pendiente”.
+
+---
+
+### 7.10 Error grave: ocultar incertidumbre
+
+Uno de los peores errores de diseño es:
+
+- esconder estados intermedios
+    
+- simplificar para “no confundir”
+    
+- asumir que el usuario no necesita saber
+    
+
+Esto rompe:
+
+- expectativas
+    
+- contratos
+    
+- trazabilidad
+    
+
+Un sistema robusto **no es el que oculta**,  
+es el que **explica**.
+
+---
+
+### 7.11 Señales de comprensión real
+
+Sabes que entiendes este tema cuando:
+
+- aceptas estados incómodos
+    
+- no fuerzas certezas falsas
+    
+- modelas incertidumbre explícitamente
+    
+- sabes explicar por qué un estado existe
+    
+
+---
+
+### 7.12 Ejercicio práctico de diseño (obligatorio)
+
+Piensa en una entidad real de tu sistema y responde:
+
+- ¿qué estados actuales asumen certeza?
+    
+- ¿cuáles podrían ser intermedios?
+    
+- ¿qué estado hoy oculta incertidumbre?
+    
+- ¿qué pasaría si lo hicieras explícito?
+    
+
+---
+
+## 8. Agregados que crecieron demasiado (cuando el modelo empieza a doler)
+
+### 8.1 Contexto
+
+En Trainee, los agregados suelen ser:
+
+- pequeños
+    
+- claros
+    
+- fáciles de entender
+    
+- con pocas reglas
+    
+
+En nivel junior, después de agregar:
+
+- reglas compuestas,
+    
+- invariantes cruzadas,
+    
+- estados intermedios,
+    
+- dependencias temporales,
+    
+- eventos externos,
+    
+
+empieza a pasar algo inevitable:
+
+> **Los agregados crecen.**
+
+Y no crecen porque el desarrollador sea malo.  
+Crecen porque el negocio **no es simple**.
+
+Aquí aparece una pregunta crítica del nivel junior:
+
+> **¿Cuándo un agregado está “demasiado grande” y cuándo no?**
+
+---
+
+### 8.2 Qué significa realmente que un agregado “crezca”
+
+Un agregado **no crece solo en líneas de código**.
+
+Crece cuando:
+
+- acumula demasiadas responsabilidades
+    
+- protege demasiadas reglas distintas
+    
+- coordina demasiados flujos
+    
+- necesita demasiada información externa
+    
+- se vuelve el centro de todo
+    
+
+El tamaño real de un agregado se mide en:
+
+- **decisiones que toma**
+    
+- **razones por las que cambia**
+    
+- **conceptos que mezcla**
+    
+
+---
+
+### 8.3 Error común del junior temprano
+
+El junior temprano detecta un agregado grande y piensa:
+
+> “Hay que partirlo.”
+
+Ese impulso, sin análisis, suele ser destructivo.
+
+Dividir un agregado **sin entender por qué creció** genera:
+
+- invariantes rotas
+    
+- consistencia perdida
+    
+- lógica duplicada
+    
+- dependencias invisibles
+    
+
+---
+
+### 8.4 Modelo mental incorrecto
+
+> “Agregado grande = mal diseño.”
+
+Ese pensamiento es simplista.
+
+Un agregado grande puede ser:
+
+- una representación fiel del negocio
+    
+- un punto crítico que **debe** existir
+    
+- una frontera de consistencia legítima
+    
+
+El tamaño por sí solo **no es el problema**.
+
+---
+
+### 8.5 Modelo mental correcto
+
+> “Un agregado crece porque está protegiendo algo importante.  
+> Antes de dividirlo, debo entender qué protege.”
+
+El junior maduro primero **lee el agregado como un mapa del negocio**, no como código.
+
+---
+
+### 8.6 Descomposición interna del problema (conceptos dentro del concepto)
+
+Para evaluar un agregado grande, hay que separar:
+
+#### a) Responsabilidad central
+
+Qué es lo único que este agregado **no puede dejar de proteger**.
+
+#### b) Responsabilidades accidentales
+
+Cosas que terminó haciendo por comodidad o evolución histórica.
+
+#### c) Reglas críticas
+
+Reglas cuya ruptura sería catastrófica.
+
+#### d) Reglas auxiliares
+
+Reglas importantes, pero no nucleares.
+
+Muchos agregados grandes **mezclan todo esto**.
+
+---
+
+### 8.7 Señales de que un agregado está creciendo por razones incorrectas
+
+- Cambia por motivos no relacionados
+    
+- Tiene métodos que no comparten datos
+    
+- Coordina flujos que podrían ser independientes
+    
+- Conoce detalles de otros agregados
+    
+- Tiene lógica “de orquestación” mezclada con lógica propia
+    
+
+Estas señales **no obligan a dividir**,  
+obligan a **pensar**.
+
+---
+
+### 8.8 Ejemplo conceptual correcto (agregado grande aceptable)
+
+Un agregado que:
+
+- representa una entidad legal
+    
+- protege invariantes críticas
+    
+- centraliza decisiones clave
+    
+- cambia solo cuando el negocio lo exige
+    
+
+Aunque sea grande, **es coherente**.
+
+---
+
+### 8.9 Ejemplo conceptual incorrecto
+
+Un agregado que:
+
+- valida reglas externas
+    
+- coordina procesos largos
+    
+- llama servicios
+    
+- maneja estados ajenos
+    
+
+Aquí el tamaño **sí es síntoma de mal diseño**.
+
+---
+
+### 8.10 Opciones reales ante un agregado grande
+
+No hay recetas.  
+Hay caminos con costos.
+
+#### Opción 1: Mantener el agregado intacto
+
+- Aceptar su tamaño
+    
+- Protegerlo bien
+    
+- Documentar decisiones
+    
+
+Costo:
+
+- menor flexibilidad
+    
+- mayor carga cognitiva
+    
+
+---
+
+#### Opción 2: Extraer políticas del dominio
+
+- Sacar reglas compuestas
+    
+- Mantener el núcleo intacto
+    
+
+Costo:
+
+- más conceptos
+    
+- mayor complejidad conceptual
+    
+
+---
+
+#### Opción 3: Dividir el agregado
+
+- Crear nuevas fronteras
+    
+- Aceptar consistencia eventual
+    
+
+Costo:
+
+- mayor complejidad técnica
+    
+- mayor responsabilidad de diseño
+    
+
+---
+
+### 8.11 Error grave: dividir por estética
+
+Dividir porque:
+
+- “se ve feo”
+    
+- “es muy largo”
+    
+- “no es elegante”
+    
+
+Esto suele romper:
+
+- reglas invisibles
+    
+- supuestos implícitos
+    
+- invariantes críticas
+    
+
+---
+
+### 8.12 Señales de comprensión real
+
+Sabes que entiendes este tema cuando:
+
+- puedes explicar **por qué** un agregado es grande
+    
+- sabes qué pasaría si lo divides
+    
+- puedes justificar mantenerlo grande
+    
+- no tomas decisiones por estética
+    
+
+---
+
+### 8.13 Ejercicio práctico de diseño (obligatorio)
+
+Piensa en un agregado real que conozcas y responde:
+
+- ¿qué responsabilidad central protege?
+    
+- ¿qué reglas no le pertenecen realmente?
+    
+- ¿qué pasaría si lo dividieras hoy?
+    
+- ¿qué romperías sin darte cuenta?
+    
+
+---
+
+
+## 9. Dominio rico mal aplicado (cuando “hacerlo bien” empieza a romper cosas)
+
+### 9.1 Contexto
+
+Después de Trainee, muchos desarrolladores llegan a Junior con una idea muy fuerte en la cabeza:
+
+> _“Un buen backend tiene un dominio rico.”_
+
+Y eso **es cierto**, pero **incompleto**.
+
+El problema no es el dominio rico.  
+El problema es **aplicarlo sin criterio**, sin entender **qué debe ser rico** y **qué no**.
+
+En este punto del nivel junior aparece un fenómeno muy común:
+
+> **El código está “bien hecho”,  
+> pero el sistema es rígido, difícil de cambiar y frágil.**
+
+---
+
+### 9.2 Qué es realmente un dominio rico (desarmado)
+
+Un **dominio rico** no significa:
+
+- muchas clases
+    
+- muchos métodos
+    
+- mucha lógica
+    
+- cero servicios
+    
+
+Un dominio rico significa:
+
+> **El conocimiento del negocio vive en el dominio  
+> y no está disperso en capas técnicas.**
+
+Eso implica:
+
+- reglas explícitas
+    
+- decisiones nombradas
+    
+- comportamiento cerca de los datos
+    
+- invariantes protegidas
+    
+
+Hasta ahí, todo bien.
+
+---
+
+### 9.3 Cuándo el dominio rico empieza a estar mal aplicado
+
+El dominio rico empieza a fallar cuando:
+
+- intenta saber demasiado
+    
+- intenta decidir demasiado
+    
+- intenta controlar cosas que no le pertenecen
+    
+- se vuelve el centro absoluto del sistema
+    
+
+Aquí el dominio deja de ser:
+
+- expresivo  
+    y se vuelve:
+    
+- autoritario
+    
+
+---
+
+### 9.4 Error común del junior temprano
+
+El junior temprano cree que:
+
+> “Si algo es negocio, debe estar en el dominio, siempre.”
+
+Eso lo lleva a:
+
+- meter lógica de integración en entidades
+    
+- hacer que el dominio conozca infraestructura
+    
+- forzar reglas que no puede garantizar
+    
+- introducir dependencias invisibles
+    
+
+---
+
+### 9.5 Modelo mental incorrecto
+
+> “Mientras más lógica tenga el dominio, mejor diseñado está el sistema.”
+
+Ese pensamiento ignora algo clave:
+
+> **No toda lógica del negocio puede ejecutarse en el dominio.**
+
+Algunas solo pueden:
+
+- coordinarse
+    
+- evaluarse parcialmente
+    
+- decidirse con información incompleta
+    
+
+---
+
+### 9.6 Modelo mental correcto
+
+> “El dominio debe expresar reglas y decisiones,  
+> pero no ejecutar aquello que no controla.”
+
+El junior maduro entiende que:
+
+- el dominio define **qué es válido**
+    
+- no siempre define **cómo se ejecuta**
+    
+- no siempre define **cuándo se confirma**
+    
+
+---
+
+### 9.7 Descomposición interna del problema (conceptos dentro del concepto)
+
+Para entender el dominio rico mal aplicado, hay que separar:
+
+#### a) Lógica decisional
+
+Define si algo es válido o no.
+
+#### b) Lógica de coordinación
+
+Decide el orden de pasos, no las reglas.
+
+#### c) Lógica de integración
+
+Interactúa con sistemas externos.
+
+#### d) Lógica técnica
+
+Persistencia, transporte, formatos.
+
+Un dominio sano:
+
+- contiene (a)
+    
+- puede participar en (b)
+    
+- **no contiene** (c) ni (d)
+    
+
+---
+
+### 9.8 Ejemplo conceptual correcto
+
+Dominio:
+
+- define estados
+    
+- define transiciones válidas
+    
+- define invariantes
+    
+- expone decisiones como métodos claros
+    
+
+Coordinación:
+
+- ocurre fuera del dominio
+    
+- respeta las decisiones del dominio
+    
+- maneja tiempos, eventos y dependencias
+    
+
+El dominio **no llama afuera**.  
+El mundo **le pregunta**.
+
+---
+
+### 9.9 Ejemplo conceptual incorrecto
+
+Dominio que:
+
+- llama APIs externas
+    
+- maneja reintentos
+    
+- conoce formatos HTTP
+    
+- decide sobre errores técnicos
+    
+
+Esto convierte el dominio en:
+
+- frágil
+    
+- acoplado
+    
+- difícil de testear
+    
+- difícil de evolucionar
+    
+
+---
+
+### 9.10 Señales claras de dominio rico mal aplicado
+
+- Entidades con dependencias técnicas
+    
+- Métodos que “hacen de todo”
+    
+- Reglas que dependen de respuestas externas
+    
+- Código difícil de reutilizar en otro contexto
+    
+- Tests extremadamente complejos
+    
+
+---
+
+### 9.11 Error grave: confundir pureza con calidad
+
+Un error conceptual fuerte es creer:
+
+> “Mientras más puro el dominio, mejor el sistema.”
+
+La pureza absoluta suele:
+
+- ignorar la realidad
+    
+- esconder complejidad
+    
+- forzar modelos irreales
+    
+
+Un buen dominio **dialoga con la realidad**, no la niega.
+
+---
+
+### 9.12 Señales de comprensión real
+
+Sabes que entiendes este tema cuando:
+
+- sabes qué lógica NO debe ir al dominio
+    
+- no te obsesionas con “todo en entidades”
+    
+- aceptas coordinación fuera del modelo
+    
+- puedes explicar por qué algo no pertenece al dominio
+    
+
+---
+
+### 9.13 Ejercicio práctico de diseño (obligatorio)
+
+Piensa en una lógica que hoy esté en tu dominio y responde:
+
+- ¿decide o ejecuta?
+    
+- ¿depende de información externa?
+    
+- ¿podría evaluarse sin ejecutar?
+    
+- ¿está forzando al dominio a controlar algo que no puede?
+    
+
+---
+
+
+## 10. Arquitectura bajo presión (cuando las capas ya no alcanzan)
+
+### 10.1 Contexto
+
+En Trainee, la arquitectura en capas funciona casi siempre:
+
+- Controller
+    
+- Service
+    
+- Repository
+    
+- Domain
+    
+
+Todo está:
+
+- ordenado
+    
+- limpio
+    
+- entendible
+    
+
+Pero en nivel junior, después de introducir:
+
+- reglas compuestas
+    
+- eventos externos
+    
+- estados intermedios
+    
+- dominio no autosuficiente
+    
+
+empieza a pasar algo incómodo:
+
+> **Las capas empiezan a estorbar más de lo que ayudan.**
+
+No porque estén mal,  
+sino porque **el sistema dejó de ser simple**.
+
+---
+
+### 10.2 Qué asume realmente una arquitectura en capas
+
+Una arquitectura en capas asume que:
+
+1. Las operaciones son sincrónicas
+    
+2. El flujo es lineal
+    
+3. La decisión ocurre en un solo punto
+    
+4. El dominio tiene toda la información
+    
+5. El request y la decisión ocurren juntos
+    
+
+En nivel junior, **ninguna de esas suposiciones es siempre cierta**.
+
+---
+
+### 10.3 Error común del junior temprano
+
+El junior temprano ve que algo no encaja y decide:
+
+> “Voy a saltarme capas para que funcione.”
+
+Esto se traduce en:
+
+- controllers con lógica
+    
+- repositories con reglas
+    
+- services gigantes
+    
+- acoplamiento invisible
+    
+
+Funciona… hasta que cambia algo.
+
+---
+
+### 10.4 Modelo mental incorrecto
+
+> “Las capas son una regla rígida.”
+
+Ese pensamiento lleva a:
+
+- forzar flujos artificiales
+    
+- esconder complejidad
+    
+- introducir código ceremonioso
+    
+
+---
+
+### 10.5 Modelo mental correcto
+
+> “Las capas son una **herramienta de orden**,  
+> no un dogma.”
+
+El junior maduro entiende que:
+
+- las capas ayudan a separar responsabilidades
+    
+- pero no reemplazan el diseño
+    
+- y no deben forzar flujos irreales
+    
+
+---
+
+### 10.6 Descomposición del problema (conceptos dentro del concepto)
+
+Cuando la arquitectura se tensa, aparecen estas piezas:
+
+#### a) Lógica de orquestación
+
+Decide **el orden** de las acciones.
+
+#### b) Lógica de decisión
+
+Decide **si algo es válido**.
+
+#### c) Lógica de ejecución
+
+Realiza acciones técnicas.
+
+El error común es **mezclar las tres** en la misma capa.
+
+---
+
+### 10.7 Ejemplo conceptual correcto
+
+- El controller:
+    
+    - recibe la intención
+        
+- Una capa de aplicación:
+    
+    - orquesta pasos
+        
+- El dominio:
+    
+    - decide qué es válido
+        
+- Infraestructura:
+    
+    - ejecuta efectos
+        
+
+No todo es “service”.  
+Cada cosa tiene un propósito.
+
+---
+
+### 10.8 Ejemplo conceptual incorrecto
+
+Un service que:
+
+- valida reglas
+    
+- coordina flujos
+    
+- llama externos
+    
+- maneja errores técnicos
+    
+- persiste
+    
+- transforma datos
+    
+
+Eso no es arquitectura.  
+Es **acumulación de responsabilidad**.
+
+---
+
+### 10.9 Señales de que la arquitectura está bajo presión
+
+- Services con cientos de líneas
+    
+- Controllers que “saben demasiado”
+    
+- Dominio pasivo
+    
+- Reglas duplicadas
+    
+- Dificultad para cambiar flujos
+    
+
+Estas señales **no indican que esté todo mal**,  
+indican que **hay que rediseñar conscientemente**.
+
+---
+
+### 10.10 Ejercicio práctico de reflexión (obligatorio)
+
+Observa una funcionalidad real y responde:
+
+- ¿quién decide?
+    
+- ¿quién coordina?
+    
+- ¿quién ejecuta?
+    
+- ¿qué capa está haciendo cosas que no le pertenecen?
+    
+
+---
+
+## 11. Separación por casos de uso (cuando “service” ya no explica nada)
+
+### 11.1 Contexto
+
+En muchos proyectos junior aparece este síntoma:
+
+- `UserService`
+    
+- `OrderService`
+    
+- `PaymentService`
+    
+
+Y dentro:
+
+- todo
+    
+
+Esto funciona hasta que:
+
+- un caso de uso toca varias entidades
+    
+- el flujo tiene pasos condicionales
+    
+- aparecen reglas temporales
+    
+
+Ahí surge una necesidad real:
+
+> **Separar por intención, no por entidad.**
+
+---
+
+### 11.2 Qué es realmente un caso de uso
+
+Un **caso de uso** no es:
+
+- un endpoint
+    
+- un método
+    
+- un controller
+    
+
+Es:
+
+> **La representación explícita de una intención del usuario o del sistema.**
+
+Ejemplos:
+
+- “Crear pedido”
+    
+- “Confirmar pago”
+    
+- “Cancelar suscripción”
+    
+
+No son clases técnicas.  
+Son **acciones del negocio**.
+
+---
+
+### 11.3 Error común del junior temprano
+
+El junior temprano:
+
+- crea casos de uso por cada endpoint
+    
+- duplica lógica
+    
+- fragmenta demasiado
+    
+
+Resultado:
+
+- ruido
+    
+- poca cohesión
+    
+- complejidad innecesaria
+    
+
+---
+
+### 11.4 Modelo mental correcto
+
+> “Un caso de uso existe cuando hay una intención con reglas propias.”
+
+No todo merece un caso de uso explícito.  
+Solo aquello que:
+
+- coordina
+    
+- decide
+    
+- afecta estados importantes
+    
+
+---
+
+### 11.5 Ejemplo conceptual correcto
+
+Un caso de uso:
+
+- recibe intención
+    
+- consulta estado actual
+    
+- pide decisiones al dominio
+    
+- coordina pasos
+    
+- maneja resultados
+    
+
+No sabe de HTTP.  
+No sabe de SQL.  
+Sabe **qué se quiere lograr**.
+
+---
+
+### 11.6 Ejercicio práctico
+
+Piensa en una funcionalidad y responde:
+
+- ¿es solo una operación técnica?
+    
+- ¿o representa una intención del negocio?
+    
+- ¿qué reglas la hacen distinta?
+    
+
+---
+
+## 12. Arquitectura hexagonal sin dogma
+
+### 12.1 Contexto
+
+Muchos juniors descubren arquitectura hexagonal y piensan:
+
+> “Esto es la solución a todo.”
+
+No lo es.
+
+Es una **herramienta**, no una religión.
+
+---
+
+### 12.2 Qué problema real intenta resolver
+
+La arquitectura hexagonal busca:
+
+- proteger el dominio
+    
+- aislar dependencias
+    
+- permitir cambio de infraestructura
+    
+
+No busca:
+
+- complejidad gratuita
+    
+- sobre-abstracción
+    
+- patrones por moda
+    
+
+---
+
+### 12.3 Error común del junior temprano
+
+- Crear puertos para todo
+    
+- Abstraer sin necesidad
+    
+- Multiplicar interfaces
+    
+- Perder claridad
+    
+
+---
+
+### 12.4 Modelo mental correcto
+
+> “Uso hexagonal cuando el dominio merece ser protegido.”
+
+No cuando:
+
+- el sistema es pequeño
+    
+- no hay cambios esperados
+    
+- no hay dependencias críticas
+    
+
+---
+
+### 12.5 Ejercicio práctico
+
+Piensa en tu sistema y responde:
+
+- ¿qué dependencias pueden cambiar?
+    
+- ¿cuáles son estables?
+    
+- ¿qué merece un puerto?
+    
+- ¿qué no?
+    
+
+---
+
+
+## 13. Persistencia en nivel junior (cuando guardar datos deja de ser trivial)
+
+### 13.1 Contexto
+
+En Trainee, la persistencia suele verse así:
+
+- guardar
+    
+- consultar
+    
+- actualizar
+    
+- borrar
+    
+
+Y normalmente funciona porque:
+
+- hay pocos datos
+    
+- hay pocos usuarios
+    
+- hay pocos flujos
+    
+- no hay concurrencia real
+    
+
+En nivel junior, esto cambia de forma radical.
+
+Empiezan a aparecer problemas como:
+
+- datos que cambian “solos”
+    
+- registros que se pisan
+    
+- consultas lentas
+    
+- transacciones que fallan
+    
+- estados que no coinciden con la realidad del negocio
+    
+
+Aquí aparece una verdad clave:
+
+> **Persistir datos no es guardar objetos,  
+> es coordinar cambios en un sistema compartido.**
+
+---
+
+### 13.2 Qué es realmente persistir datos (desarmado)
+
+Persistir **no es**:
+
+- llamar a `save()`
+    
+- usar un ORM
+    
+- escribir SQL
+    
+
+Persistir es:
+
+> **Registrar un cambio de estado que será observado, leído y modificado por otros actores, en momentos distintos y bajo condiciones distintas.**
+
+Componentes internos de la persistencia:
+
+1. **Estado**
+    
+    - Qué se guarda
+        
+2. **Momento**
+    
+    - Cuándo se guarda
+        
+3. **Concurrencia**
+    
+    - Quién más puede tocarlo
+        
+4. **Durabilidad**
+    
+    - Qué pasa si el sistema falla
+        
+5. **Visibilidad**
+    
+    - Cuándo otros ven el cambio
+        
+
+En Trainee:
+
+- casi no piensas en esto
+    
+
+En Junior:
+
+- esto define si el sistema sobrevive
+    
+
+---
+
+### 13.3 Error común del junior temprano
+
+El junior temprano piensa:
+
+> “Si uso un ORM, la base de datos se encarga.”
+
+Esto es falso.
+
+El ORM:
+
+- **no decide consistencia**
+    
+- **no decide concurrencia**
+    
+- **no entiende el negocio**
+    
+- **no protege invariantes**
+    
+
+El ORM solo traduce instrucciones.
+
+---
+
+### 13.4 Modelo mental incorrecto
+
+> “La base de datos es una caja mágica.”
+
+Ese pensamiento lleva a:
+
+- confiar ciegamente en `save()`
+    
+- ignorar transacciones
+    
+- ignorar concurrencia
+    
+- culpar al ORM cuando algo falla
+    
+
+---
+
+### 13.5 Modelo mental correcto
+
+> “La base de datos es un recurso compartido y hostil.”
+
+Hostil no porque sea mala,  
+sino porque:
+
+- otros procesos escriben
+    
+- otros hilos leen
+    
+- otros sistemas consultan
+    
+- el orden no está garantizado
+    
+
+El junior maduro **asume conflicto**.
+
+---
+
+### 13.6 ORM: qué promete y qué NO promete
+
+#### Lo que un ORM sí promete
+
+- mapear objetos a tablas
+    
+- manejar SQL básico
+    
+- facilitar CRUD
+    
+- manejar identidad básica
+    
+
+#### Lo que un ORM NO promete
+
+- performance óptima
+    
+- ausencia de conflictos
+    
+- consistencia de negocio
+    
+- orden correcto de operaciones
+    
+
+Muchos bugs junior nacen aquí.
+
+---
+
+### 13.7 Ejemplo conceptual correcto
+
+Uso del ORM con conciencia:
+
+- el dominio decide qué cambiar
+    
+- la capa de aplicación define cuándo persistir
+    
+- la transacción protege una frontera clara
+    
+- el ORM ejecuta instrucciones, no decisiones
+    
+
+El ORM **obedece**, no piensa.
+
+---
+
+### 13.8 Ejemplo conceptual incorrecto
+
+- meter lógica de negocio en entidades persistentes
+    
+- confiar en cascadas para reglas
+    
+- asumir que `save()` es atómico para todo
+    
+- persistir sin pensar en estados intermedios
+    
+
+---
+
+### 13.9 Concurrencia: el enemigo invisible
+
+En nivel junior, la concurrencia deja de ser teórica.
+
+Aparecen situaciones como:
+
+- dos usuarios editando lo mismo
+    
+- procesos paralelos
+    
+- reintentos automáticos
+    
+- eventos asincrónicos
+    
+
+La pregunta ya no es:
+
+> “¿Funciona?”
+
+Sino:
+
+> “¿Qué pasa si dos cosas pasan al mismo tiempo?”
+
+---
+
+### 13.10 Qué es realmente una transacción (redefinida)
+
+Una **transacción** no es:
+
+- una anotación
+    
+- un bloque de código
+    
+- una comodidad
+    
+
+Una transacción es:
+
+> **Un acuerdo temporal de exclusividad y coherencia sobre un conjunto de datos.**
+
+Dentro de una transacción:
+
+- se asumen ciertas verdades
+    
+- se bloquean ciertos recursos
+    
+- se aplazan efectos
+    
+
+Fuera de ella:
+
+- nada está garantizado
+    
+
+---
+
+### 13.11 Error grave del junior
+
+Transacciones demasiado grandes:
+
+- bloqueos largos
+    
+- baja performance
+    
+- deadlocks
+    
+
+Transacciones demasiado pequeñas:
+
+- estados inconsistentes
+    
+- reglas rotas
+    
+- efectos parciales
+    
+
+---
+
+### 13.12 Modelo mental correcto sobre transacciones
+
+> “Una transacción debe proteger una decisión del negocio,  
+> no un flujo completo.”
+
+El junior maduro delimita:
+
+- qué debe ser atómico
+    
+- qué puede ser eventual
+    
+- qué no debe estar dentro
+    
+
+---
+
+### 13.13 Ejemplo conceptual correcto
+
+- Validar regla
+    
+- Cambiar estado crítico
+    
+- Persistir
+    
+- Salir de transacción
+    
+
+Eventos, notificaciones, integraciones:
+
+- **fuera**
+    
+
+---
+
+### 13.14 Ejemplo conceptual incorrecto
+
+- iniciar transacción
+    
+- llamar externos
+    
+- esperar respuestas
+    
+- manejar lógica compleja
+    
+- persistir al final
+    
+
+Esto es una receta para el desastre.
+
+---
+
+### 13.15 Ejercicio práctico (obligatorio)
+
+Piensa en una operación real y responde:
+
+- ¿qué parte debe ser atómica?
+    
+- ¿qué parte no?
+    
+- ¿qué pasaría si falla a la mitad?
+    
+- ¿qué quedaría bloqueado?
+    
+
+---
+
+
+## 14. ORM bajo estrés real (cuando JPA / Hibernate dejan de ser “cómodos”)
+
+### 14.1 Contexto
+
+En Trainee, el ORM parece una bendición:
+
+- escribes poco código
+    
+- no piensas en SQL
+    
+- todo “fluye”
+    
+- los objetos se guardan solos
+    
+
+En nivel junior, cuando el sistema:
+
+- crece en volumen,
+    
+- aumenta concurrencia,
+    
+- agrega relaciones,
+    
+- introduce reglas compuestas,
+    
+
+el ORM empieza a mostrar su verdadera naturaleza:
+
+> **No es una capa mágica, es una herramienta con límites muy claros.**
+
+Aquí muchos juniors culpan al ORM.  
+El problema casi nunca es el ORM.  
+El problema es **cómo se usa**.
+
+---
+
+### 14.2 Qué es realmente un ORM (desarmado)
+
+Un ORM no es:
+
+- un motor de base de datos
+    
+- un optimizador de queries
+    
+- un validador de negocio
+    
+
+Un ORM es:
+
+> **Un traductor entre dos modelos distintos:  
+> el modelo de objetos y el modelo relacional.**
+
+Ese choque de modelos **nunca desaparece**.
+
+Componentes internos que el junior debe entender:
+
+1. **Contexto de persistencia**
+    
+2. **Identidad de entidad**
+    
+3. **Ciclo de vida**
+    
+4. **Carga de relaciones**
+    
+5. **Sincronización con la base**
+    
+
+Si no entiendes estos puntos, el ORM te controla a ti.
+
+---
+
+### 14.3 Error común del junior temprano
+
+El junior temprano piensa:
+
+> “Si funciona en local, está bien.”
+
+Eso ignora:
+
+- volumen real
+    
+- datos reales
+    
+- patrones de acceso reales
+    
+- concurrencia real
+    
+
+El ORM **se comporta distinto** bajo carga.
+
+---
+
+### 14.4 Contexto de persistencia (concepto crítico)
+
+El **contexto de persistencia** es:
+
+> **El conjunto de entidades que el ORM está gestionando en memoria en un momento dado.**
+
+Dentro de ese contexto:
+
+- el ORM rastrea cambios
+    
+- compara estados
+    
+- decide qué SQL ejecutar
+    
+
+Problema junior típico:
+
+- contextos gigantes
+    
+- sesiones largas
+    
+- memoria consumida
+    
+- SQL inesperado
+    
+
+---
+
+### 14.5 Ciclo de vida de una entidad (desarmado)
+
+Una entidad puede estar:
+
+- **Transient** – no existe en BD
+    
+- **Managed** – controlada por el ORM
+    
+- **Detached** – existe, pero no se controla
+    
+- **Removed** – marcada para borrar
+    
+
+Muchos bugs junior vienen de:
+
+- modificar entidades detached
+    
+- asumir que están sincronizadas
+    
+- mezclar contextos
+    
+
+---
+
+### 14.6 Lazy loading: la trampa silenciosa
+
+Lazy loading promete:
+
+- eficiencia
+    
+- carga bajo demanda
+    
+
+Pero en realidad:
+
+- es una **decisión diferida**
+    
+- depende del contexto activo
+    
+- dispara queries invisibles
+    
+
+---
+
+### 14.7 Error clásico: N+1
+
+Ejemplo conceptual:
+
+- 1 query para obtener entidades
+    
+- N queries adicionales para relaciones
+    
+
+Esto:
+
+- mata performance
+    
+- aparece solo en producción
+    
+- no se ve en tests pequeños
+    
+
+El junior que no entiende esto:
+
+- culpa al ORM
+    
+- agrega caché a ciegas
+    
+- complica el sistema
+    
+
+---
+
+### 14.8 Modelo mental incorrecto
+
+> “El ORM decide cuándo consultar.”
+
+No.  
+**Tú decides**, aunque no lo veas.
+
+---
+
+### 14.9 Modelo mental correcto
+
+> “Cada acceso a una relación puede ser una query.”
+
+El junior maduro:
+
+- piensa en queries
+    
+- revisa logs SQL
+    
+- entiende el costo de cada acceso
+    
+
+---
+
+### 14.10 Cascadas peligrosas
+
+Las cascadas parecen útiles:
+
+- `Cascade.ALL`
+    
+- persistir todo “automáticamente”
+    
+
+En sistemas reales:
+
+- persisten cosas que no deberían
+    
+- borran más de lo esperado
+    
+- introducen efectos colaterales
+    
+
+Cascada sin criterio = bug oculto.
+
+---
+
+### 14.11 Ejemplo conceptual correcto
+
+- cascadas mínimas
+    
+- explícitas
+    
+- justificadas por invariante
+    
+
+---
+
+### 14.12 Ejemplo conceptual incorrecto
+
+- cascadas por comodidad
+    
+- cascadas por desconocimiento
+    
+- cascadas “porque funciona”
+    
+
+---
+
+### 14.13 Sesiones largas: el enemigo silencioso
+
+Sesiones largas implican:
+
+- memoria acumulada
+    
+- cambios no intencionales
+    
+- flush inesperado
+    
+- locks prolongados
+    
+
+Muchos juniors no saben:
+
+- cuándo se hace flush
+    
+- por qué se ejecuta SQL “solo”
+    
+
+---
+
+### 14.14 Señales de problemas con ORM
+
+- SQL inesperado en logs
+    
+- queries repetidas
+    
+- tiempos inconsistentes
+    
+- memory leaks
+    
+- deadlocks inexplicables
+    
+
+No es “misterio”.  
+Es diseño.
+
+---
+
+### 14.15 Ejercicio práctico (obligatorio)
+
+Toma una operación real y responde:
+
+- ¿cuántas queries ejecuta?
+    
+- ¿cuáles son explícitas?
+    
+- ¿cuáles son implícitas?
+    
+- ¿qué relaciones se cargan sin que lo notes?
+    
+
+---
+
+
+## 15. Transacciones reales en producción (cuando `@Transactional` deja de ser trivial)
+
+### 15.1 Contexto
+
+En Trainee, una transacción suele verse así:
+
+- anotas un método
+    
+- todo “pasa o no pasa”
+    
+- si hay error, rollback
+    
+- listo
+    
+
+En nivel junior, esa visión se rompe cuando:
+
+- hay múltiples usuarios
+    
+- hay concurrencia real
+    
+- hay procesos largos
+    
+- hay integraciones externas
+    
+- hay volumen de datos
+    
+
+Aquí aparece una verdad incómoda:
+
+> **Una transacción no es solo un mecanismo técnico,  
+> es una decisión de diseño con impacto sistémico.**
+
+---
+
+### 15.2 Qué es realmente una transacción (desarmada completamente)
+
+Una **transacción** no es:
+
+- una anotación
+    
+- un bloque de código
+    
+- un detalle de implementación
+    
+
+Una transacción es:
+
+> **Un acuerdo temporal donde el sistema promete coherencia  
+> a costa de bloquear, retrasar o coordinar otros actores.**
+
+Componentes internos de una transacción:
+
+1. **Frontera**
+    
+    - Qué operaciones quedan dentro
+        
+2. **Aislamiento**
+    
+    - Qué tanto se aíslan de otras transacciones
+        
+3. **Duración**
+    
+    - Cuánto tiempo se mantiene el acuerdo
+        
+4. **Costo**
+    
+    - Qué recursos quedan bloqueados
+        
+5. **Riesgo**
+    
+    - Qué pasa si falla
+        
+
+En Junior, ya no puedes ignorar ninguno.
+
+---
+
+### 15.3 Error común del junior temprano
+
+El junior temprano piensa:
+
+> “Mientras más grande la transacción, más seguro.”
+
+Eso es falso.
+
+Transacciones grandes:
+
+- bloquean más
+    
+- duran más
+    
+- fallan más
+    
+- escalan peor
+    
+
+---
+
+### 15.4 Modelo mental incorrecto
+
+> “La transacción protege todo el flujo.”
+
+Eso lleva a:
+
+- incluir llamadas externas
+    
+- incluir lógica de negocio extensa
+    
+- incluir validaciones tardías
+    
+
+Resultado:
+
+- locks prolongados
+    
+- timeouts
+    
+- deadlocks
+    
+- caída de rendimiento
+    
+
+---
+
+### 15.5 Modelo mental correcto
+
+> “La transacción protege **una decisión crítica**,  
+> no todo el proceso.”
+
+El junior maduro delimita la transacción alrededor de:
+
+- un cambio de estado esencial
+    
+- una invariante que no puede romperse
+    
+- una decisión irreversible
+    
+
+---
+
+### 15.6 Aislamiento: qué significa de verdad
+
+El **aislamiento** define:
+
+- qué puede ver una transacción de otra
+    
+- cuándo ve los cambios
+    
+- qué anomalías son posibles
+    
+
+No es un detalle académico.  
+Define bugs reales.
+
+Tipos comunes (conceptuales, no técnicos):
+
+- Leer datos no confirmados
+    
+- Leer datos que cambian
+    
+- Leer conjuntos inconsistentes
+    
+
+El junior no necesita memorizar niveles,  
+necesita **entender consecuencias**.
+
+---
+
+### 15.7 Locks: el costo oculto
+
+Cada transacción:
+
+- bloquea filas
+    
+- bloquea índices
+    
+- bloquea recursos
+    
+
+Locks largos:
+
+- reducen throughput
+    
+- generan colas
+    
+- provocan timeouts
+    
+
+Locks cortos:
+
+- reducen conflictos
+    
+- mejoran escalabilidad
+    
+
+El tiempo **importa más que la cantidad de código**.
+
+---
+
+### 15.8 Deadlocks: cuando nadie gana
+
+Un deadlock ocurre cuando:
+
+- dos transacciones esperan una a la otra
+    
+- ninguna puede avanzar
+    
+- el sistema debe abortar una
+    
+
+No son raros.  
+Son inevitables en sistemas concurrentes.
+
+El error junior es:
+
+- ignorarlos
+    
+- no manejarlos
+    
+- asumir que “no pasan”
+    
+
+---
+
+### 15.9 Rollbacks costosos
+
+Un rollback no es gratis.
+
+Implica:
+
+- liberar locks
+    
+- descartar trabajo
+    
+- repetir operaciones
+    
+- aumentar latencia
+    
+
+Diseñar flujos que fallan tarde **es caro**.
+
+---
+
+### 15.10 Error grave con `@Transactional`
+
+Errores muy comunes:
+
+- Anotar métodos demasiado altos
+    
+- Anotar controllers
+    
+- Anidar transacciones sin entender
+    
+- Asumir que todo rollbackea igual
+    
+- Mezclar lógica técnica y negocio dentro
+    
+
+Muchos juniors usan la anotación **sin entender qué protege**.
+
+---
+
+### 15.11 Ejemplo conceptual correcto
+
+Flujo sano:
+
+- validar condiciones fuera
+    
+- iniciar transacción
+    
+- cambiar estado crítico
+    
+- persistir
+    
+- salir
+    
+
+Todo lo demás:
+
+- fuera
+    
+
+---
+
+### 15.12 Ejemplo conceptual incorrecto
+
+- iniciar transacción
+    
+- consultar muchos datos
+    
+- llamar externos
+    
+- decidir
+    
+- persistir al final
+    
+
+Esto multiplica el riesgo.
+
+---
+
+### 15.13 Señales de problemas transaccionales
+
+- timeouts intermitentes
+    
+- deadlocks frecuentes
+    
+- performance impredecible
+    
+- bloqueos bajo carga
+    
+- errores que solo aparecen en producción
+    
+
+No son “misterios”.  
+Son diseño.
+
+---
+
+### 15.14 Señales de comprensión real
+
+Sabes que entiendes este tema cuando:
+
+- puedes explicar qué protege una transacción
+    
+- sabes por qué no debe ser más grande
+    
+- entiendes el costo del rollback
+    
+- no usas `@Transactional` como parche
+    
+
+---
+
+### 15.15 Ejercicio práctico (obligatorio)
+
+Toma una operación real y responde:
+
+- ¿qué parte debe ser atómica?
+    
+- ¿qué puede fallar fuera?
+    
+- ¿qué recursos se bloquean?
+    
+- ¿qué pasa si hay concurrencia?
+    
+
+---
+
+
+## 16. Modelado orientado a lectura (cuando leer pesa más que escribir)
+
+### 16.1 Contexto
+
+En Trainee, el modelo de datos suele diseñarse así:
+
+- entidades
+    
+- relaciones
+    
+- normalización
+    
+- claves foráneas
+    
+- integridad referencial
+    
+
+Eso está bien… **para empezar**.
+
+En nivel junior, el sistema empieza a mostrar otra realidad:
+
+- se lee mucho más de lo que se escribe
+    
+- las pantallas hacen joins complejos
+    
+- los reportes crecen
+    
+- las consultas empiezan a ser lentas
+    
+- el dominio ya no coincide con lo que se necesita mostrar
+    
+
+Aquí aparece una verdad clave:
+
+> **El modelo de escritura y el modelo de lectura no tienen por qué ser iguales.**
+
+---
+
+### 16.2 Qué significa “modelar para lectura”
+
+Modelar para lectura **no significa**:
+
+- romper normalización sin pensar
+    
+- duplicar datos por pereza
+    
+- hacer queries gigantes
+    
+
+Significa:
+
+> **Diseñar la forma en que los datos serán consultados  
+> antes de decidir cómo se almacenan.**
+
+En sistemas reales:
+
+- el 80–90% del tráfico son lecturas
+    
+- la latencia percibida viene de consultas
+    
+- los usuarios “sienten” las lecturas, no las escrituras
+    
+
+---
+
+### 16.3 Error común del junior temprano
+
+El junior temprano piensa:
+
+> “Si el modelo está bien normalizado, las queries se arreglan solas.”
+
+Eso es falso.
+
+Un modelo perfectamente normalizado puede:
+
+- requerir muchos joins
+    
+- ser difícil de optimizar
+    
+- escalar mal bajo carga
+    
+
+---
+
+### 16.4 Modelo mental incorrecto
+
+> “La base de datos existe para guardar datos.”
+
+No.  
+La base de datos existe para:
+
+> **Responder preguntas del sistema.**
+
+Guardar es un medio.  
+Leer es el objetivo principal.
+
+---
+
+### 16.5 Modelo mental correcto
+
+> “Diseño primero las preguntas que el sistema debe responder.”
+
+Luego:
+
+- evalúas frecuencia
+    
+- evalúas volumen
+    
+- evalúas latencia aceptable
+    
+- eliges estructura
+    
+
+El junior maduro empieza por las **queries**, no por las tablas.
+
+---
+
+### 16.6 Descomposición del concepto (conceptos dentro del concepto)
+
+Para modelar orientado a lectura hay que separar:
+
+#### a) Modelo de escritura
+
+- protege invariantes
+    
+- es consistente
+    
+- suele estar normalizado
+    
+
+#### b) Modelo de lectura
+
+- optimizado para consultas
+    
+- puede duplicar datos
+    
+- puede ser denormalizado
+    
+- no siempre es fuente de verdad
+    
+
+#### c) Proyección
+
+- una vista del estado
+    
+- construida a partir del modelo de escritura
+    
+
+---
+
+### 16.7 Ejemplo conceptual correcto
+
+Sistema con:
+
+- modelo central normalizado
+    
+- proyecciones para:
+    
+    - listas
+        
+    - dashboards
+        
+    - búsquedas
+        
+
+Las proyecciones:
+
+- no deciden reglas
+    
+- no modifican invariantes
+    
+- solo **exponen información**
+    
+
+---
+
+### 16.8 Ejemplo conceptual incorrecto
+
+Usar:
+
+- el mismo modelo
+    
+- las mismas entidades
+    
+- las mismas relaciones
+    
+
+para:
+
+- escribir
+    
+- leer
+    
+- reportar
+    
+- exportar
+    
+
+Eso termina en:
+
+- queries monstruosas
+    
+- performance impredecible
+    
+- cambios peligrosos
+    
+
+---
+
+### 16.9 Duplicación consciente de datos
+
+Duplicar datos **no es pecado** en Junior.  
+Es una **decisión**.
+
+Duplicación consciente implica:
+
+- saber qué se duplica
+    
+- saber de dónde viene
+    
+- saber cuándo se actualiza
+    
+- saber qué pasa si se desincroniza
+    
+
+Duplicación inconsciente es el problema.
+
+---
+
+### 16.10 Error grave: usar el ORM para todo
+
+Muchos juniors intentan:
+
+- resolver queries complejas solo con ORM
+    
+- evitar SQL por completo
+    
+- encadenar relaciones infinitas
+    
+
+Eso:
+
+- oculta el costo real
+    
+- dificulta optimización
+    
+- genera sorpresas en producción
+    
+
+ORM y SQL **no son enemigos**.  
+Son herramientas distintas.
+
+---
+
+### 16.11 Señales de comprensión real
+
+Sabes que entiendes este tema cuando:
+
+- puedes listar las queries críticas del sistema
+    
+- sabes cuáles se ejecutan más
+    
+- entiendes su costo
+    
+- no fuerzas el modelo de escritura para leer
+    
+
+---
+
+### 16.12 Ejercicio práctico (obligatorio)
+
+Toma una pantalla real y responde:
+
+- ¿qué datos muestra?
+    
+- ¿de cuántas tablas salen?
+    
+- ¿cuántas veces se consulta?
+    
+- ¿necesita el modelo completo o solo una proyección?
+    
+
+---
+
+## 17. Antipatrones de persistencia en nivel junior
+
+### 17.1 Contexto
+
+En este punto, muchos sistemas junior fallan **no por falta de conocimiento**,  
+sino por **malos hábitos repetidos**.
+
+Estos errores:
+
+- funcionan al principio
+    
+- pasan tests
+    
+- se rompen con carga
+    
+- son difíciles de corregir después
+    
+
+Reconocer antipatrones es **parte del nivel junior**.
+
+---
+
+### 17.2 Antipatrón: “El repositorio sabe demasiado”
+
+Síntomas:
+
+- lógica de negocio en queries
+    
+- validaciones en SQL
+    
+- reglas escondidas en `WHERE`
+    
+
+Problema:
+
+- el negocio no es explícito
+    
+- la lógica no se reutiliza
+    
+- es difícil de testear
+    
+
+---
+
+### 17.3 Antipatrón: “Todo es transaccional”
+
+Síntomas:
+
+- métodos enormes con transacción
+    
+- miedo a sacar código fuera
+    
+- rollback por cualquier cosa
+    
+
+Problema:
+
+- bloqueos innecesarios
+    
+- baja escalabilidad
+    
+- errores bajo carga
+    
+
+---
+
+### 17.4 Antipatrón: “El ORM decide por mí”
+
+Síntomas:
+
+- no mirar SQL generado
+    
+- no medir queries
+    
+- confiar en lazy loading
+    
+
+Problema:
+
+- performance impredecible
+    
+- bugs invisibles
+    
+- consumo excesivo
+    
+
+---
+
+### 17.5 Antipatrón: “Normalización absoluta”
+
+Síntomas:
+
+- demasiadas tablas
+    
+- demasiados joins
+    
+- consultas lentas
+    
+
+Problema:
+
+- diseño orientado a teoría, no a uso real
+    
+
+---
+
+### 17.6 Señales de comprensión real
+
+Sabes que entiendes persistencia junior cuando:
+
+- desconfías de la magia
+    
+- mides antes de optimizar
+    
+- puedes explicar por qué algo es lento
+    
+- sabes qué cambiar sin romper reglas
+    
+
+---
+
+### 17.7 Ejercicio práctico final de este bloque
+
+Analiza un módulo real y responde:
+
+- ¿dónde está el modelo de escritura?
+    
+- ¿dónde está el modelo de lectura?
+    
+- ¿qué antipatrones reconoces?
+    
+- ¿qué cambiarías primero y por qué?
+    
+
+---
+
+
+## 18. REST y contratos en nivel junior (cuando una API deja de ser “endpoints”)
+
+### 18.1 Contexto
+
+En Trainee, REST suele aprenderse como:
+
+- verbos HTTP
+    
+- códigos de estado
+    
+- JSON de entrada y salida
+    
+
+Eso es **necesario**, pero **insuficiente**.
+
+En nivel junior, una API deja de ser:
+
+- “una forma de exponer datos”
+    
+
+y pasa a ser:
+
+> **Un contrato vivo entre sistemas que no controlas.**
+
+Aquí es donde muchos juniors rompen compatibilidad sin darse cuenta.
+
+---
+
+### 18.2 Qué es realmente un contrato (desarmado)
+
+Un **contrato** no es:
+
+- un Swagger
+    
+- un endpoint
+    
+- un DTO
+    
+
+Un contrato es:
+
+> **Una promesa explícita sobre comportamiento,  
+> no solo sobre estructura.**
+
+Componentes internos de un contrato:
+
+1. **Semántica**
+    
+    - Qué significa la operación
+        
+2. **Expectativas**
+    
+    - Qué asume el consumidor
+        
+3. **Garantías**
+    
+    - Qué promete el proveedor
+        
+4. **Límites**
+    
+    - Qué NO promete
+        
+
+Si no defines estos puntos, el contrato existe igual…  
+solo que **en la cabeza del consumidor**.
+
+---
+
+### 18.3 Error común del junior temprano
+
+El junior temprano piensa:
+
+> “Si el JSON es el mismo, no rompí nada.”
+
+Eso es falso.
+
+Cambios que **rompen contrato** sin cambiar JSON:
+
+- cambiar cuándo ocurre un error
+    
+- cambiar tiempos de respuesta
+    
+- cambiar orden de estados
+    
+- cambiar idempotencia
+    
+- cambiar efectos colaterales
+    
+
+---
+
+### 18.4 Modelo mental incorrecto
+
+> “El contrato es el formato.”
+
+Eso lleva a:
+
+- cambios silenciosos
+    
+- bugs en consumidores
+    
+- pérdida de confianza
+    
+
+---
+
+### 18.5 Modelo mental correcto
+
+> “El contrato es el comportamiento observable.”
+
+El junior maduro entiende que:
+
+- los clientes dependen de comportamientos
+    
+- no solo de campos
+    
+- ni de estructuras
+    
+
+---
+
+### 18.6 Idempotencia (ya no superficial)
+
+Idempotencia **no es**:
+
+- usar PUT
+    
+- devolver 200
+    
+
+Idempotencia es:
+
+> **Poder repetir una operación sin cambiar el resultado final.**
+
+Pero eso implica preguntas difíciles:
+
+- ¿qué pasa si llega dos veces?
+    
+- ¿qué pasa si falla a la mitad?
+    
+- ¿qué pasa si el cliente reintenta?
+    
+
+---
+
+### 18.7 Error común con idempotencia
+
+El junior temprano:
+
+- asume que el cliente no reintenta
+    
+- asume que la red no falla
+    
+- asume que el request llega una sola vez
+    
+
+Nada de eso es cierto.
+
+---
+
+### 18.8 Ejemplo conceptual correcto
+
+Operación idempotente bien diseñada:
+
+- identifica la intención (idempotency key)
+    
+- detecta duplicados
+    
+- devuelve el mismo resultado
+    
+- no repite efectos
+    
+
+---
+
+### 18.9 Ejemplo conceptual incorrecto
+
+- crear recursos sin control
+    
+- ejecutar efectos colaterales
+    
+- confiar en “no va a pasar”
+    
+
+Esto genera:
+
+- duplicados
+    
+- cargos repetidos
+    
+- estados imposibles
+    
+
+---
+
+### 18.10 Errores como parte del contrato
+
+En nivel junior, los errores dejan de ser:
+
+- “excepciones”
+    
+
+y pasan a ser:
+
+> **Respuestas diseñadas.**
+
+Un error comunica:
+
+- qué pasó
+    
+- si se puede reintentar
+    
+- si el estado cambió
+    
+- qué espera el sistema ahora
+    
+
+---
+
+### 18.11 Error común del junior
+
+- usar 500 para todo
+    
+- devolver mensajes genéricos
+    
+- no diferenciar error técnico de negocio
+    
+
+Esto obliga al consumidor a:
+
+- adivinar
+    
+- reintentar mal
+    
+- romper flujos
+    
+
+---
+
+### 18.12 Modelo mental correcto sobre errores
+
+> “Un error también es una respuesta válida.”
+
+El junior maduro diseña:
+
+- errores esperados
+    
+- errores recuperables
+    
+- errores definitivos
+    
+
+---
+
+### 18.13 Versionado: cuándo y por qué
+
+Versionar **no es**:
+
+- miedo al cambio
+    
+- señal de mal diseño
+    
+
+Versionar es:
+
+> **Reconocer que los contratos cambian con el tiempo.**
+
+Errores comunes:
+
+- versionar todo
+    
+- no versionar nada
+    
+- versionar por campo
+    
+
+---
+
+### 18.14 Modelo mental correcto de versionado
+
+> “Versiono cuando cambio el comportamiento observable.”
+
+No cuando:
+
+- agrego un campo opcional
+    
+- cambio algo interno
+    
+
+---
+
+### 18.15 Ejercicio práctico (obligatorio)
+
+Piensa en un endpoint real y responde:
+
+- ¿qué promete?
+    
+- ¿qué NO promete?
+    
+- ¿qué pasa si se repite?
+    
+- ¿qué errores puede devolver?
+    
+- ¿cuál rompe compatibilidad?
+    
+
+---
+
+## 19. Antipatrones REST en nivel junior
+
+### 19.1 Antipatrón: “Endpoint por cada acción”
+
+Síntomas:
+
+- URLs verbosas
+    
+- verbos en la ruta
+    
+- lógica escondida
+    
+
+Problema:
+
+- contratos confusos
+    
+- difícil evolución
+    
+
+---
+
+### 19.2 Antipatrón: “HTTP como transporte, no como semántica”
+
+Síntomas:
+
+- siempre 200
+    
+- errores en el body
+    
+- sin significado
+    
+
+Problema:
+
+- clientes frágiles
+    
+- reintentos incorrectos
+    
+
+---
+
+### 19.3 Antipatrón: “Romper contrato sin saberlo”
+
+Síntomas:
+
+- cambios pequeños “inofensivos”
+    
+- bugs en otros equipos
+    
+
+Problema:
+
+- pérdida de confianza
+    
+- rollback forzado
+    
+
+---
+
+## 20. Testing en nivel junior real (cuando probar deja de ser cubrir líneas)
+
+### 20.1 Contexto
+
+En Trainee, testear suele significar:
+
+- cubrir código
+    
+- usar mocks
+    
+- pasar pipelines
+    
+
+En nivel junior, el objetivo cambia:
+
+> **Un test debe proteger una decisión del diseño.**
+
+---
+
+### 20.2 Qué es realmente un test útil
+
+Un test útil:
+
+- falla cuando algo importante cambia
+    
+- no falla cuando refactorizas
+    
+- expresa intención
+    
+- protege reglas
+    
+
+---
+
+### 20.3 Error común del junior temprano
+
+- testear implementaciones
+    
+- testear getters/setters
+    
+- mockear todo
+    
+- acoplar tests al código
+    
+
+Resultado:
+
+- tests frágiles
+    
+- refactors imposibles
+    
+- falsa seguridad
+    
+
+---
+
+### 20.4 Modelo mental correcto
+
+> “Testeo lo que me dolería romper.”
+
+No lo que es fácil testear.
+
+---
+
+### 20.5 Mocking con criterio
+
+Mockear **no es malo**.  
+Mockear **sin criterio** sí.
+
+Mockear:
+
+- dependencias lentas
+    
+- dependencias externas
+    
+
+No mockear:
+
+- lógica de dominio
+    
+- decisiones importantes
+    
+
+---
+
+### 20.6 Ejercicio práctico
+
+Toma un test y responde:
+
+- ¿qué protege?
+    
+- ¿qué rompería si falla?
+    
+- ¿qué cambio legítimo lo rompería?
+    
+- ¿es un buen test?
+    
+
+---
+
+## 21. Antipatrones de testing junior
+
+- Tests que no fallan nunca
+    
+- Tests que fallan por cualquier cambio
+    
+- Tests que duplican lógica
+    
+- Tests que no dicen nada
+    
+
+Reconocerlos es parte del nivel.
+
+---
+
+
+## 22. Manejo de errores y excepciones en nivel junior (cuando fallar es parte del diseño)
+
+### 22.1 Contexto
+
+En Trainee, los errores suelen verse como:
+
+- algo que “no debería pasar”
+    
+- algo que se captura y se loggea
+    
+- algo que devuelve un 500
+    
+
+En nivel junior, esa visión **ya no sirve**.
+
+En sistemas reales:
+
+- las cosas fallan
+    
+- los datos llegan mal
+    
+- los eventos no llegan
+    
+- los sistemas externos caen
+    
+- los usuarios hacen cosas inesperadas
+    
+
+Aquí aparece una verdad clave:
+
+> **El error no es una anomalía;  
+> es un flujo esperado del sistema.**
+
+---
+
+### 22.2 Qué es realmente un error (desarmado)
+
+Un **error** no es:
+
+- una excepción
+    
+- un stacktrace
+    
+- un mensaje
+    
+
+Un error es:
+
+> **La manifestación de que una expectativa no se cumplió.**
+
+Componentes internos de un error:
+
+1. **Expectativa**
+    
+    - Qué se esperaba
+        
+2. **Realidad**
+    
+    - Qué ocurrió
+        
+3. **Impacto**
+    
+    - Qué se rompió
+        
+4. **Reacción**
+    
+    - Qué hace el sistema ahora
+        
+
+El junior debe aprender a **clasificar errores**, no solo atraparlos.
+
+---
+
+### 22.3 Tipos de errores que un junior debe distinguir
+
+#### a) Error de negocio
+
+- Regla violada
+    
+- Condición no cumplida
+    
+- Estado inválido
+    
+
+Ejemplo:
+
+- “No se puede cancelar un pedido enviado”
+    
+
+---
+
+#### b) Error técnico
+
+- Base de datos caída
+    
+- Timeout
+    
+- Error de red
+    
+
+Ejemplo:
+
+- “No se pudo persistir”
+    
+
+---
+
+#### c) Error esperado
+
+- Forma parte del flujo normal
+    
+- El sistema sabe manejarlo
+    
+
+---
+
+#### d) Error inesperado
+
+- Bug
+    
+- Estado imposible
+    
+- Falta de control
+    
+
+Confundir estos tipos **rompe el diseño**.
+
+---
+
+### 22.4 Error común del junior temprano
+
+El junior temprano:
+
+- usa excepciones para todo
+    
+- mezcla negocio con técnico
+    
+- responde siempre igual
+    
+
+Resultado:
+
+- clientes que no saben qué hacer
+    
+- reintentos incorrectos
+    
+- sistemas frágiles
+    
+
+---
+
+### 22.5 Modelo mental incorrecto
+
+> “Una excepción corta el flujo y listo.”
+
+Eso es insuficiente.
+
+---
+
+### 22.6 Modelo mental correcto
+
+> “Un error es una decisión:  
+> qué comunicar,  
+> qué permitir,  
+> qué prohibir,  
+> qué esperar después.”
+
+---
+
+### 22.7 Ejemplo conceptual correcto
+
+Regla de negocio violada:
+
+- se comunica claramente
+    
+- no se reintenta
+    
+- el estado no cambia
+    
+
+Error técnico:
+
+- se comunica como transitorio
+    
+- puede reintentarse
+    
+- el estado puede quedar pendiente
+    
+
+El sistema **no trata ambos igual**.
+
+---
+
+### 22.8 Ejemplo conceptual incorrecto
+
+- devolver 500 por regla de negocio
+    
+- lanzar excepción por validación
+    
+- esconder detalles importantes
+    
+
+Esto obliga al consumidor a adivinar.
+
+---
+
+### 22.9 Excepciones como herramienta, no como flujo
+
+Las excepciones:
+
+- sirven para señalar ruptura
+    
+- no para modelar reglas
+    
+- no para controlar lógica normal
+    
+
+Usarlas como flujo normal es un antipatrón.
+
+---
+
+### 22.10 Señales de comprensión real
+
+Sabes que entiendes este tema cuando:
+
+- puedes explicar qué errores se reintentan
+    
+- sabes cuáles no
+    
+- sabes qué errores cambian estado
+    
+- sabes cuáles no deben hacerlo
+    
+
+---
+
+### 22.11 Ejercicio práctico
+
+Toma un error real y responde:
+
+- ¿es negocio o técnico?
+    
+- ¿es esperado?
+    
+- ¿qué debe comunicar?
+    
+- ¿qué debe hacer el cliente?
+    
+
+---
+
+## 23. Performance inicial en nivel junior (cuando el sistema “funciona” pero va lento)
+
+### 23.1 Contexto
+
+En Trainee, performance suele ser:
+
+- “optimizar después”
+    
+- “si funciona, está bien”
+    
+
+En nivel junior, aparecen señales claras:
+
+- el sistema responde lento
+    
+- bajo carga se cae
+    
+- algunas operaciones tardan demasiado
+    
+- los tiempos no son consistentes
+    
+
+Aquí aparece otra verdad incómoda:
+
+> **La performance no se arregla con parches,  
+> se define con decisiones tempranas.**
+
+---
+
+### 23.2 Qué es realmente la performance (desarmada)
+
+Performance no es solo:
+
+- tiempo de respuesta
+    
+
+Es:
+
+- latencia
+    
+- throughput
+    
+- estabilidad
+    
+- predictibilidad
+    
+
+Un sistema rápido pero impredecible **no es bueno**.
+
+---
+
+### 23.3 Error común del junior temprano
+
+El junior temprano:
+
+- optimiza sin medir
+    
+- culpa al lenguaje
+    
+- agrega caché a ciegas
+    
+- toca lo incorrecto
+    
+
+Eso suele empeorar todo.
+
+---
+
+### 23.4 Modelo mental incorrecto
+
+> “La performance es un problema técnico.”
+
+No.
+
+---
+
+### 23.5 Modelo mental correcto
+
+> “La performance es una consecuencia del diseño.”
+
+Decisiones que afectan performance:
+
+- tamaño de transacciones
+    
+- cantidad de queries
+    
+- acoplamiento
+    
+- sincronía vs asincronía
+    
+
+---
+
+### 23.6 Fuentes reales de lentitud en sistemas junior
+
+- IO (base de datos, red)
+    
+- contención (locks)
+    
+- serialización
+    
+- queries costosas
+    
+- flujos sincrónicos innecesarios
+    
+
+Rara vez es “el CPU”.
+
+---
+
+### 23.7 Ejemplo conceptual correcto
+
+Un sistema que:
+
+- limita lo sincrónico
+    
+- reduce locks
+    
+- separa lectura y escritura
+    
+- mide antes de cambiar
+    
+
+---
+
+### 23.8 Ejemplo conceptual incorrecto
+
+- optimizar bucles
+    
+- micro-optimizaciones
+    
+- ignorar IO
+    
+- no medir nada
+    
+
+---
+
+### 23.9 Señales de comprensión real
+
+Sabes que entiendes performance cuando:
+
+- puedes señalar el cuello de botella
+    
+- sabes qué no tocar
+    
+- mides antes y después
+    
+- no optimizas por intuición
+    
+
+---
+
+### 23.10 Ejercicio práctico
+
+Analiza una operación lenta y responde:
+
+- ¿dónde espera?
+    
+- ¿qué recurso usa?
+    
+- ¿qué se bloquea?
+    
+- ¿qué cambiaría el diseño?
+    
+
+---
+
+## 24. Trabajo en equipo y código vivo (cuando el código deja de ser “tuyo”)
+
+### 24.1 Contexto
+
+En Trainee, el código suele ser:
+
+- escrito por una persona
+    
+- entendido por una persona
+    
+- modificado sin miedo
+    
+
+En nivel junior:
+
+- otros tocan tu código
+    
+- otros dependen de él
+    
+- otros lo mantienen
+    
+- otros sufren tus decisiones
+    
+
+Aquí aparece otra responsabilidad:
+
+> **Escribir código para humanos, no solo para máquinas.**
+
+---
+
+### 24.2 Qué es código vivo
+
+Código vivo es:
+
+- código que cambia
+    
+- código que evoluciona
+    
+- código que se lee más de lo que se escribe
+    
+
+Si no se puede leer, **no sobrevive**.
+
+---
+
+### 24.3 Error común del junior temprano
+
+- código “inteligente”
+    
+- abstracciones innecesarias
+    
+- falta de intención
+    
+- decisiones no documentadas
+    
+
+Eso mata la colaboración.
+
+---
+
+### 24.4 Modelo mental correcto
+
+> “El código es una conversación con el futuro.”
+
+Con:
+
+- otros desarrolladores
+    
+- tú mismo en seis meses
+    
+
+---
+
+### 24.5 Refactor seguro
+
+Refactor no es:
+
+- cambiar todo
+    
+- “limpiar”
+    
+
+Refactor es:
+
+> **Mejorar sin cambiar comportamiento.**
+
+Eso requiere:
+
+- tests útiles
+    
+- cambios pequeños
+    
+- intención clara
+    
+
+---
+
+### 24.6 Deuda técnica consciente
+
+Deuda técnica:
+
+- no es error
+    
+- no es descuido
+    
+
+Es:
+
+> **Una decisión consciente de postergar algo.**
+
+El problema no es tener deuda.  
+El problema es **no saber que existe**.
+
+---
+
+### 24.7 Ejercicio práctico
+
+Mira una parte del código y responde:
+
+- ¿qué decisión está implícita?
+    
+- ¿qué no está escrito?
+    
+- ¿qué rompería un cambio?
+    
+- ¿qué deuda existe?
+    
+
+---
+
+## 25. Antipatrones junior completos (reconocer para no repetir)
+
+### 25.1 Antipatrones de diseño
+
+- Dominio que sabe demasiado
+    
+- Services gigantes
+    
+- Reglas duplicadas
+    
+
+### 25.2 Antipatrones de Spring / frameworks
+
+- Anotaciones por todos lados
+    
+- Magia sin entender
+    
+- Configuración implícita peligrosa
+    
+
+### 25.3 Antipatrones JPA / ORM
+
+- N+1 ignorado
+    
+- Cascadas indiscriminadas
+    
+- Sesiones largas
+    
+
+### 25.4 Antipatrones de base de datos
+
+- Queries gigantes
+    
+- Falta de índices
+    
+- Normalización dogmática
+    
+
+### 25.5 Antipatrones sociales
+
+- Cambios sin comunicar
+    
+- Romper contratos
+    
+- Refactors grandes sin consenso
+    
+
+Reconocerlos **es parte del nivel junior**.
+
+---
+
+
+## 26. Antipatrones de Dominio en nivel JUNIOR
+
+---
+
+### 26.1 Antipatrón: Dominio Anémico “disfrazado”
+
+#### Contexto
+
+Muchos juniors escuchan que el dominio debe tener lógica, pero no entienden **qué lógica**.
+
+#### Qué es
+
+- Entidades con getters/setters
+    
+- Toda la lógica en services
+    
+- Dominio que solo transporta datos
+    
+
+#### Por qué aparece
+
+- Miedo a “romper DDD”
+    
+- Falta de criterio sobre qué es dominio
+    
+- Influencia de CRUD simples
+    
+
+#### Por qué está mal
+
+- Las reglas no están protegidas
+    
+- Es fácil romper invariantes
+    
+- El negocio no es explícito
+    
+
+#### Señal clara
+
+Si puedes cambiar estados inválidos desde cualquier lugar, estás aquí.
+
+---
+
+### 26.2 Antipatrón: Dominio Obeso (el extremo opuesto)
+
+#### Contexto
+
+Después de evitar el dominio anémico, muchos juniors se pasan al otro extremo.
+
+#### Qué es
+
+- Entidades que:
+    
+    - validan
+        
+    - coordinan
+        
+    - persisten
+        
+    - llaman servicios externos
+        
+- “Todo vive en el dominio”
+    
+
+#### Por qué aparece
+
+- Dogmatismo
+    
+- Confundir pureza con calidad
+    
+- No entender límites del dominio
+    
+
+#### Por qué está mal
+
+- Dominio acoplado
+    
+- Difícil de testear
+    
+- Frágil ante cambios externos
+    
+
+#### Señal clara
+
+Tu dominio necesita mocks de infraestructura para testearse.
+
+---
+
+### 26.3 Antipatrón: Reglas invisibles
+
+#### Qué es
+
+- Reglas escondidas en:
+    
+    - SQL
+        
+    - queries
+        
+    - ifs sueltos
+        
+    - controllers
+        
+
+#### Por qué está mal
+
+- El negocio no es legible
+    
+- Nadie sabe qué reglas existen
+    
+- Se duplican sin darse cuenta
+    
+
+#### Señal clara
+
+“No sé dónde se valida eso”.
+
+---
+
+## 27. Antipatrones de Arquitectura en nivel JUNIOR
+
+---
+
+### 27.1 Antipatrón: Service Gigante
+
+#### Qué es
+
+- Clases con cientos/miles de líneas
+    
+- Métodos que:
+    
+    - validan
+        
+    - coordinan
+        
+    - persisten
+        
+    - llaman externos
+        
+
+#### Por qué aparece
+
+- “Funciona”
+    
+- Falta de separación de intención
+    
+- Miedo a crear más clases
+    
+
+#### Por qué está mal
+
+- Todo cambia por todo
+    
+- Refactor peligroso
+    
+- Tests complejos e inútiles
+    
+
+#### Señal clara
+
+Un cambio pequeño rompe muchas cosas.
+
+---
+
+### 27.2 Antipatrón: Saltarse capas “solo esta vez”
+
+#### Qué es
+
+- Controller → Repository
+    
+- Dominio llamando infraestructura
+    
+- Accesos directos “temporales”
+    
+
+#### Por qué aparece
+
+- Presión de tiempo
+    
+- Falta de criterio
+    
+- “Después lo arreglo”
+    
+
+#### Por qué está mal
+
+- Acoplamiento invisible
+    
+- Deuda técnica silenciosa
+    
+- Difícil de revertir
+    
+
+#### Señal clara
+
+“No sé por dónde entra esta lógica”.
+
+---
+
+### 27.3 Antipatrón: Arquitectura por moda
+
+#### Qué es
+
+- Hexagonal sin necesidad
+    
+- CQRS sin problema real
+    
+- Microservicios prematuros
+    
+
+#### Por qué aparece
+
+- Artículos
+    
+- Charlas
+    
+- CV-driven development
+    
+
+#### Por qué está mal
+
+- Complejidad innecesaria
+    
+- Curva de aprendizaje alta
+    
+- Más puntos de fallo
+    
+
+#### Señal clara
+
+No sabes explicar **qué problema real resolviste**.
+
+---
+
+## 28. Antipatrones Spring Boot específicos (nivel JUNIOR)
+
+---
+
+### 28.1 Antipatrón: @Transactional por costumbre
+
+#### Qué es
+
+- Anotar métodos “por si acaso”
+    
+- Transacciones gigantes
+    
+- Controllers transaccionales
+    
+
+#### Por qué está mal
+
+- Locks largos
+    
+- Deadlocks
+    
+- Baja escalabilidad
+    
+
+#### Señal clara
+
+No sabes exactamente **qué protege** la transacción.
+
+---
+
+### 28.2 Antipatrón: @Autowired en todo
+
+#### Qué es
+
+- Dependencias implícitas
+    
+- Clases imposibles de testear
+    
+- Acoplamiento oculto
+    
+
+#### Por qué aparece
+
+- Facilidad
+    
+- Desconocimiento de diseño
+    
+
+#### Señal clara
+
+No puedes crear la clase sin Spring.
+
+---
+
+### 28.3 Antipatrón: Excepciones globales para todo
+
+#### Qué es
+
+- Todo termina en 500
+    
+- Mensajes genéricos
+    
+- Sin distinción de negocio vs técnico
+    
+
+#### Por qué está mal
+
+- APIs confusas
+    
+- Clientes frágiles
+    
+- Reintentos incorrectos
+    
+
+---
+
+## 29. Antipatrones JPA / Hibernate profundos
+
+---
+
+### 29.1 Antipatrón: N+1 ignorado
+
+#### Qué es
+
+- Relaciones lazy sin control
+    
+- Queries invisibles
+    
+- Performance impredecible
+    
+
+#### Señal clara
+
+Funciona en local, muere en producción.
+
+---
+
+### 29.2 Antipatrón: Cascade.ALL sin pensar
+
+#### Qué es
+
+- Persistir/borrar más de lo esperado
+    
+- Efectos colaterales ocultos
+    
+
+#### Por qué está mal
+
+- Pérdida de control
+    
+- Bugs críticos
+    
+
+---
+
+### 29.3 Antipatrón: Sesiones largas
+
+#### Qué es
+
+- Contextos enormes
+    
+- Memoria alta
+    
+- Flush inesperado
+    
+
+#### Señal clara
+
+SQL ejecutándose “solo”.
+
+---
+
+### 29.4 Antipatrón: ORM como lenguaje de queries
+
+#### Qué es
+
+- Queries complejas en JPQL
+    
+- Evitar SQL por miedo
+    
+
+#### Por qué está mal
+
+- Difícil optimización
+    
+- Poco control
+    
+
+---
+
+## 30. Antipatrones de Bases de Datos en Backend
+
+---
+
+### 30.1 Antipatrón: Normalización dogmática
+
+#### Qué es
+
+- Demasiadas tablas
+    
+- Joins excesivos
+    
+- Lecturas lentas
+    
+
+#### Por qué está mal
+
+- Ignora patrones reales de acceso
+    
+
+---
+
+### 30.2 Antipatrón: Índices ignorados
+
+#### Qué es
+
+- Queries lentas
+    
+- Full table scans
+    
+- Performance errática
+    
+
+#### Señal clara
+
+“No sé por qué es lento”.
+
+---
+
+### 30.3 Antipatrón: Lógica de negocio en SQL
+
+#### Qué es
+
+- Reglas en triggers
+    
+- Validaciones en queries
+    
+
+#### Por qué está mal
+
+- Negocio invisible
+    
+- Difícil evolución
+    
+
+---
+
+## 31. Antipatrones REST y APIs en nivel JUNIOR
+
+---
+
+### 31.1 Antipatrón: Siempre 200
+
+#### Qué es
+
+- Errores en body
+    
+- Sin semántica HTTP
+    
+
+#### Impacto
+
+- Clientes no saben reaccionar
+    
+
+---
+
+### 31.2 Antipatrón: Endpoints verbosos
+
+#### Qué es
+
+- `/createUser`
+    
+- `/cancelOrderNow`
+    
+
+#### Impacto
+
+- Contratos confusos
+    
+- Difícil evolución
+    
+
+---
+
+### 31.3 Antipatrón: Romper contrato sin saberlo
+
+#### Qué es
+
+- Cambiar comportamiento “sin tocar JSON”
+    
+
+#### Impacto
+
+- Bugs en otros equipos
+    
+- Pérdida de confianza
+    
+
+---
+
+## 32. Antipatrones Sociales–Técnicos (los más peligrosos)
+
+---
+
+### 32.1 Antipatrón: “Después lo vemos”
+
+- Decisiones sin registrar
+    
+- Deuda sin consciencia
+    
+
+---
+
+### 32.2 Antipatrón: Refactors grandes sin comunicar
+
+- Cambios masivos
+    
+- Sin tests
+    
+- Sin consenso
+    
+
+---
+
+### 32.3 Antipatrón: Silencio técnico
+
+- No preguntar
+    
+- No advertir riesgos
+    
+- No documentar decisiones
+    
+
+---
+
+## CIERRE REAL DEL NIVEL JUNIOR
+
+Si alguien **entiende y reconoce estos antipatrones**, ya:
+
+- no es trainee
+    
+- no rompe sistemas por ingenuidad
+    
+- entiende consecuencias
+    
+- empieza a pensar como ingeniero
+    
+
+El nivel JUNIOR **no se trata de saber más herramientas**,  
+se trata de **saber qué NO hacer**.
+
+---
+
+Si quieres, el siguiente paso natural sería:
+
+- **Transición JUNIOR → MID**
+    
+- o **un checklist de evaluación real de Junior**
+    
+- o **casos reales de fallos en producción**
+    
+
+Tú decides.
+
