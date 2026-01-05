@@ -254,12 +254,3 @@
 * **Junior** → leer para *aplicar*
 * **Advanced** → leer para *diseñar y operar*
 * **Senior** → leer para *decidir y liderar*
-
-Si quieres, el siguiente paso puede ser:
-
-* convertir estas referencias en **plan de lectura por semanas**
-* marcar **cuáles son obligatorias vs complementarias**
-* crear **checklist de dominio por libro**
-* o generar un **mapa Obsidian enlazado por nivel**
-
-Tú mandas.
