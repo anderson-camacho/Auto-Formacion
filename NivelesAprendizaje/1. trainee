@@ -1,0 +1,12629 @@
+
+# NIVEL: TRAINEE
+
+## Desarrollo de Software con OOP (Programación Orientada a Objetos)
+
+---
+
+## 1. Programación Orientada a Objetos (OOP)
+
+---
+
+### 1.1 Contexto
+
+Antes de que existiera la Programación Orientada a Objetos, la mayoría del software se desarrollaba utilizando **programación procedural**. En este enfoque, el código se organizaba principalmente en funciones y procedimientos que operaban sobre datos globales o estructuras de datos simples.
+
+Este modelo funcionaba relativamente bien para programas pequeños, pero empezó a fallar cuando los sistemas crecieron en tamaño y complejidad. Los problemas más comunes eran:
+
+- Código difícil de entender.
+    
+- Cambios pequeños que rompían muchas partes del sistema.
+    
+- Dificultad para reutilizar código.
+    
+- Dependencias fuertes entre funciones.
+    
+- Dificultad para trabajar en equipo.
+    
+
+La Programación Orientada a Objetos surge como una respuesta a estos problemas. Su objetivo principal es **modelar el software de forma similar al mundo real**, agrupando datos y comportamientos en unidades coherentes llamadas **objetos**.
+
+OOP permite construir sistemas **más mantenibles, escalables y comprensibles**, especialmente cuando varias personas trabajan sobre el mismo código durante largos periodos de tiempo.
+
+---
+
+### 1.2 Definición extensa y desglosada
+
+La **Programación Orientada a Objetos (OOP)** es un paradigma de programación que organiza el software alrededor de **objetos**, en lugar de funciones sueltas o lógica procedural.
+
+Un **objeto** es una entidad que:
+
+- Representa algo del mundo real o del dominio del problema.
+    
+- Contiene **datos** (estado).
+    
+- Contiene **comportamientos** (acciones que puede realizar).
+    
+
+Estos objetos se crean a partir de **clases**, que funcionan como **planos o moldes**.
+
+En OOP:
+
+- **Las clases definen qué es algo.**
+    
+- **Los objetos son instancias concretas de esas clases.**
+    
+
+La idea central es que:
+
+> _Cada objeto es responsable de su propio comportamiento y de proteger su propio estado._
+
+OOP se sostiene sobre varios conceptos fundamentales que iremos desarrollando uno por uno:
+
+- Clases
+    
+- Objetos
+    
+- Encapsulación
+    
+- Abstracción
+    
+- Herencia
+    
+- Polimorfismo
+    
+
+En este punto **no se asume conocimiento previo** de ninguno de ellos.
+
+---
+
+### 1.3 Modelo mental
+
+#### Cómo piensa un principiante (modelo incorrecto)
+
+Un principiante suele pensar el programa como:
+
+- Una secuencia larga de instrucciones.
+    
+- Muchas funciones que se llaman entre sí.
+    
+- Variables globales que cualquiera puede modificar.
+    
+
+Ejemplo mental típico:
+
+> “Primero hago esto, luego esto, luego llamo esta función, luego cambio esta variable…”
+
+Este modelo **no escala**.
+
+#### Cómo debe pensarse en OOP (modelo correcto)
+
+En OOP debes pensar en:
+
+- **Entidades**
+    
+- **Responsabilidades**
+    
+- **Colaboración entre objetos**
+    
+
+Un buen modelo mental es imaginar el sistema como una **comunidad de objetos**, donde:
+
+- Cada objeto sabe hacer algo.
+    
+- Cada objeto tiene responsabilidades claras.
+    
+- Los objetos se comunican entre sí mediante mensajes (métodos).
+    
+
+#### Analogía
+
+Piensa en una empresa:
+
+- La empresa no es una sola persona.
+    
+- Cada empleado tiene un rol.
+    
+- Nadie hace todo.
+    
+- Cada rol tiene responsabilidades claras.
+    
+
+Eso es OOP.
+
+---
+
+### 1.4 Ejemplo correcto (obligatorio)
+
+Ejemplo sencillo en Java (aplica también mentalmente a otros lenguajes backend).
+
+```java
+public class User {
+    private String name;
+    private String email;
+
+    public User(String name, String email) {
+        this.name = name;
+        this.email = email;
+    }
+
+    public void changeEmail(String newEmail) {
+        this.email = newEmail;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+}
+```
+
+#### Explicación paso a paso
+
+1. `User` es una **clase**.
+    
+2. `name` y `email` son el **estado** del objeto.
+    
+3. El constructor define cómo se crea un usuario.
+    
+4. `changeEmail` define un **comportamiento** del usuario.
+    
+5. Nadie puede cambiar el email directamente sin pasar por el método.
+    
+
+Aquí:
+
+- El objeto **protege su estado**.
+    
+- El comportamiento está **donde tiene sentido**.
+    
+- El código es fácil de entender.
+    
+
+---
+
+### 1.5 Ejemplo incorrecto (obligatorio)
+
+```java
+public class UserData {
+    public String name;
+    public String email;
+}
+
+public class Main {
+    public static void main(String[] args) {
+        UserData user = new UserData();
+        user.email = "correo@ejemplo.com";
+    }
+}
+```
+
+#### Por qué está mal
+
+- Los atributos son públicos.
+    
+- Cualquiera puede modificar el estado.
+    
+- No hay control ni validación.
+    
+- No hay comportamiento asociado al objeto.
+    
+
+Esto **no es OOP real**, es solo agrupar datos.
+
+---
+
+### 1.6 Errores típicos del principiante
+
+- Creer que OOP es solo “usar clases”.
+    
+- Crear clases solo para agrupar variables.
+    
+- Usar atributos públicos.
+    
+- Pensar que OOP es más código “porque sí”.
+    
+- No entender para qué sirve proteger el estado.
+    
+
+---
+
+### 1.7 Señales de comprensión
+
+Sabes que entendiste OOP cuando puedes responder:
+
+- ¿Qué responsabilidad tiene este objeto?
+    
+- ¿Este comportamiento pertenece a esta clase?
+    
+- ¿Quién debería conocer este dato?
+    
+- ¿Qué pasaría si alguien modifica este atributo sin control?
+    
+
+---
+
+### 1.8 Ejercicio práctico mínimo
+
+**Ejercicio (NO resolver ahora):**
+
+Modela una clase `Car` que:
+
+- Tenga marca, modelo y velocidad actual.
+    
+- Permita acelerar y frenar.
+    
+- No permita que la velocidad sea negativa.
+    
+
+No escribas funciones sueltas.  
+Todo debe estar encapsulado en la clase.
+
+---
+
+## 1.2 Clases y Objetos (desarrollo completo con los 8 criterios obligatorios)
+
+## 1.2 Clases y Objetos
+
+---
+
+### 1.2.1 Contexto
+
+Cuando los programas comenzaron a crecer en tamaño y complejidad, se hizo evidente que **manejar solo funciones y variables sueltas no era suficiente**. El problema principal era que los datos estaban dispersos y cualquier parte del código podía modificarlos, lo que generaba errores difíciles de rastrear.
+
+Antes de las clases y objetos:
+
+- Los datos vivían separados de las funciones.
+    
+- Las funciones dependían de variables globales.
+    
+- No existía una forma clara de representar entidades del mundo real.
+    
+- El código se volvía frágil: un cambio pequeño podía romper todo.
+    
+
+Las **clases y objetos** aparecen como una solución para **organizar el software alrededor de entidades coherentes**, donde los datos y su comportamiento viven juntos y están protegidos.
+
+---
+
+### 1.2.2 Definición extensa y desglosada
+
+#### ¿Qué es una clase?
+
+Una **clase** es una **definición abstracta** que describe:
+
+- Qué datos tendrá un objeto (atributos).
+    
+- Qué acciones podrá realizar (métodos).
+    
+- Cómo se construye (constructor).
+    
+
+Una clase **no es algo que exista por sí mismo en ejecución**, es un **molde**.
+
+#### ¿Qué es un objeto?
+
+Un **objeto** es una **instancia concreta** de una clase.
+
+- Vive en memoria.
+    
+- Tiene valores reales.
+    
+- Ejecuta comportamientos.
+    
+
+Una misma clase puede crear **muchos objetos distintos**, cada uno con su propio estado.
+
+#### Relación entre clase y objeto
+
+- La clase define el **qué**.
+    
+- El objeto representa el **quién**.
+    
+
+Ejemplo conceptual:
+
+- Clase: `User`
+    
+- Objetos: Juan, Ana, Carlos (usuarios concretos)
+    
+
+---
+
+### 1.2.3 Modelo mental
+
+#### Modelo incorrecto del principiante
+
+El principiante suele pensar:
+
+> “La clase y el objeto son lo mismo”
+
+O:
+
+> “La clase es solo una forma rara de escribir código”
+
+Este pensamiento lleva a:
+
+- Usar clases como simples contenedores de datos.
+    
+- No entender cuándo se crea un objeto.
+    
+- Confundir definición con ejecución.
+    
+
+#### Modelo correcto
+
+Piensa así:
+
+- La **clase es el plano**.
+    
+- El **objeto es la casa construida**.
+    
+- Puedes construir muchas casas con el mismo plano.
+    
+- Cada casa es independiente.
+    
+
+Si destruyes una casa, el plano sigue existiendo.
+
+---
+
+### 1.2.4 Ejemplo correcto (obligatorio)
+
+`public class Account {     private double balance;      public Account(double initialBalance) {         this.balance = initialBalance;     }      public void deposit(double amount) {         if (amount > 0) {             balance += amount;         }     }      public double getBalance() {         return balance;     } }`
+
+Uso del objeto:
+
+`public class Main {     public static void main(String[] args) {         Account account = new Account(100.0);         account.deposit(50.0);         System.out.println(account.getBalance());     } }`
+
+#### Explicación paso a paso
+
+1. `Account` es la clase.
+    
+2. `balance` es un atributo privado.
+    
+3. `account` es un objeto concreto.
+    
+4. Cada objeto tiene su propio `balance`.
+    
+5. El comportamiento está dentro del objeto.
+    
+
+---
+
+### 1.2.5 Ejemplo incorrecto (obligatorio)
+
+`public class Account {     public double balance; }`
+
+`Account acc = new Account(); acc.balance = -1000;`
+
+#### Por qué está mal
+
+- El estado es público.
+    
+- Se rompe la lógica del negocio.
+    
+- No hay control.
+    
+- Cualquier parte del sistema puede dañar el objeto.
+    
+
+---
+
+### 1.2.6 Errores típicos del principiante
+
+- Pensar que crear una clase ya crea un objeto.
+    
+- Usar atributos públicos.
+    
+- No usar constructores.
+    
+- Modificar atributos directamente.
+    
+- No entender que cada objeto es independiente.
+    
+
+---
+
+### 1.2.7 Señales de comprensión
+
+Sabes que entiendes clases y objetos si puedes responder:
+
+- ¿Cuándo se crea un objeto?
+    
+- ¿Cuántos objetos existen en memoria?
+    
+- ¿Qué pasa si modifico un objeto?
+    
+- ¿La clase guarda datos o define estructura?
+    
+
+---
+
+### 1.2.8 Ejercicio práctico mínimo
+
+**Ejercicio (NO resolver ahora):**
+
+Crea una clase `Product` que:
+
+- Tenga nombre, precio y stock.
+    
+- Permita aumentar y disminuir stock.
+    
+- No permita stock negativo.
+    
+
+Piensa primero en:
+
+- Qué es clase.
+    
+- Qué es objeto.
+    
+- Quién es responsable del control.
+
+
+## 1.3 Encapsulación
+
+---
+
+### 1.3.1 Contexto
+
+En los primeros estilos de programación (procedural o estructurada), los datos solían estar **expuestos** y podían ser modificados desde cualquier parte del programa. Esto generaba varios problemas graves:
+
+- Cualquier función podía cambiar cualquier dato.
+    
+- Era muy difícil saber **quién** había modificado un valor.
+    
+- Los errores aparecían lejos de su causa real.
+    
+- El sistema se volvía frágil: un cambio rompía múltiples partes.
+    
+
+Antes de la encapsulación:
+
+- No existía un límite claro entre “lo interno” y “lo externo”.
+    
+- El código dependía de detalles internos de otros módulos.
+    
+- La mantenibilidad era muy baja.
+    
+
+La **encapsulación** nace para resolver este problema:  
+**proteger el estado interno de un objeto y controlar cómo se accede a él**.
+
+---
+
+### 1.3.2 Definición extensa y desglosada
+
+La **encapsulación** es un principio fundamental de la Programación Orientada a Objetos que consiste en:
+
+> **Ocultar el estado interno de un objeto y exponer solo operaciones controladas para interactuar con él.**
+
+Esto implica tres ideas clave:
+
+1. **Los datos no deben ser accesibles directamente desde fuera del objeto.**
+    
+2. **El objeto decide cómo se modifican sus propios datos.**
+    
+3. **El resto del sistema no debe conocer los detalles internos.**
+    
+
+En la práctica, la encapsulación se logra mediante:
+
+- Modificadores de acceso (`private`, `protected`, `public`)
+    
+- Métodos que actúan como interfaz (getters, setters, métodos de negocio)
+    
+
+La encapsulación **no es solo ocultar datos**, es **proteger reglas de negocio**.
+
+---
+
+### 1.3.3 Modelo mental
+
+#### Modelo incorrecto del principiante
+
+El principiante suele pensar:
+
+> “Si puedo acceder a la variable directamente, es más fácil”
+
+O:
+
+> “¿Para qué usar métodos si puedo cambiar el valor directo?”
+
+Este modelo genera:
+
+- Código frágil
+    
+- Dependencias ocultas
+    
+- Violación de reglas del negocio
+    
+
+#### Modelo correcto
+
+Piensa el objeto como una **caja negra**:
+
+- Desde afuera solo sabes **qué hace**, no **cómo lo hace**.
+    
+- No puedes meter la mano y cambiar cosas arbitrariamente.
+    
+- Te comunicas con él mediante **mensajes** (métodos).
+    
+
+#### Analogía
+
+Piensa en un cajero automático:
+
+- No puedes acceder al dinero directamente.
+    
+- Solo puedes usar botones específicos.
+    
+- El cajero valida cada acción.
+    
+
+Eso es encapsulación.
+
+---
+
+### 1.3.4 Ejemplo correcto (obligatorio)
+
+```java
+public class BankAccount {
+    private double balance;
+
+    public BankAccount(double initialBalance) {
+        if (initialBalance < 0) {
+            throw new IllegalArgumentException("Balance inicial inválido");
+        }
+        this.balance = initialBalance;
+    }
+
+    public void withdraw(double amount) {
+        if (amount <= 0) {
+            throw new IllegalArgumentException("Monto inválido");
+        }
+        if (amount > balance) {
+            throw new IllegalStateException("Fondos insuficientes");
+        }
+        balance -= amount;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+}
+```
+
+#### Explicación paso a paso
+
+1. `balance` es **privado**.
+    
+2. Nadie puede modificarlo directamente.
+    
+3. Toda modificación pasa por reglas claras.
+    
+4. El objeto protege su estado.
+    
+5. Las reglas viven donde deben vivir: **en el objeto**.
+    
+
+---
+
+### 1.3.5 Ejemplo incorrecto (obligatorio)
+
+```java
+public class BankAccount {
+    public double balance;
+}
+```
+
+```java
+BankAccount acc = new BankAccount();
+acc.balance = -999999;
+```
+
+#### Por qué está mal
+
+- No hay validación.
+    
+- Se rompen reglas de negocio.
+    
+- El objeto no se protege.
+    
+- Cualquier parte del sistema puede causar errores críticos.
+    
+
+Esto **rompe completamente la encapsulación**.
+
+---
+
+### 1.3.6 Errores típicos del principiante
+
+- Usar `public` en todos los atributos.
+    
+- Crear getters y setters sin reglas.
+    
+- Pensar que encapsular es solo “poner private”.
+    
+- No validar entradas en métodos.
+    
+- Exponer detalles internos innecesarios.
+    
+
+---
+
+### 1.3.7 Señales de comprensión
+
+Sabes que entendiste encapsulación si puedes responder:
+
+- ¿Quién debería poder cambiar este dato?
+    
+- ¿Qué reglas protegen este estado?
+    
+- ¿Qué pasa si alguien usa el objeto mal?
+    
+- ¿El objeto se puede romper desde afuera?
+    
+
+---
+
+### 1.3.8 Ejercicio práctico mínimo
+
+**Ejercicio (NO resolver ahora):**
+
+Diseña una clase `TemperatureSensor` que:
+
+- Guarde una temperatura interna.
+    
+- No permita valores fuera de un rango válido.
+    
+- Permita leer la temperatura.
+    
+- No permita modificarla directamente.
+    
+
+Piensa:
+
+- ¿Qué debe ser privado?
+    
+- ¿Qué métodos necesita?
+    
+- ¿Dónde viven las validaciones?
+    
+
+---
+
+
+## 1.4 Abstracción
+
+---
+
+### 1.4.1 Contexto
+
+A medida que los sistemas crecieron, incluso usando encapsulación, apareció un nuevo problema:  
+**demasiados detalles al mismo tiempo**.
+
+Antes de aplicar abstracción:
+
+- Las clases exponían demasiada información.
+    
+- Los desarrolladores debían entender _cómo_ funcionaba todo para poder usar algo.
+    
+- Cambios internos rompían a quienes usaban la clase.
+    
+- El código se volvía difícil de leer y mantener.
+    
+
+En sistemas grandes, nadie puede ni debe conocer todos los detalles.  
+La **abstracción** surge para resolver este problema:  
+**permitir trabajar con lo esencial, ocultando la complejidad innecesaria**.
+
+---
+
+### 1.4.2 Definición extensa y desglosada
+
+La **abstracción** es el principio de OOP que consiste en:
+
+> **Definir qué hace un objeto sin exponer cómo lo hace.**
+
+Esto implica:
+
+- Identificar comportamientos relevantes.
+    
+- Ignorar detalles de implementación.
+    
+- Proveer contratos claros para interactuar con el objeto.
+    
+
+La abstracción se expresa mediante:
+
+- Interfaces
+    
+- Clases abstractas
+    
+- Métodos bien definidos
+    
+
+La abstracción **reduce la complejidad cognitiva** del sistema.
+
+---
+
+### 1.4.3 Modelo mental
+
+#### Modelo incorrecto del principiante
+
+El principiante piensa:
+
+> “Necesito saber todo para usar esto”
+
+O:
+
+> “Si no veo el código, no confío”
+
+Este pensamiento genera:
+
+- Dependencia excesiva de implementación.
+    
+- Miedo al cambio.
+    
+- Código acoplado.
+    
+
+#### Modelo correcto
+
+Piensa así:
+
+- **Qué hace** es más importante que **cómo lo hace**.
+    
+- Mientras el contrato se cumpla, el interior puede cambiar.
+    
+- El usuario del objeto no debe preocuparse por detalles internos.
+    
+
+#### Analogía
+
+Conducir un carro:
+
+- Sabes usar volante, freno y acelerador.
+    
+- No necesitas saber cómo funciona el motor.
+    
+- El fabricante puede cambiar el motor y tú sigues conduciendo.
+    
+
+Eso es abstracción.
+
+---
+
+### 1.4.4 Ejemplo correcto (obligatorio)
+
+```java
+public interface PaymentMethod {
+    void pay(double amount);
+}
+```
+
+```java
+public class CreditCardPayment implements PaymentMethod {
+    @Override
+    public void pay(double amount) {
+        System.out.println("Pago con tarjeta: " + amount);
+    }
+}
+```
+
+```java
+public class CashPayment implements PaymentMethod {
+    @Override
+    public void pay(double amount) {
+        System.out.println("Pago en efectivo: " + amount);
+    }
+}
+```
+
+Uso:
+
+```java
+public class Checkout {
+    private PaymentMethod paymentMethod;
+
+    public Checkout(PaymentMethod paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
+    public void process(double amount) {
+        paymentMethod.pay(amount);
+    }
+}
+```
+
+#### Explicación paso a paso
+
+1. `PaymentMethod` define **qué se puede hacer**.
+    
+2. No define cómo.
+    
+3. Las implementaciones deciden cómo pagar.
+    
+4. `Checkout` no conoce detalles internos.
+    
+5. El sistema es flexible y extensible.
+    
+
+---
+
+### 1.4.5 Ejemplo incorrecto (obligatorio)
+
+```java
+public class Checkout {
+    public void process(String type, double amount) {
+        if (type.equals("CARD")) {
+            System.out.println("Pago con tarjeta");
+        } else if (type.equals("CASH")) {
+            System.out.println("Pago en efectivo");
+        }
+    }
+}
+```
+
+#### Por qué está mal
+
+- Violación de OOP.
+    
+- Código rígido.
+    
+- Difícil de extender.
+    
+- Cada cambio requiere modificar la clase.
+    
+
+No hay abstracción, solo condicionales.
+
+---
+
+### 1.4.6 Errores típicos del principiante
+
+- Confundir abstracción con ocultar todo.
+    
+- Crear interfaces sin sentido.
+    
+- Exponer métodos innecesarios.
+    
+- Depender de clases concretas.
+    
+- Usar `if` en lugar de polimorfismo.
+    
+
+---
+
+### 1.4.7 Señales de comprensión
+
+Sabes que entiendes abstracción si puedes responder:
+
+- ¿Necesito conocer la implementación?
+    
+- ¿Qué contrato expone este objeto?
+    
+- ¿Puedo cambiar la implementación sin romper código?
+    
+- ¿Estoy dependiendo de una abstracción o de un detalle?
+    
+
+---
+
+### 1.4.8 Ejercicio práctico mínimo
+
+**Ejercicio (NO resolver ahora):**
+
+Diseña una abstracción `NotificationService` que:
+
+- Permita enviar notificaciones.
+    
+- Tenga al menos dos implementaciones (email, SMS).
+    
+- El código cliente no debe conocer el tipo concreto.
+    
+
+---
+
+
+## 1.5 Herencia
+
+---
+
+### 1.5.1 Contexto
+
+Cuando se empezaron a construir sistemas más grandes usando clases y objetos, surgió un problema nuevo: **repetición de código**.
+
+Antes de la herencia, los desarrolladores solían:
+
+- Copiar y pegar código entre clases similares.
+    
+- Repetir atributos y métodos comunes.
+    
+- Introducir inconsistencias al modificar solo algunas copias.
+    
+- Generar errores difíciles de mantener.
+    
+
+Ejemplo típico del pasado:
+
+- `User`
+    
+- `AdminUser`
+    
+- `GuestUser`
+    
+
+Cada uno con atributos y métodos casi idénticos.
+
+La **herencia** surge para resolver este problema:  
+**permitir reutilizar código y representar relaciones jerárquicas entre conceptos**.
+
+---
+
+### 1.5.2 Definición extensa y desglosada
+
+La **herencia** es un mecanismo de la Programación Orientada a Objetos que permite que una clase:
+
+> **herede atributos y comportamientos de otra clase**.
+
+En esta relación:
+
+- Existe una **clase padre** (o superclase).
+    
+- Existe una **clase hija** (o subclase).
+    
+
+La clase hija:
+
+- Reutiliza el código de la clase padre.
+    
+- Puede agregar nuevo comportamiento.
+    
+- Puede modificar (sobrescribir) comportamiento existente.
+    
+
+La herencia representa una relación de tipo:
+
+> **“es un / es una”**
+
+Ejemplo conceptual:
+
+- Un `AdminUser` **es un** `User`.
+    
+- Un `Dog` **es un** `Animal`.
+    
+
+---
+
+### 1.5.3 Modelo mental
+
+#### Modelo incorrecto del principiante
+
+El principiante suele pensar:
+
+> “Uso herencia para reutilizar código”
+
+Este pensamiento es **incompleto y peligroso**.
+
+Conduce a:
+
+- Jerarquías mal diseñadas.
+    
+- Clases acopladas innecesariamente.
+    
+- Uso incorrecto de herencia donde debería usarse composición.
+    
+
+#### Modelo correcto
+
+La herencia debe pensarse como:
+
+- Una **relación semántica fuerte**.
+    
+- Una especialización real del concepto base.
+    
+- Una forma de **extender comportamiento**, no solo de copiar código.
+    
+
+#### Analogía
+
+Piensa en biología:
+
+- Un perro es un animal.
+    
+- Un gato es un animal.
+    
+- No todo animal es un perro.
+    
+
+Eso es herencia bien aplicada.
+
+---
+
+### 1.5.4 Ejemplo correcto (obligatorio)
+
+```java
+public class Animal {
+    protected String name;
+
+    public Animal(String name) {
+        this.name = name;
+    }
+
+    public void makeSound() {
+        System.out.println("El animal hace un sonido");
+    }
+}
+```
+
+```java
+public class Dog extends Animal {
+
+    public Dog(String name) {
+        super(name);
+    }
+
+    @Override
+    public void makeSound() {
+        System.out.println("El perro ladra");
+    }
+}
+```
+
+Uso:
+
+```java
+Animal animal = new Dog("Firulais");
+animal.makeSound();
+```
+
+#### Explicación paso a paso
+
+1. `Animal` define comportamiento general.
+    
+2. `Dog` hereda de `Animal`.
+    
+3. `Dog` especializa el comportamiento.
+    
+4. Se aplica polimorfismo.
+    
+5. El código es reutilizable y extensible.
+    
+
+---
+
+### 1.5.5 Ejemplo incorrecto (obligatorio)
+
+```java
+public class Engine {
+    public void start() {}
+}
+
+public class Car extends Engine {
+}
+```
+
+#### Por qué está mal
+
+- Un carro **no es** un motor.
+    
+- Relación incorrecta.
+    
+- Violación del significado semántico.
+    
+- Debería ser composición, no herencia.
+    
+
+Esto es un **error conceptual grave**.
+
+---
+
+### 1.5.6 Errores típicos del principiante
+
+- Usar herencia solo para reutilizar código.
+    
+- Crear jerarquías profundas sin necesidad.
+    
+- Heredar de clases que no representan un “es un”.
+    
+- Sobrescribir métodos sin entender el contrato.
+    
+- Depender demasiado de clases padre.
+    
+
+---
+
+### 1.5.7 Señales de comprensión
+
+Sabes que entiendes herencia si puedes responder:
+
+- ¿Esta clase realmente es una especialización?
+    
+- ¿Puedo reemplazar el padre por el hijo sin romper nada?
+    
+- ¿La relación tiene sentido semántico?
+    
+- ¿Estoy heredando comportamiento o solo código?
+    
+
+---
+
+### 1.5.8 Ejercicio práctico mínimo
+
+**Ejercicio (NO resolver ahora):**
+
+Diseña una jerarquía:
+
+- Clase base `Employee`
+    
+- Subclases `Developer` y `Manager`
+    
+- Cada uno debe tener un comportamiento diferente para calcular salario.
+    
+
+Piensa:
+
+- ¿Qué es común?
+    
+- ¿Qué es específico?
+    
+- ¿Dónde vive cada responsabilidad?
+    
+
+---
+
+
+## 1.6 Polimorfismo
+
+---
+
+### 1.6.1 Contexto
+
+A medida que los sistemas orientados a objetos empezaron a usar **herencia y abstracción**, apareció una necesidad clave:  
+**tratar objetos distintos de forma uniforme**, sin conocer su tipo concreto.
+
+Antes del polimorfismo, el código solía verse así:
+
+- Grandes bloques de `if / else` o `switch`.
+    
+- Lógica condicional basada en tipos.
+    
+- Código rígido y difícil de extender.
+    
+- Cada nuevo tipo implicaba modificar código existente.
+    
+
+Esto generaba:
+
+- Violaciones del principio de abierto/cerrado.
+    
+- Código frágil.
+    
+- Alto riesgo de errores al crecer el sistema.
+    
+
+El **polimorfismo** surge para resolver esto:  
+**permitir que diferentes objetos respondan de forma distinta al mismo mensaje**.
+
+---
+
+### 1.6.2 Definición extensa y desglosada
+
+El **polimorfismo** es un principio de OOP que permite:
+
+> **Invocar el mismo método en objetos distintos, obteniendo comportamientos diferentes según el objeto real.**
+
+La palabra viene del griego:
+
+- _Poly_ = muchos
+    
+- _Morphos_ = formas
+    
+
+Es decir: **muchas formas para una misma operación**.
+
+El polimorfismo se apoya en:
+
+- Herencia
+    
+- Interfaces
+    
+- Abstracción
+    
+- Sobrescritura de métodos
+    
+
+El código cliente:
+
+- No conoce el tipo concreto.
+    
+- No necesita saber cómo se implementa.
+    
+- Solo conoce el contrato.
+    
+
+---
+
+### 1.6.3 Modelo mental
+
+#### Modelo incorrecto del principiante
+
+El principiante suele pensar:
+
+> “Tengo que preguntar qué tipo es este objeto”
+
+Esto lleva a:
+
+- `if (obj instanceof X)`
+    
+- `switch(type)`
+    
+- Código rígido.
+    
+
+Este modelo **rompe OOP**.
+
+#### Modelo correcto
+
+Piensa así:
+
+- Envías un **mensaje**.
+    
+- El objeto decide **cómo responder**.
+    
+- No te importa quién es internamente.
+    
+
+#### Analogía
+
+Piensa en un control remoto:
+
+- Presionas “play”.
+    
+- El televisor, el reproductor o el equipo responden distinto.
+    
+- Tú no preguntas “¿eres TV o DVD?”.
+    
+
+Eso es polimorfismo.
+
+---
+
+### 1.6.4 Ejemplo correcto (obligatorio)
+
+```java
+public interface Shape {
+    double area();
+}
+```
+
+```java
+public class Circle implements Shape {
+    private double radius;
+
+    public Circle(double radius) {
+        this.radius = radius;
+    }
+
+    public double area() {
+        return Math.PI * radius * radius;
+    }
+}
+```
+
+```java
+public class Rectangle implements Shape {
+    private double width;
+    private double height;
+
+    public Rectangle(double width, double height) {
+        this.width = width;
+        this.height = height;
+    }
+
+    public double area() {
+        return width * height;
+    }
+}
+```
+
+Uso:
+
+```java
+public class AreaCalculator {
+    public double calculate(Shape shape) {
+        return shape.area();
+    }
+}
+```
+
+#### Explicación paso a paso
+
+1. `Shape` define un contrato.
+    
+2. Cada clase implementa su lógica.
+    
+3. `AreaCalculator` no conoce tipos concretos.
+    
+4. Se elimina lógica condicional.
+    
+5. El sistema es extensible.
+    
+
+---
+
+### 1.6.5 Ejemplo incorrecto (obligatorio)
+
+```java
+public class AreaCalculator {
+    public double calculate(Object shape) {
+        if (shape instanceof Circle) {
+            Circle c = (Circle) shape;
+            return Math.PI * c.getRadius() * c.getRadius();
+        } else if (shape instanceof Rectangle) {
+            Rectangle r = (Rectangle) shape;
+            return r.getWidth() * r.getHeight();
+        }
+        return 0;
+    }
+}
+```
+
+#### Por qué está mal
+
+- Usa `instanceof`.
+    
+- Acopla el código a tipos concretos.
+    
+- Cada nuevo tipo obliga a modificar esta clase.
+    
+- Rompe el principio de OOP.
+    
+
+---
+
+### 1.6.6 Errores típicos del principiante
+
+- Usar `if` en lugar de polimorfismo.
+    
+- No sobrescribir métodos correctamente.
+    
+- No usar interfaces.
+    
+- Pensar que polimorfismo es solo herencia.
+    
+- Forzar conversiones de tipo (`casting`).
+    
+
+---
+
+### 1.6.7 Señales de comprensión
+
+Sabes que entiendes polimorfismo si puedes responder:
+
+- ¿Estoy enviando mensajes o preguntando tipos?
+    
+- ¿El código cliente depende de clases concretas?
+    
+- ¿Puedo agregar un nuevo tipo sin modificar código existente?
+    
+- ¿Quién decide el comportamiento?
+    
+
+---
+
+### 1.6.8 Ejercicio práctico mínimo
+
+**Ejercicio (NO resolver ahora):**
+
+Diseña un sistema de envío:
+
+- Interfaz `DeliveryMethod`
+    
+- Implementaciones `BikeDelivery`, `CarDelivery`
+    
+- Un servicio que use el método sin conocer el tipo concreto.
+    
+
+Piensa:
+
+- ¿Dónde vive la decisión?
+    
+- ¿Quién ejecuta el comportamiento?
+    
+- ¿Qué cambia cuando agregas un nuevo método?
+    
+
+---
+
+
+## 1.7 Bucles en Programación Orientada a Objetos (for, while, do-while)
+
+> **Nota clave desde el inicio:**  
+> Aunque los bucles existen desde la programación procedural, **su mal uso dentro de OOP es una de las causas más comunes de código mal diseñado en principiantes backend**.  
+> Aquí no solo aprenderás _cómo funcionan_, sino **cómo deben pensarse dentro de un diseño orientado a objetos**.
+
+---
+
+### 1.7.1 Contexto
+
+Antes de la Programación Orientada a Objetos, los bucles eran el **corazón del programa**:
+
+- El flujo del sistema se controlaba con `for`, `while`, `goto`.
+    
+- La lógica vivía en ciclos largos.
+    
+- Los datos se recorrían y modificaban directamente.
+    
+
+Esto generaba programas donde:
+
+- Todo estaba mezclado.
+    
+- El control del flujo dominaba el diseño.
+    
+- El comportamiento no estaba encapsulado.
+    
+
+Cuando OOP aparece, **los bucles no desaparecen**, pero **cambian su rol**.
+
+El problema real que aparece en OOP es este:
+
+> Los principiantes usan bucles como si siguieran programando en procedural, rompiendo encapsulación, abstracción y responsabilidades.
+
+---
+
+### 1.7.2 Definición extensa y desglosada
+
+Un **bucle** es una estructura de control que permite **ejecutar un bloque de código repetidamente** mientras se cumpla una condición o durante un número determinado de iteraciones.
+
+Los bucles **no son malos**, el problema es **dónde y cómo se usan**.
+
+En OOP:
+
+- Los bucles **no deben controlar el sistema completo**.
+    
+- Los bucles **sirven a los objetos**, no al revés.
+    
+- Un bucle mal ubicado suele indicar **mal diseño**.
+    
+
+Tipos principales:
+
+- `for`
+    
+- `while`
+    
+- `do-while`
+    
+
+Cada uno tiene un **uso semántico distinto**.
+
+---
+
+### 1.7.3 Modelo mental
+
+#### Modelo incorrecto del principiante
+
+El principiante piensa:
+
+> “Necesito recorrer algo → hago un for aquí mismo”
+
+Resultado:
+
+- Métodos enormes.
+    
+- Lógica mezclada.
+    
+- Clases que hacen demasiado.
+    
+- Violación de responsabilidades.
+    
+
+#### Modelo correcto en OOP
+
+Piensa así:
+
+- ¿Quién es responsable del recorrido?
+    
+- ¿Este objeto _posee_ la colección?
+    
+- ¿Este comportamiento vive aquí?
+    
+
+El bucle **debe vivir donde vive la responsabilidad**.
+
+#### Analogía
+
+No es lo mismo:
+
+- Un jefe revisando personalmente cada hoja.
+    
+- Que cada departamento revise sus propios documentos.
+    
+
+En OOP, **cada objeto se hace cargo de su propio recorrido**.
+
+---
+
+## 1.7.4 Bucle `for`
+
+---
+
+### 1.7.4.1 Contexto
+
+El `for` nació para:
+
+- Repeticiones con **cantidad conocida**.
+    
+- Recorrer arreglos y listas.
+    
+- Iteraciones controladas.
+    
+
+En backend moderno:
+
+- Se usa principalmente para recorrer colecciones.
+    
+- Debe usarse **dentro de objetos responsables**, no desde afuera.
+    
+
+---
+
+### 1.7.4.2 Definición extensa y desglosada
+
+Un `for` define:
+
+- Inicialización
+    
+- Condición
+    
+- Incremento
+    
+
+Todo en un solo lugar, lo que lo hace:
+
+- Predecible
+    
+- Controlado
+    
+- Legible si se usa bien
+    
+
+---
+
+### 1.7.4.3 Modelo mental
+
+- “Sé cuántas veces necesito iterar”
+    
+- “Estoy recorriendo algo finito”
+    
+- “La responsabilidad del recorrido es clara”
+    
+
+---
+
+### 1.7.4.4 Ejemplo correcto (obligatorio)
+
+```java
+public class Order {
+    private List<OrderItem> items;
+
+    public double calculateTotal() {
+        double total = 0;
+        for (OrderItem item : items) {
+            total += item.getSubtotal();
+        }
+        return total;
+    }
+}
+```
+
+#### Explicación paso a paso
+
+1. El objeto `Order` **posee** los items.
+    
+2. El cálculo es responsabilidad de `Order`.
+    
+3. El bucle vive dentro del objeto correcto.
+    
+4. No se expone la colección al exterior.
+    
+5. Diseño limpio y orientado a objetos.
+    
+
+---
+
+### 1.7.4.5 Ejemplo incorrecto (obligatorio)
+
+```java
+double total = 0;
+for (OrderItem item : order.getItems()) {
+    total += item.getSubtotal();
+}
+```
+
+#### Por qué está mal
+
+- Se rompe encapsulación.
+    
+- Se expone estructura interna.
+    
+- La lógica vive fuera del objeto.
+    
+- El objeto pierde responsabilidad.
+    
+
+---
+
+### 1.7.4.6 Errores típicos del principiante
+
+- Bucles fuera del objeto responsable.
+    
+- Métodos gigantes con múltiples bucles.
+    
+- Mezclar lógica de negocio con control de flujo.
+    
+- Recorrer colecciones ajenas.
+    
+
+---
+
+### 1.7.4.7 Señales de comprensión
+
+- ¿Quién debería recorrer esta colección?
+    
+- ¿Este bucle pertenece a este objeto?
+    
+- ¿Estoy violando encapsulación?
+    
+
+---
+
+### 1.7.4.8 Ejercicio práctico mínimo
+
+**Ejercicio (NO resolver ahora):**
+
+Diseña una clase `ShoppingCart` que:
+
+- Contenga productos.
+    
+- Calcule el total internamente.
+    
+- No permita que el exterior recorra la lista.
+    
+
+---
+
+## 1.7.5 Bucle `while`
+
+---
+
+### 1.7.5.1 Contexto
+
+El `while` surge para:
+
+- Repeticiones **condicionales**.
+    
+- Procesos que no tienen cantidad fija.
+    
+- Esperar estados.
+    
+
+En backend:
+
+- Se usa para validaciones.
+    
+- Procesos controlados por estado.
+    
+- Flujos dependientes de condiciones.
+    
+
+---
+
+### 1.7.5.2 Definición extensa y desglosada
+
+El `while` ejecuta el bloque:
+
+- Mientras la condición sea verdadera.
+    
+- Puede no ejecutarse nunca.
+    
+
+Debe usarse cuando:
+
+- No sabes cuántas iteraciones habrá.
+    
+- El proceso depende de un estado cambiante.
+    
+
+---
+
+### 1.7.5.3 Modelo mental
+
+- “Sigo mientras esto sea válido”
+    
+- “El estado controla el flujo”
+    
+- “La salida depende de una condición”
+    
+
+---
+
+### 1.7.5.4 Ejemplo correcto (obligatorio)
+
+```java
+public class PasswordValidator {
+    public void validate(String password) {
+        while (!isValid(password)) {
+            throw new IllegalArgumentException("Contraseña inválida");
+        }
+    }
+
+    private boolean isValid(String password) {
+        return password.length() >= 8;
+    }
+}
+```
+
+_(Ejemplo conceptual de uso controlado)_
+
+---
+
+### 1.7.5.5 Ejemplo incorrecto (obligatorio)
+
+```java
+while(true) {
+    // lógica de negocio
+}
+```
+
+#### Por qué está mal
+
+- Riesgo de bucles infinitos.
+    
+- Código inseguro.
+    
+- Difícil de mantener.
+    
+- Muy común en principiantes.
+    
+
+---
+
+### 1.7.5.6 Errores típicos del principiante
+
+- Bucles infinitos.
+    
+- Condiciones mal definidas.
+    
+- Lógica crítica dentro del while.
+    
+- Falta de control de salida.
+    
+
+---
+
+### 1.7.5.7 Señales de comprensión
+
+- ¿Puede este bucle terminar?
+    
+- ¿Qué condición lo controla?
+    
+- ¿Quién cambia el estado?
+    
+
+---
+
+### 1.7.5.8 Ejercicio práctico mínimo
+
+Diseña una clase que:
+
+- Reintente una operación.
+    
+- Tenga un límite de intentos.
+    
+- Use `while` de forma segura.
+    
+
+---
+
+## 1.7.6 Bucle `do-while`
+
+---
+
+### 1.7.6.1 Contexto
+
+El `do-while` aparece cuando:
+
+- El código debe ejecutarse **al menos una vez**.
+    
+- La validación ocurre después.
+    
+
+Es menos usado, pero **muy importante entenderlo**.
+
+---
+
+### 1.7.6.2 Definición extensa y desglosada
+
+El `do-while`:
+
+- Ejecuta primero.
+    
+- Evalúa después.
+    
+- Garantiza una ejecución mínima.
+    
+
+---
+
+### 1.7.6.3 Modelo mental
+
+- “Primero hago”
+    
+- “Luego valido”
+    
+- “Repito si es necesario”
+    
+
+---
+
+### 1.7.6.4 Ejemplo correcto (obligatorio)
+
+```java
+public class Menu {
+    public void show() {
+        int option;
+        do {
+            option = getOption();
+        } while (option != 0);
+    }
+
+    private int getOption() {
+        return 0;
+    }
+}
+```
+
+---
+
+### 1.7.6.5 Ejemplo incorrecto (obligatorio)
+
+```java
+do {
+    // lógica compleja
+} while(true);
+```
+
+#### Por qué está mal
+
+- Difícil de leer.
+    
+- Riesgo alto.
+    
+- Mala práctica en backend.
+    
+
+---
+
+### 1.7.6.6 Errores típicos del principiante
+
+- Usarlo sin necesidad.
+    
+- Bucles infinitos.
+    
+- Mezclar lógica compleja.
+    
+
+---
+
+### 1.7.6.7 Señales de comprensión
+
+- ¿Necesito ejecutar al menos una vez?
+    
+- ¿La validación es posterior?
+    
+- ¿Es realmente necesario?
+    
+
+---
+
+### 1.7.6.8 Ejercicio práctico mínimo
+
+Diseña una clase que:
+
+- Solicite una acción.
+    
+- Valide después.
+    
+- Repita si es inválida.
+    
+
+---
+
+
+## 1.8 Genéricos (Generics) en Programación Orientada a Objetos
+
+> **Advertencia pedagógica importante**  
+> Los genéricos son uno de los puntos donde más trainees **memorizan sintaxis sin entender el problema real**.  
+> Aquí no vas a aprender “cómo se escriben”, sino **por qué existen, qué problema histórico solucionan y cómo pensar con ellos**.
+
+---
+
+### 1.8.1 Contexto
+
+Antes de que existieran los **genéricos**, los lenguajes orientados a objetos (como Java en sus primeras versiones) tenían un problema serio:
+
+- Las colecciones almacenaban `Object`.
+    
+- Todo era genérico… pero **demasiado genérico**.
+    
+- Se perdía seguridad de tipos.
+    
+- Los errores aparecían **en tiempo de ejecución**, no en compilación.
+    
+
+Ejemplo histórico típico:
+
+```java
+List list = new ArrayList();
+list.add("hola");
+list.add(10);
+
+String text = (String) list.get(1); // error en runtime
+```
+
+Problemas reales de este enfoque:
+
+- Errores difíciles de detectar.
+    
+- Castings constantes.
+    
+- Código frágil.
+    
+- Pérdida de confianza en el compilador.
+    
+
+Los **genéricos** nacen para resolver **exactamente esto**:
+
+> **Garantizar seguridad de tipos sin perder reutilización de código.**
+
+---
+
+### 1.8.2 Definición extensa y desglosada
+
+Los **genéricos** permiten definir **clases, interfaces y métodos parametrizados por tipo**.
+
+En palabras simples:
+
+> Un genérico es una forma de decir  
+> “Este código funciona para cualquier tipo, pero quiero que el compilador sepa cuál es”.
+
+Conceptos clave:
+
+- El tipo se define **cuando se usa**, no cuando se escribe la clase.
+    
+- El compilador valida los tipos.
+    
+- Se eliminan castings inseguros.
+    
+- El código se vuelve más expresivo y seguro.
+    
+
+Un genérico **no es**:
+
+- Un comodín sin reglas.
+    
+- Un reemplazo de `Object`.
+    
+- Algo solo para colecciones.
+    
+
+Es una **herramienta de diseño**.
+
+---
+
+### 1.8.3 Modelo mental
+
+#### Modelo incorrecto del principiante
+
+El principiante piensa:
+
+> “Es una cosa rara con `<T>` que toca usar porque toca”
+
+O:
+
+> “Los genéricos son solo para listas”
+
+Este pensamiento lleva a:
+
+- Usarlos mal.
+    
+- Evitarlos.
+    
+- Romper seguridad de tipos.
+    
+
+#### Modelo correcto
+
+Piensa así:
+
+- El genérico es un **contrato de tipo**.
+    
+- Le estás diciendo al compilador:  
+    “Este objeto trabaja con UN tipo consistente”.
+    
+- El genérico **propaga seguridad** a todo el sistema.
+    
+
+#### Analogía
+
+Piensa en una caja etiquetada:
+
+- Caja sin etiqueta: puedes meter cualquier cosa → caos.
+    
+- Caja etiquetada “solo libros”: orden y seguridad.
+    
+
+Eso es un genérico.
+
+---
+
+### 1.8.4 Ejemplo correcto (obligatorio)
+
+#### Clase genérica
+
+```java
+public class Box<T> {
+    private T value;
+
+    public void put(T value) {
+        this.value = value;
+    }
+
+    public T get() {
+        return value;
+    }
+}
+```
+
+Uso:
+
+```java
+Box<String> stringBox = new Box<>();
+stringBox.put("Hola");
+
+String text = stringBox.get(); // seguro
+```
+
+#### Explicación paso a paso
+
+1. `T` representa un tipo genérico.
+    
+2. La clase no sabe qué tipo será.
+    
+3. El usuario decide el tipo.
+    
+4. El compilador valida todo.
+    
+5. No hay castings inseguros.
+    
+
+---
+
+### 1.8.5 Ejemplo incorrecto (obligatorio)
+
+```java
+public class Box {
+    private Object value;
+
+    public void put(Object value) {
+        this.value = value;
+    }
+
+    public Object get() {
+        return value;
+    }
+}
+```
+
+Uso:
+
+```java
+Box box = new Box();
+box.put(123);
+
+String text = (String) box.get(); // runtime error
+```
+
+#### Por qué está mal
+
+- No hay seguridad de tipos.
+    
+- El error aparece tarde.
+    
+- Se rompe la confianza en el código.
+    
+- Es exactamente el problema que los genéricos solucionan.
+    
+
+---
+
+### 1.8.6 Errores típicos del principiante
+
+- Usar `Object` en lugar de genéricos.
+    
+- No parametrizar clases genéricas.
+    
+- Usar genéricos solo en listas.
+    
+- Confundir `<T>` con una clase real.
+    
+- Pensar que los genéricos existen en runtime (en Java).
+    
+
+---
+
+### 1.8.7 Señales de comprensión
+
+Sabes que entendiste genéricos si puedes responder:
+
+- ¿Qué tipo está viajando por esta clase?
+    
+- ¿Dónde se define el tipo?
+    
+- ¿El compilador puede protegerme aquí?
+    
+- ¿Estoy evitando castings?
+    
+
+---
+
+### 1.8.8 Ejercicio práctico mínimo
+
+**Ejercicio (NO resolver ahora):**
+
+Diseña una clase genérica `Repository<T>` que:
+
+- Permita guardar un objeto.
+    
+- Permita obtenerlo.
+    
+- No use `Object`.
+    
+
+Piensa:
+
+- ¿Quién define `T`?
+    
+- ¿Dónde se garantiza la seguridad?
+    
+- ¿Qué pasa si uso tipos distintos?
+    
+
+---
+
+
+## 1.9 Anotaciones (Annotations) en Backend
+
+> **Advertencia pedagógica clave**  
+> Las anotaciones son uno de los puntos donde más trainees _usan cosas sin entender qué están haciendo_.  
+> Aquí no vas a aprender “qué anotación poner”, sino **por qué existen, qué problema real solucionan y cómo pensarlas correctamente en backend**.
+
+---
+
+### 1.9.1 Contexto
+
+Antes de que existieran las **anotaciones**, la configuración del comportamiento del software se hacía principalmente de dos formas:
+
+1. **Configuración externa**
+    
+    - Archivos XML enormes
+        
+    - Difíciles de leer
+        
+    - Difíciles de mantener
+        
+    - Poco cercanos al código real
+        
+2. **Código explícito y repetitivo**
+    
+    - Mucho código “ceremonial”
+        
+    - Lógica técnica mezclada con lógica de negocio
+        
+    - Difícil reutilización
+        
+
+Ejemplo del pasado:
+
+- Configurar transacciones en XML
+    
+- Mapear clases a base de datos en XML
+    
+- Configurar seguridad fuera del código
+    
+
+Problemas reales:
+
+- El desarrollador debía mirar muchos lugares distintos.
+    
+- El comportamiento real del sistema no era evidente leyendo el código.
+    
+- Alto riesgo de inconsistencias.
+    
+
+Las **anotaciones** surgen para resolver esto:
+
+> **Declarar comportamiento y metadatos directamente sobre el código, sin contaminar la lógica de negocio.**
+
+---
+
+### 1.9.2 Definición extensa y desglosada
+
+Una **anotación** es una forma de **agregar metadatos al código**.
+
+Metadatos significa:
+
+- Información **sobre** el código
+    
+- No es lógica de negocio
+    
+- No ejecuta acciones por sí sola
+    
+
+Las anotaciones:
+
+- No cambian el flujo directamente
+    
+- Son **leídas por frameworks, librerías o el compilador**
+    
+- Activan comportamientos externos
+    
+
+Una anotación responde a la pregunta:
+
+> “¿Cómo debe tratarse este elemento?”
+
+No:
+
+> “¿Qué hace este método?”
+
+---
+
+### 1.9.3 Modelo mental
+
+#### Modelo incorrecto del principiante
+
+El principiante suele pensar:
+
+> “Esto es magia”  
+> “Pongo la anotación y funciona”
+
+Esto es peligroso porque:
+
+- No entiende el ciclo de vida
+    
+- No sabe quién la interpreta
+    
+- No sabe cuándo se ejecuta
+    
+
+#### Modelo correcto
+
+Piensa así:
+
+- La anotación **no hace nada sola**
+    
+- Alguien la **lee**
+    
+- Ese alguien actúa según lo que encuentra
+    
+
+Siempre pregúntate:
+
+- ¿Quién lee esta anotación?
+    
+- ¿Cuándo la lee?
+    
+- ¿Qué decisión toma con ella?
+    
+
+#### Analogía
+
+Piensa en una etiqueta en una caja:
+
+- La etiqueta no mueve la caja
+    
+- El operario la lee
+    
+- Decide dónde colocarla
+    
+
+Eso es una anotación.
+
+---
+
+### 1.9.4 Ejemplo correcto (obligatorio)
+
+Ejemplo típico en backend (conceptual, no dependiente de framework específico):
+
+```java
+public class UserService {
+
+    @Transactional
+    public void createUser(User user) {
+        // lógica de negocio
+    }
+}
+```
+
+#### Explicación paso a paso
+
+1. `@Transactional` **no ejecuta código**
+    
+2. El framework inspecciona el método
+    
+3. Detecta la anotación
+    
+4. Envuelve la ejecución con lógica de transacción
+    
+5. El método sigue siendo limpio
+    
+
+La lógica de negocio **no sabe** de transacciones.
+
+---
+
+### 1.9.5 Ejemplo incorrecto (obligatorio)
+
+```java
+public class UserService {
+
+    public void createUser(User user) {
+        beginTransaction();
+        saveUser(user);
+        commitTransaction();
+    }
+}
+```
+
+#### Por qué está mal
+
+- Mezcla lógica técnica con negocio
+    
+- Duplica código
+    
+- Difícil de mantener
+    
+- Rompe separación de responsabilidades
+    
+
+Las anotaciones existen **para evitar esto**.
+
+---
+
+### 1.9.6 Errores típicos del principiante
+
+- Usar anotaciones sin saber qué hacen
+    
+- Pensar que son magia
+    
+- Abusar de anotaciones
+    
+- No entender el orden de ejecución
+    
+- Mezclar anotaciones contradictorias
+    
+
+---
+
+### 1.9.7 Señales de comprensión
+
+Sabes que entiendes anotaciones si puedes responder:
+
+- ¿Quién procesa esta anotación?
+    
+- ¿En qué momento se evalúa?
+    
+- ¿Qué pasaría si la quito?
+    
+- ¿Estoy declarando comportamiento o lógica?
+    
+
+---
+
+### 1.9.8 Ejercicio práctico mínimo
+
+**Ejercicio (NO resolver ahora):**
+
+Piensa en una anotación `@LogExecution` que:
+
+- Indique que un método debe ser logueado
+    
+- No modifique la lógica del método
+    
+- Sea interpretada externamente
+    
+
+Reflexiona:
+
+- ¿Quién la leería?
+    
+- ¿Cómo se aplicaría?
+    
+- ¿Qué problema resuelve?
+    
+
+---
+
+
+## 1.10 Estructuras de Datos en Backend (List, Map, Set)
+
+> **Advertencia pedagógica importante**  
+> Las estructuras de datos no son “cosas para memorizar”.  
+> Son **decisiones de diseño**.  
+> Un backend trainee suele fallar no por no saber programar, sino por **usar la estructura equivocada para el problema equivocado**.
+
+---
+
+### 1.10.1 Contexto
+
+Antes de que existieran estructuras de datos bien definidas en los lenguajes modernos, los desarrolladores:
+
+- Usaban arreglos para todo.
+    
+- Implementaban estructuras manualmente.
+    
+- Mezclaban lógica de recorrido con lógica de negocio.
+    
+- Generaban código rígido y poco expresivo.
+    
+
+Problemas reales del pasado:
+
+- Dificultad para buscar información.
+    
+- Código ineficiente.
+    
+- Errores por manejo manual de índices.
+    
+- Bajo rendimiento al escalar.
+    
+
+Las **estructuras de datos** surgen para resolver esto:
+
+> **Proveer formas especializadas de organizar, acceder y manipular datos de acuerdo con su uso real.**
+
+En backend, elegir mal una estructura:
+
+- Afecta rendimiento.
+    
+- Afecta claridad.
+    
+- Afecta escalabilidad.
+    
+- Afecta diseño.
+    
+
+---
+
+### 1.10.2 Definición extensa y desglosada
+
+Una **estructura de datos** es una forma organizada de almacenar información que define:
+
+- Cómo se guardan los datos.
+    
+- Cómo se accede a ellos.
+    
+- Qué operaciones son eficientes.
+    
+- Qué reglas se aplican.
+    
+
+En backend, las más fundamentales son:
+
+- `List` → colecciones ordenadas
+    
+- `Set` → colecciones sin duplicados
+    
+- `Map` → asociaciones clave–valor
+    
+
+Cada una **existe por una razón distinta**.  
+No son intercambiables.
+
+---
+
+### 1.10.3 Modelo mental general
+
+#### Modelo incorrecto del principiante
+
+El principiante suele pensar:
+
+> “Todas guardan datos, da igual cuál use”
+
+Esto genera:
+
+- Código confuso.
+    
+- Problemas de rendimiento.
+    
+- Lógica innecesaria.
+    
+- Bugs difíciles de detectar.
+    
+
+#### Modelo correcto
+
+Piensa así:
+
+- **Qué representa este dato**
+    
+- **Cómo lo voy a buscar**
+    
+- **Qué reglas debe cumplir**
+    
+
+La estructura **representa una intención**.
+
+---
+
+## 1.10.4 List (Listas)
+
+---
+
+### 1.10.4.1 Contexto
+
+Las listas existen porque:
+
+- Necesitamos mantener **orden**.
+    
+- Necesitamos permitir **duplicados**.
+    
+- Necesitamos recorrer elementos secuencialmente.
+    
+
+Antes de `List`:
+
+- Arreglos con tamaño fijo.
+    
+- Manejo manual de índices.
+    
+- Riesgo alto de errores.
+    
+
+---
+
+### 1.10.4.2 Definición extensa y desglosada
+
+Una **List** es:
+
+- Una colección **ordenada**.
+    
+- Permite **duplicados**.
+    
+- Acceso por índice.
+    
+- Mantiene el orden de inserción.
+    
+
+En backend se usa cuando:
+
+- El orden importa.
+    
+- La posición tiene significado.
+    
+- Se necesita recorrer en secuencia.
+    
+
+---
+
+### 1.10.4.3 Modelo mental
+
+Piensa en una fila:
+
+- El orden importa.
+    
+- Puedes tener personas repetidas.
+    
+- Cada posición es relevante.
+    
+
+---
+
+### 1.10.4.4 Ejemplo correcto (obligatorio)
+
+```java
+public class Playlist {
+    private List<String> songs = new ArrayList<>();
+
+    public void addSong(String song) {
+        songs.add(song);
+    }
+
+    public String getSong(int index) {
+        return songs.get(index);
+    }
+}
+```
+
+#### Explicación paso a paso
+
+1. La lista mantiene orden.
+    
+2. La clase controla el acceso.
+    
+3. No se expone la estructura.
+    
+4. El objeto es responsable.
+    
+
+---
+
+### 1.10.4.5 Ejemplo incorrecto (obligatorio)
+
+```java
+public class Playlist {
+    public List<String> songs;
+}
+```
+
+```java
+playlist.songs.remove(0);
+playlist.songs.add(null);
+```
+
+#### Por qué está mal
+
+- Se rompe encapsulación.
+    
+- No hay control.
+    
+- El estado puede corromperse.
+    
+- El objeto pierde responsabilidad.
+    
+
+---
+
+### 1.10.4.6 Errores típicos del principiante
+
+- Usar `List` cuando no importa el orden.
+    
+- Exponer la lista públicamente.
+    
+- Manipular índices sin validación.
+    
+- Mezclar lógica de negocio con recorrido.
+    
+
+---
+
+### 1.10.4.7 Señales de comprensión
+
+- ¿El orden es importante?
+    
+- ¿Necesito duplicados?
+    
+- ¿Quién debería recorrer esta lista?
+    
+
+---
+
+### 1.10.4.8 Ejercicio práctico mínimo
+
+Diseña una clase `TodoList` que:
+
+- Mantenga tareas en orden.
+    
+- Permita agregar y obtener tareas.
+    
+- No exponga la lista directamente.
+    
+
+---
+
+## 1.10.5 Set (Conjuntos)
+
+---
+
+### 1.10.5.1 Contexto
+
+El `Set` surge para resolver un problema muy concreto:
+
+> **Evitar duplicados automáticamente**.
+
+Antes de `Set`:
+
+- Validaciones manuales.
+    
+- Comparaciones constantes.
+    
+- Código repetitivo.
+    
+- Errores frecuentes.
+    
+
+---
+
+### 1.10.5.2 Definición extensa y desglosada
+
+Un **Set** es:
+
+- Una colección **sin duplicados**.
+    
+- El orden **no es lo importante**.
+    
+- La unicidad es la regla principal.
+    
+
+En backend se usa cuando:
+
+- No deben existir repeticiones.
+    
+- El dato representa identidad.
+    
+- El acceso rápido es importante.
+    
+
+---
+
+### 1.10.5.3 Modelo mental
+
+Piensa en una lista de documentos:
+
+- No puedes tener el mismo documento dos veces.
+    
+- El orden no importa.
+    
+- Lo importante es que exista o no.
+    
+
+---
+
+### 1.10.5.4 Ejemplo correcto (obligatorio)
+
+```java
+public class UserRegistry {
+    private Set<String> emails = new HashSet<>();
+
+    public boolean registerEmail(String email) {
+        return emails.add(email);
+    }
+}
+```
+
+#### Explicación paso a paso
+
+1. El `Set` evita duplicados.
+    
+2. No se necesita validar manualmente.
+    
+3. El objeto controla la regla.
+    
+4. Código limpio y expresivo.
+    
+
+---
+
+### 1.10.5.5 Ejemplo incorrecto (obligatorio)
+
+```java
+List<String> emails = new ArrayList<>();
+if (!emails.contains(email)) {
+    emails.add(email);
+}
+```
+
+#### Por qué está mal
+
+- Lógica duplicada.
+    
+- Menor rendimiento.
+    
+- Código innecesario.
+    
+- El `Set` ya resuelve esto.
+    
+
+---
+
+### 1.10.5.6 Errores típicos del principiante
+
+- Usar `List` para datos únicos.
+    
+- No entender `equals` / `hashCode`.
+    
+- Asumir orden en un `Set`.
+    
+- Validar duplicados manualmente.
+    
+
+---
+
+### 1.10.5.7 Señales de comprensión
+
+- ¿Este dato debe ser único?
+    
+- ¿Me importa el orden?
+    
+- ¿Estoy reinventando algo que ya existe?
+    
+
+---
+
+### 1.10.5.8 Ejercicio práctico mínimo
+
+Diseña una clase `AccessControl` que:
+
+- Mantenga roles únicos.
+    
+- Permita agregar roles.
+    
+- Nunca permita duplicados.
+    
+
+---
+
+## 1.10.6 Map (Mapas)
+
+---
+
+### 1.10.6.1 Contexto
+
+El `Map` existe porque muchas veces:
+
+- No buscas por posición.
+    
+- Buscas por **identidad**.
+    
+- Necesitas acceso rápido.
+    
+
+Antes de `Map`:
+
+- Recorridos completos.
+    
+- Comparaciones constantes.
+    
+- Código lento e innecesario.
+    
+
+---
+
+### 1.10.6.2 Definición extensa y desglosada
+
+Un **Map**:
+
+- Asocia **clave → valor**.
+    
+- Cada clave es única.
+    
+- El acceso es directo.
+    
+
+En backend:
+
+- IDs → entidades
+    
+- Códigos → configuraciones
+    
+- Usuarios → sesiones
+    
+
+---
+
+### 1.10.6.3 Modelo mental
+
+Piensa en un diccionario:
+
+- Buscas por palabra (clave).
+    
+- Obtienes definición (valor).
+    
+- No recorres todo el libro.
+    
+
+---
+
+### 1.10.6.4 Ejemplo correcto (obligatorio)
+
+```java
+public class SessionManager {
+    private Map<String, Session> sessions = new HashMap<>();
+
+    public void addSession(String token, Session session) {
+        sessions.put(token, session);
+    }
+
+    public Session getSession(String token) {
+        return sessions.get(token);
+    }
+}
+```
+
+---
+
+### 1.10.6.5 Ejemplo incorrecto (obligatorio)
+
+```java
+List<Session> sessions;
+
+for (Session s : sessions) {
+    if (s.getToken().equals(token)) {
+        return s;
+    }
+}
+```
+
+#### Por qué está mal
+
+- Búsqueda ineficiente.
+    
+- Código innecesario.
+    
+- Mala elección de estructura.
+    
+
+---
+
+### 1.10.6.6 Errores típicos del principiante
+
+- Usar `List` para búsquedas por clave.
+    
+- Claves mal definidas.
+    
+- Exponer el `Map`.
+    
+- No entender unicidad de claves.
+    
+
+---
+
+### 1.10.6.7 Señales de comprensión
+
+- ¿Estoy buscando por identidad?
+    
+- ¿Necesito acceso directo?
+    
+- ¿Estoy recorriendo de más?
+    
+
+---
+
+### 1.10.6.8 Ejercicio práctico mínimo
+
+Diseña una clase `ConfigService` que:
+
+- Guarde configuraciones por nombre.
+    
+- Permita obtenerlas por clave.
+    
+- No exponga el mapa directamente.
+    
+
+---
+
+
+---
+
+# 2. Componentes – Arquitectura de Capas en Backend
+
+---
+
+## 2.1 Arquitectura de Capas (Layered Architecture)
+
+---
+
+### 2.1.1 Contexto
+
+Cuando los sistemas backend comenzaron a crecer, apareció un problema estructural grave:  
+**todo el código estaba mezclado**.
+
+Antes de usar arquitectura de capas, era común encontrar:
+
+- Acceso a base de datos dentro de controladores.
+    
+- Lógica de negocio mezclada con lógica técnica.
+    
+- Código imposible de testear.
+    
+- Cambios pequeños que rompían todo.
+    
+
+Ejemplo típico del pasado (muy común en trainees):
+
+```java
+// controlador
+public void createUser(Request req) {
+    Connection conn = DriverManager.getConnection(...);
+    PreparedStatement ps = conn.prepareStatement("INSERT...");
+    ps.execute();
+}
+```
+
+Problemas reales:
+
+- Alto acoplamiento.
+    
+- Baja cohesión.
+    
+- Imposibilidad de escalar.
+    
+- Dificultad para trabajar en equipo.
+    
+
+La **Arquitectura de Capas** surge para resolver esto:
+
+> **Separar responsabilidades claramente y definir cómo fluye la información dentro del sistema.**
+
+---
+
+### 2.1.2 Definición extensa y desglosada
+
+La **Arquitectura de Capas** es un estilo arquitectónico que organiza el sistema en **capas**, donde cada capa:
+
+- Tiene una responsabilidad clara.
+    
+- Solo se comunica con capas específicas.
+    
+- No conoce los detalles internos de otras capas.
+    
+
+Las capas típicas en backend son:
+
+1. **Capa de Presentación / Controladores**
+    
+2. **Capa de Aplicación / Servicios**
+    
+3. **Capa de Dominio**
+    
+4. **Capa de Persistencia / Infraestructura**
+    
+
+Cada capa **existe por una razón**, no por moda.
+
+---
+
+### 2.1.3 Modelo mental
+
+#### Modelo incorrecto del principiante
+
+El principiante piensa:
+
+> “Pongo todo donde funcione”
+
+Resultado:
+
+- Código espagueti.
+    
+- Dependencias cruzadas.
+    
+- Sistema frágil.
+    
+
+#### Modelo correcto
+
+Piensa el sistema como un edificio:
+
+- Cada piso tiene una función.
+    
+- No saltas pisos arbitrariamente.
+    
+- La comunicación está definida.
+    
+
+Si rompes una capa, el edificio colapsa.
+
+---
+
+## 2.2 Capa de Presentación (Controllers)
+
+---
+
+### 2.2.1 Contexto
+
+La capa de presentación surge porque:
+
+- El sistema necesita recibir solicitudes externas.
+    
+- El backend debe comunicarse con clientes (HTTP, APIs).
+    
+- No todo el sistema debe conocer protocolos externos.
+    
+
+Antes de esta capa:
+
+- La lógica de negocio dependía de HTTP.
+    
+- Cambiar REST por otro protocolo rompía todo.
+    
+
+---
+
+### 2.2.2 Definición extensa y desglosada
+
+La **capa de presentación** es responsable de:
+
+- Recibir solicitudes externas.
+    
+- Validar datos básicos de entrada.
+    
+- Delegar la lógica al servicio adecuado.
+    
+- Transformar respuestas al formato requerido.
+    
+
+**NO es responsable de:**
+
+- Lógica de negocio.
+    
+- Acceso a base de datos.
+    
+- Decisiones complejas.
+    
+
+---
+
+### 2.2.3 Modelo mental
+
+Piensa en un recepcionista:
+
+- Recibe solicitudes.
+    
+- No toma decisiones de negocio.
+    
+- Redirige al área correcta.
+    
+
+Eso es un controlador.
+
+---
+
+### 2.2.4 Ejemplo correcto (obligatorio)
+
+```java
+@RestController
+public class UserController {
+
+    private final UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
+    @PostMapping("/users")
+    public void createUser(@RequestBody UserDto dto) {
+        userService.create(dto);
+    }
+}
+```
+
+#### Explicación paso a paso
+
+1. El controlador recibe la petición.
+    
+2. No contiene lógica de negocio.
+    
+3. Delegación clara al servicio.
+    
+4. Código simple y legible.
+    
+
+---
+
+### 2.2.5 Ejemplo incorrecto (obligatorio)
+
+```java
+@PostMapping("/users")
+public void createUser(UserDto dto) {
+    if(dto.getAge() < 18) {
+        throw new RuntimeException();
+    }
+    repository.save(dto);
+}
+```
+
+#### Por qué está mal
+
+- Lógica de negocio en el controlador.
+    
+- Acceso directo a persistencia.
+    
+- Violación total de capas.
+    
+
+---
+
+### 2.2.6 Errores típicos del principiante
+
+- Controladores gigantes.
+    
+- Validaciones de negocio en controllers.
+    
+- Acceso directo a base de datos.
+    
+- Lógica duplicada.
+    
+
+---
+
+### 2.2.7 Señales de comprensión
+
+- ¿Este código depende de HTTP?
+    
+- ¿Puedo testear esto sin servidor?
+    
+- ¿El controlador decide o delega?
+    
+
+---
+
+### 2.2.8 Ejercicio práctico mínimo
+
+Diseña un controlador que:
+
+- Reciba una petición.
+    
+- Valide formato.
+    
+- Delegue todo al servicio.
+    
+
+---
+
+## 2.3 Capa de Aplicación (Servicios)
+
+---
+
+### 2.3.1 Contexto
+
+La capa de servicios surge porque:
+
+- La lógica de negocio debe vivir en un solo lugar.
+    
+- Los controladores no deben decidir reglas.
+    
+- El dominio no debe conocer infraestructura.
+    
+
+Antes de esta capa:
+
+- Lógica duplicada.
+    
+- Código imposible de reutilizar.
+    
+- Cambios costosos.
+    
+
+---
+
+### 2.3.2 Definición extensa y desglosada
+
+La **capa de aplicación**:
+
+- Orquesta casos de uso.
+    
+- Aplica reglas de negocio.
+    
+- Coordina dominio y persistencia.
+    
+- No conoce detalles de transporte.
+    
+
+Es el **cerebro del sistema**.
+
+---
+
+### 2.3.3 Modelo mental
+
+Piensa en un gerente:
+
+- Decide qué se hace.
+    
+- Coordina áreas.
+    
+- No ejecuta tareas técnicas.
+    
+
+---
+
+### 2.3.4 Ejemplo correcto (obligatorio)
+
+```java
+public class UserService {
+
+    private final UserRepository repository;
+
+    public UserService(UserRepository repository) {
+        this.repository = repository;
+    }
+
+    public void create(UserDto dto) {
+        if(dto.getAge() < 18) {
+            throw new IllegalArgumentException("Menor de edad");
+        }
+        User user = new User(dto.getName(), dto.getAge());
+        repository.save(user);
+    }
+}
+```
+
+---
+
+### 2.3.5 Ejemplo incorrecto (obligatorio)
+
+```java
+public void create(UserDto dto) {
+    System.out.println("INSERT INTO users...");
+}
+```
+
+#### Por qué está mal
+
+- Lógica técnica en servicio.
+    
+- Acoplamiento innecesario.
+    
+- Difícil de testear.
+    
+
+---
+
+### 2.3.6 Errores típicos del principiante
+
+- Servicios anémicos.
+    
+- Servicios demasiado grandes.
+    
+- Lógica duplicada.
+    
+- Dependencia directa de frameworks.
+    
+
+---
+
+### 2.3.7 Señales de comprensión
+
+- ¿Este servicio representa un caso de uso?
+    
+- ¿Puedo testearlo sin framework?
+    
+- ¿Está orquestando o ejecutando detalles?
+    
+
+---
+
+### 2.3.8 Ejercicio práctico mínimo
+
+Diseña un servicio que:
+
+- Valide reglas de negocio.
+    
+- Use dominio.
+    
+- Delegue persistencia.
+    
+
+---
+
+
+## 2.4 Capa de Dominio
+
+---
+
+### 2.4.1 Contexto
+
+Cuando los sistemas backend empezaron a adoptar arquitectura de capas, muchos equipos cometieron un error grave:  
+**poner toda la lógica en servicios** y dejar las entidades como simples “bolsas de datos”.
+
+Antes de una capa de dominio bien definida, era común ver:
+
+- Entidades sin comportamiento.
+    
+- Reglas de negocio dispersas en servicios.
+    
+- Duplicación de validaciones.
+    
+- Modelos que no representaban el problema real.
+    
+
+Ejemplo típico de mal diseño histórico:
+
+```java
+public class User {
+    public String name;
+    public int age;
+}
+```
+
+Toda la lógica vivía fuera de la entidad.
+
+Esto genera un problema serio:
+
+> El sistema **no modela el negocio**, solo ejecuta instrucciones.
+
+La **capa de dominio** surge para resolver esto:
+
+> **Representar el problema real del negocio en código, con reglas, comportamientos y restricciones propias.**
+
+---
+
+### 2.4.2 Definición extensa y desglosada
+
+La **capa de dominio** es el corazón del sistema backend.  
+Contiene:
+
+- Entidades
+    
+- Value Objects
+    
+- Reglas de negocio
+    
+- Invariantes
+    
+- Comportamientos propios del dominio
+    
+
+Características clave:
+
+- No depende de frameworks.
+    
+- No conoce HTTP, JSON, SQL.
+    
+- No sabe cómo se persiste.
+    
+- Solo conoce el **lenguaje del negocio**.
+    
+
+El dominio responde a:
+
+> “¿Qué es esto?”  
+> “¿Qué puede hacer?”  
+> “¿Qué reglas nunca se pueden romper?”
+
+---
+
+### 2.4.3 Modelo mental
+
+#### Modelo incorrecto del principiante
+
+El principiante suele pensar:
+
+> “La entidad solo guarda datos, la lógica va en el servicio”
+
+Esto produce:
+
+- Dominio anémico.
+    
+- Servicios inflados.
+    
+- Código difícil de mantener.
+    
+
+#### Modelo correcto
+
+Piensa así:
+
+- El dominio **sabe cosas**.
+    
+- El dominio **se protege**.
+    
+- El dominio **toma decisiones**.
+    
+
+Los servicios **orquestan**, el dominio **decide**.
+
+#### Analogía
+
+Piensa en un contrato legal:
+
+- El contrato define reglas.
+    
+- El abogado lo aplica.
+    
+- El contrato no es un papel vacío.
+    
+
+Eso es el dominio.
+
+---
+
+### 2.4.4 Ejemplo correcto (obligatorio)
+
+```java
+public class User {
+    private final String name;
+    private int age;
+
+    public User(String name, int age) {
+        if (age < 18) {
+            throw new IllegalArgumentException("El usuario debe ser mayor de edad");
+        }
+        this.name = name;
+        this.age = age;
+    }
+
+    public void celebrateBirthday() {
+        this.age++;
+    }
+
+    public int getAge() {
+        return age;
+    }
+}
+```
+
+#### Explicación paso a paso
+
+1. El dominio valida reglas críticas.
+    
+2. No permite estados inválidos.
+    
+3. El comportamiento vive en la entidad.
+    
+4. El objeto se protege.
+    
+5. El modelo representa el negocio real.
+    
+
+---
+
+### 2.4.5 Ejemplo incorrecto (obligatorio)
+
+```java
+public class User {
+    public String name;
+    public int age;
+}
+```
+
+```java
+if(user.age < 18) {
+    throw new RuntimeException();
+}
+```
+
+#### Por qué está mal
+
+- La regla vive fuera del dominio.
+    
+- Cualquier código puede romperla.
+    
+- El modelo no protege invariantes.
+    
+- El negocio no está modelado.
+    
+
+---
+
+### 2.4.6 Errores típicos del principiante
+
+- Entidades sin comportamiento.
+    
+- Validaciones solo en servicios.
+    
+- Uso excesivo de getters/setters.
+    
+- Modificación libre del estado.
+    
+- Dominio dependiente de frameworks.
+    
+
+---
+
+### 2.4.7 Señales de comprensión
+
+Sabes que entiendes dominio si puedes responder:
+
+- ¿Dónde vive esta regla?
+    
+- ¿Puede este objeto estar en un estado inválido?
+    
+- ¿Quién protege las invariantes?
+    
+- ¿El dominio se puede usar sin framework?
+    
+
+---
+
+### 2.4.8 Ejercicio práctico mínimo
+
+Diseña una entidad `Order` que:
+
+- No permita total negativo.
+    
+- Cambie de estado (CREATED, PAID, SHIPPED).
+    
+- No permita saltos inválidos de estado.
+    
+
+Piensa:
+
+- ¿Dónde vive la lógica?
+    
+- ¿Quién controla el estado?
+    
+
+---
+
+
+## 2.5 Capa de Persistencia (Repositorio / Infraestructura)
+
+---
+
+### 2.5.1 Contexto
+
+Cuando los sistemas backend empezaron a trabajar con bases de datos, apareció un error muy común que todavía hoy cometen los trainees:
+
+> **Pensar que guardar datos es “parte natural” del dominio o del servicio.**
+
+Antes de separar la capa de persistencia, era común ver:
+
+- SQL directamente en servicios.
+    
+- Entidades que sabían cómo guardarse.
+    
+- Código acoplado a una base de datos específica.
+    
+- Imposibilidad de cambiar de motor de base de datos.
+    
+- Dificultad extrema para hacer pruebas.
+    
+
+Ejemplo histórico típico (muy común aún):
+
+```java
+public void createUser(User user) {
+    Connection conn = DriverManager.getConnection(...);
+    PreparedStatement ps = conn.prepareStatement("INSERT INTO users...");
+    ps.execute();
+}
+```
+
+Problemas reales:
+
+- El dominio depende de infraestructura.
+    
+- Cambiar de base de datos rompe todo.
+    
+- El código no es testeable.
+    
+- El sistema no escala.
+    
+
+La **capa de persistencia** surge para resolver esto:
+
+> **Separar el “qué” se guarda del “cómo” se guarda.**
+
+---
+
+### 2.5.2 Definición extensa y desglosada
+
+La **capa de persistencia** es responsable de:
+
+- Guardar y recuperar información.
+    
+- Traducir objetos del dominio a estructuras persistentes.
+    
+- Encapsular detalles técnicos (SQL, ORM, drivers).
+    
+- Proteger al dominio de la infraestructura.
+    
+
+Esta capa:
+
+- **NO contiene reglas de negocio.**
+    
+- **NO toma decisiones del dominio.**
+    
+- **NO conoce casos de uso.**
+    
+
+Solo responde a:
+
+> “¿Cómo se guarda y se recupera esto?”
+
+---
+
+### 2.5.3 Modelo mental
+
+#### Modelo incorrecto del principiante
+
+El principiante piensa:
+
+> “El objeto se guarda solo”
+
+O:
+
+> “Da igual dónde pongo el SQL”
+
+Esto genera:
+
+- Acoplamiento extremo.
+    
+- Código frágil.
+    
+- Imposibilidad de evolución.
+    
+
+#### Modelo correcto
+
+Piensa así:
+
+- El dominio **no sabe que existe una base de datos**.
+    
+- La persistencia **sirve** al dominio.
+    
+- La infraestructura es un **detalle reemplazable**.
+    
+
+#### Analogía
+
+Piensa en una persona y su memoria:
+
+- La persona piensa.
+    
+- La memoria guarda recuerdos.
+    
+- La persona no sabe cómo funcionan las neuronas.
+    
+
+Eso es persistencia.
+
+---
+
+## 2.5.4 Repositorios (Repository Pattern)
+
+---
+
+### 2.5.4.1 Contexto
+
+El **patrón repositorio** surge porque:
+
+- El dominio necesita acceder a datos.
+    
+- No debe conocer SQL ni detalles técnicos.
+    
+- Se necesita un punto claro de acceso a persistencia.
+    
+
+Antes del repositorio:
+
+- SQL disperso.
+    
+- Lógica duplicada.
+    
+- Cambios costosos.
+    
+
+---
+
+### 2.5.4.2 Definición extensa y desglosada
+
+Un **repositorio** es una abstracción que:
+
+- Representa una colección de objetos del dominio.
+    
+- Permite guardar y recuperar entidades.
+    
+- Oculta detalles de implementación.
+    
+
+Un repositorio **se expresa en el lenguaje del dominio**, no en SQL.
+
+Ejemplo conceptual:
+
+- `UserRepository`
+    
+- `OrderRepository`
+    
+
+No:
+
+- `UserDAOWithMySQLImplementation`
+    
+
+---
+
+### 2.5.4.3 Modelo mental
+
+Piensa en un archivo físico:
+
+- Tú pides un documento.
+    
+- No sabes en qué estante está.
+    
+- No sabes si es digital o físico.
+    
+
+El repositorio hace eso.
+
+---
+
+### 2.5.4.4 Ejemplo correcto (obligatorio)
+
+```java
+public interface UserRepository {
+    void save(User user);
+    Optional<User> findById(String id);
+}
+```
+
+Implementación:
+
+```java
+public class UserRepositoryJdbc implements UserRepository {
+
+    public void save(User user) {
+        // SQL aquí
+    }
+
+    public Optional<User> findById(String id) {
+        // SQL aquí
+        return Optional.empty();
+    }
+}
+```
+
+#### Explicación paso a paso
+
+1. El dominio conoce la interfaz.
+    
+2. No conoce la implementación.
+    
+3. El SQL está encapsulado.
+    
+4. Se puede cambiar de tecnología.
+    
+5. El sistema es flexible.
+    
+
+---
+
+### 2.5.4.5 Ejemplo incorrecto (obligatorio)
+
+```java
+public class User {
+    public void save() {
+        // SQL aquí
+    }
+}
+```
+
+#### Por qué está mal
+
+- El dominio depende de infraestructura.
+    
+- Violación total de capas.
+    
+- Código rígido.
+    
+- Dominio contaminado.
+    
+
+---
+
+### 2.5.4.6 Errores típicos del principiante
+
+- Repositorios gigantes.
+    
+- Métodos genéricos sin sentido.
+    
+- SQL en servicios.
+    
+- Dominio que conoce persistencia.
+    
+- Repositorios que contienen lógica de negocio.
+    
+
+---
+
+### 2.5.4.7 Señales de comprensión
+
+- ¿El dominio conoce SQL?
+    
+- ¿Puedo cambiar la base de datos?
+    
+- ¿Puedo testear sin DB real?
+    
+- ¿El repositorio habla lenguaje del dominio?
+    
+
+---
+
+### 2.5.4.8 Ejercicio práctico mínimo
+
+Diseña un repositorio `OrderRepository` que:
+
+- Guarde órdenes.
+    
+- Busque por ID.
+    
+- No exponga detalles técnicos.
+    
+
+---
+
+## 2.5.5 Infraestructura
+
+---
+
+### 2.5.5.1 Contexto
+
+La infraestructura existe porque:
+
+- El software necesita interactuar con el mundo real.
+    
+- Bases de datos, colas, APIs, archivos existen.
+    
+- Estos detalles **no son el negocio**.
+    
+
+Antes de separar infraestructura:
+
+- Código acoplado.
+    
+- Cambios costosos.
+    
+- Sistemas frágiles.
+    
+
+---
+
+### 2.5.5.2 Definición extensa y desglosada
+
+La **infraestructura** incluye:
+
+- Implementaciones de repositorios.
+    
+- Configuración de base de datos.
+    
+- Clientes HTTP.
+    
+- Mensajería.
+    
+- Frameworks.
+    
+
+Es la capa **más externa**.
+
+---
+
+### 2.5.5.3 Modelo mental
+
+Piensa en enchufes:
+
+- El aparato no sabe de electricidad.
+    
+- El enchufe se adapta.
+    
+- Cambias de país, cambias enchufe.
+    
+
+Eso es infraestructura.
+
+---
+
+### 2.5.5.4 Ejemplo correcto (obligatorio)
+
+```java
+@Configuration
+public class DatabaseConfig {
+
+    @Bean
+    public DataSource dataSource() {
+        // configuración técnica
+    }
+}
+```
+
+El dominio **no conoce esto**.
+
+---
+
+### 2.5.5.5 Ejemplo incorrecto (obligatorio)
+
+```java
+public class OrderService {
+    DataSource ds = new DataSource();
+}
+```
+
+#### Por qué está mal
+
+- Servicio acoplado.
+    
+- Difícil de testear.
+    
+- Violación de capas.
+    
+
+---
+
+### 2.5.5.6 Errores típicos del principiante
+
+- Infraestructura mezclada con negocio.
+    
+- Dependencias directas.
+    
+- Falta de abstracciones.
+    
+- Código difícil de mover.
+    
+
+---
+
+### 2.5.5.7 Señales de comprensión
+
+- ¿El dominio depende de infraestructura?
+    
+- ¿Puedo reemplazar tecnología?
+    
+- ¿Las dependencias apuntan hacia adentro?
+    
+
+---
+
+### 2.5.5.8 Ejercicio práctico mínimo
+
+Diseña una infraestructura que:
+
+- Implemente un repositorio.
+    
+- Sea reemplazable.
+    
+- No afecte dominio ni servicios.
+    
+
+---
+
+
+
+---
+
+# 3. Fundamentos – Patrones GRASP en Backend
+
+> **Advertencia pedagógica clave**  
+> GRASP **no son patrones de moda**, **no son frameworks**, **no son recetas**.  
+> Son **principios de pensamiento** para asignar responsabilidades correctamente.  
+> Un backend trainee que entiende GRASP **piensa mejor**, incluso sin saber frameworks.
+
+---
+
+## 3.1 ¿Qué son los patrones GRASP?
+
+---
+
+### 3.1.1 Contexto
+
+Antes de GRASP, muchos sistemas orientados a objetos fallaban **aunque usaran OOP**.
+
+¿Por qué?
+
+Porque:
+
+- Las clases existían, pero no sabían qué les correspondía hacer.
+    
+- Las responsabilidades se asignaban “donde funcionara”.
+    
+- Aparecían clases “Dios” que hacían todo.
+    
+- El código se volvía difícil de cambiar.
+    
+
+Ejemplo clásico del pasado:
+
+- Un `Manager` que valida, guarda, calcula, envía emails y maneja errores.
+    
+- Un `Service` con 2000 líneas.
+    
+
+El problema **no era la sintaxis**, era **la asignación de responsabilidades**.
+
+Los **patrones GRASP** (General Responsibility Assignment Software Patterns) nacen para resolver esto:
+
+> **Proveer criterios claros para decidir qué clase debe hacer qué.**
+
+---
+
+### 3.1.2 Definición extensa y desglosada
+
+GRASP es un conjunto de **principios de diseño**, no patrones de implementación.
+
+No dicen:
+
+- “Usa esta clase”
+    
+- “Escribe este código”
+    
+
+Dicen:
+
+- “Pon esta responsabilidad aquí, no allá”
+    
+- “Evita este tipo de acoplamiento”
+    
+- “Favorece esta forma de colaboración”
+    
+
+GRASP responde preguntas como:
+
+- ¿Quién debería crear este objeto?
+    
+- ¿Quién debería conocer estos datos?
+    
+- ¿Dónde debería vivir esta lógica?
+    
+- ¿Cómo evitar acoplamiento innecesario?
+    
+
+---
+
+### 3.1.3 Modelo mental
+
+#### Modelo incorrecto del principiante
+
+El principiante piensa:
+
+> “Pongo la lógica donde ya tengo código”
+
+Resultado:
+
+- Clases infladas.
+    
+- Responsabilidades mezcladas.
+    
+- Difícil mantenimiento.
+    
+
+#### Modelo correcto
+
+Piensa así:
+
+- Cada responsabilidad **tiene un lugar natural**.
+    
+- Si dudas, GRASP te da criterios.
+    
+- El diseño importa tanto como el código.
+    
+
+#### Analogía
+
+Piensa en una empresa:
+
+- El contador no hace marketing.
+    
+- El gerente no limpia oficinas.
+    
+- Cada rol existe por una razón.
+    
+
+Eso es GRASP.
+
+---
+
+## 3.2 GRASP: Experto en Información (Information Expert)
+
+---
+
+### 3.2.1 Contexto
+
+Uno de los errores más comunes en backend trainee es este:
+
+> **Calcular cosas lejos de los datos que las necesitan.**
+
+Antes de aplicar este patrón, se veía:
+
+- Servicios calculando totales.
+    
+- Controladores tomando decisiones de negocio.
+    
+- Clases que “usan” datos que no poseen.
+    
+
+Esto genera:
+
+- Alto acoplamiento.
+    
+- Código difícil de entender.
+    
+- Duplicación de lógica.
+    
+
+---
+
+### 3.2.2 Definición extensa y desglosada
+
+El patrón **Experto en Información** dice:
+
+> **Asigna una responsabilidad a la clase que tiene la información necesaria para cumplirla.**
+
+No a la que:
+
+- Está más “arriba”.
+    
+- Tiene más visibilidad.
+    
+- Ya existe.
+    
+
+Sino a la que **posee los datos**.
+
+---
+
+### 3.2.3 Modelo mental
+
+#### Modelo incorrecto
+
+> “El servicio calcula todo”
+
+#### Modelo correcto
+
+> “El objeto que tiene los datos sabe calcular con ellos”
+
+La información **no debe viajar innecesariamente**.
+
+---
+
+### 3.2.4 Ejemplo correcto (obligatorio)
+
+```java
+public class Order {
+    private List<OrderItem> items;
+
+    public double calculateTotal() {
+        double total = 0;
+        for (OrderItem item : items) {
+            total += item.getSubtotal();
+        }
+        return total;
+    }
+}
+```
+
+#### Explicación paso a paso
+
+1. `Order` posee los ítems.
+    
+2. Tiene toda la información necesaria.
+    
+3. La responsabilidad vive donde corresponde.
+    
+4. El servicio no calcula.
+    
+5. Diseño limpio.
+    
+
+---
+
+### 3.2.5 Ejemplo incorrecto (obligatorio)
+
+```java
+public class OrderService {
+    public double calculateTotal(Order order) {
+        double total = 0;
+        for (OrderItem item : order.getItems()) {
+            total += item.getSubtotal();
+        }
+        return total;
+    }
+}
+```
+
+#### Por qué está mal
+
+- El servicio usa datos que no posee.
+    
+- El dominio se vuelve pasivo.
+    
+- Se rompe encapsulación.
+    
+- Duplicación futura garantizada.
+    
+
+---
+
+### 3.2.6 Errores típicos del principiante
+
+- Calcular todo en servicios.
+    
+- Pasar listas de objetos entre capas.
+    
+- Ignorar quién tiene la información.
+    
+- Lógica duplicada.
+    
+
+---
+
+### 3.2.7 Señales de comprensión
+
+- ¿Quién tiene los datos?
+    
+- ¿Quién debería decidir?
+    
+- ¿Estoy moviendo datos innecesariamente?
+    
+
+---
+
+### 3.2.8 Ejercicio práctico mínimo
+
+Diseña una entidad `Invoice` que:
+
+- Tenga líneas de factura.
+    
+- Calcule su total internamente.
+    
+- No dependa del servicio para calcular.
+    
+
+---
+
+## 3.3 GRASP: Creador (Creator)
+
+---
+
+### 3.3.1 Contexto
+
+Otro error clásico en trainees:
+
+> **Crear objetos en cualquier lugar.**
+
+Antes de aplicar este patrón:
+
+- Objetos creados en controladores.
+    
+- Servicios creando cosas que no entienden.
+    
+- Dependencias innecesarias.
+    
+
+---
+
+### 3.3.2 Definición extensa y desglosada
+
+El patrón **Creador** dice:
+
+> Una clase A debería crear instancias de B si:
+> 
+> - A contiene o agrega B
+>     
+> - A usa B intensamente
+>     
+> - A tiene los datos para inicializar B
+>     
+
+No se trata de “dónde es más fácil”, sino de **coherencia**.
+
+---
+
+### 3.3.3 Modelo mental
+
+Piensa:
+
+- ¿Quién conoce los datos?
+    
+- ¿Quién usa el objeto?
+    
+- ¿Quién tiene relación natural?
+    
+
+---
+
+### 3.3.4 Ejemplo correcto (obligatorio)
+
+```java
+public class Order {
+    private List<OrderItem> items = new ArrayList<>();
+
+    public void addItem(String product, int quantity, double price) {
+        OrderItem item = new OrderItem(product, quantity, price);
+        items.add(item);
+    }
+}
+```
+
+#### Explicación
+
+- `Order` contiene `OrderItem`.
+    
+- Tiene datos necesarios.
+    
+- Controla consistencia.
+    
+- Aplica GRASP Creador.
+    
+
+---
+
+### 3.3.5 Ejemplo incorrecto (obligatorio)
+
+```java
+OrderItem item = new OrderItem(...);
+order.getItems().add(item);
+```
+
+#### Por qué está mal
+
+- Se expone estructura interna.
+    
+- Se pierde control.
+    
+- Se rompe encapsulación.
+    
+
+---
+
+### 3.3.6 Errores típicos del principiante
+
+- Crear objetos en controladores.
+    
+- Usar `new` en cualquier parte.
+    
+- No pensar en consistencia.
+    
+- Exponer colecciones.
+    
+
+---
+
+### 3.3.7 Señales de comprensión
+
+- ¿Quién debería crear este objeto?
+    
+- ¿Quién controla su ciclo de vida?
+    
+- ¿Estoy rompiendo encapsulación?
+    
+
+---
+
+### 3.3.8 Ejercicio práctico mínimo
+
+Diseña una clase `Team` que:
+
+- Cree sus propios `Member`.
+    
+- No permita agregarlos desde afuera.
+    
+- Controle su consistencia.
+    
+
+---
+
+
+## 3.4 GRASP: Controlador (Controller)
+
+---
+
+### 3.4.1 Contexto
+
+Cuando los sistemas backend empezaron a recibir solicitudes externas (HTTP, eventos, mensajes), surgió una confusión grave:
+
+> **¿Quién debe recibir la petición y decidir qué hacer con ella?**
+
+Antes de aplicar el patrón Controlador, era común ver:
+
+- Lógica de negocio en controladores HTTP.
+    
+- Controladores gigantes con múltiples responsabilidades.
+    
+- Servicios que conocían detalles de transporte.
+    
+- Código imposible de mantener.
+    
+
+Ejemplo histórico típico:
+
+```java
+@PostMapping("/order")
+public void createOrder(Request req) {
+    // valida
+    // crea
+    // guarda
+    // envía email
+    // maneja errores
+}
+```
+
+El patrón **Controlador (GRASP)** surge para resolver esto:
+
+> **Asignar la responsabilidad de manejar eventos del sistema a una clase específica, sin que esta contenga la lógica de negocio.**
+
+---
+
+### 3.4.2 Definición extensa y desglosada
+
+El **Controlador (GRASP)** es una clase que:
+
+- Recibe eventos del sistema (requests, comandos).
+    
+- Coordina la ejecución de un caso de uso.
+    
+- Delegar la lógica real a otras clases.
+    
+- No toma decisiones del dominio.
+    
+
+No debe:
+
+- Validar reglas de negocio complejas.
+    
+- Acceder directamente a la base de datos.
+    
+- Contener lógica técnica pesada.
+    
+
+El controlador **orquesta**, no **ejecuta**.
+
+---
+
+### 3.4.3 Modelo mental
+
+#### Modelo incorrecto del principiante
+
+> “El controlador hace todo porque recibe la petición”
+
+Resultado:
+
+- Clases gigantes.
+    
+- Código duplicado.
+    
+- Violación de capas.
+    
+
+#### Modelo correcto
+
+Piensa en el controlador como:
+
+- Un **director de orquesta**.
+    
+- No toca instrumentos.
+    
+- Indica quién toca y cuándo.
+    
+
+---
+
+### 3.4.4 Ejemplo correcto (obligatorio)
+
+```java
+public class OrderController {
+
+    private final OrderService service;
+
+    public OrderController(OrderService service) {
+        this.service = service;
+    }
+
+    public void createOrder(CreateOrderCommand command) {
+        service.createOrder(command);
+    }
+}
+```
+
+#### Explicación paso a paso
+
+1. El controlador recibe el comando.
+    
+2. No aplica reglas.
+    
+3. Delegación total al servicio.
+    
+4. Responsabilidad clara.
+    
+
+---
+
+### 3.4.5 Ejemplo incorrecto (obligatorio)
+
+```java
+public void createOrder(Command c) {
+    if(c.amount <= 0) throw new RuntimeException();
+    Order o = new Order(...);
+    repository.save(o);
+}
+```
+
+#### Por qué está mal
+
+- Controlador decide reglas.
+    
+- Acceso directo a persistencia.
+    
+- Violación de GRASP y capas.
+    
+
+---
+
+### 3.4.6 Errores típicos del principiante
+
+- Controladores con lógica de negocio.
+    
+- Validaciones complejas en controllers.
+    
+- Acceso a repositorios.
+    
+- Lógica duplicada.
+    
+
+---
+
+### 3.4.7 Señales de comprensión
+
+- ¿Este controlador decide o delega?
+    
+- ¿Podría testearlo sin dominio?
+    
+- ¿Es solo un coordinador?
+    
+
+---
+
+### 3.4.8 Ejercicio práctico mínimo
+
+Diseña un controlador que:
+
+- Reciba un comando.
+    
+- No tenga lógica.
+    
+- Delegue completamente.
+    
+
+---
+
+## 3.5 GRASP: Alta Cohesión (High Cohesion)
+
+---
+
+### 3.5.1 Contexto
+
+Un problema recurrente en sistemas backend es la existencia de clases que:
+
+- Hacen demasiadas cosas.
+    
+- Tienen múltiples razones para cambiar.
+    
+- Son difíciles de entender.
+    
+
+Antes de aplicar alta cohesión:
+
+- Clases “Dios”.
+    
+- Servicios gigantes.
+    
+- Código frágil.
+    
+
+---
+
+### 3.5.2 Definición extensa y desglosada
+
+**Alta Cohesión** significa:
+
+> **Cada clase debe tener una responsabilidad clara y bien delimitada.**
+
+Una clase cohesionada:
+
+- Hace pocas cosas.
+    
+- Todas relacionadas entre sí.
+    
+- Tiene un propósito claro.
+    
+
+---
+
+### 3.5.3 Modelo mental
+
+Piensa:
+
+- Una clase = un concepto.
+    
+- Un concepto = una responsabilidad.
+    
+- Si no puedes explicarla en una frase, está mal.
+    
+
+---
+
+### 3.5.4 Ejemplo correcto (obligatorio)
+
+```java
+public class PasswordHasher {
+    public String hash(String password) {
+        // lógica de hash
+        return "...";
+    }
+}
+```
+
+---
+
+### 3.5.5 Ejemplo incorrecto (obligatorio)
+
+```java
+public class UserService {
+    public void createUser(){}
+    public void hashPassword(){}
+    public void sendEmail(){}
+    public void generateReport(){}
+}
+```
+
+#### Por qué está mal
+
+- Demasiadas responsabilidades.
+    
+- Baja cohesión.
+    
+- Alta fragilidad.
+    
+
+---
+
+### 3.5.6 Errores típicos del principiante
+
+- Servicios con demasiados métodos.
+    
+- Clases utilitarias gigantes.
+    
+- Mezclar responsabilidades.
+    
+
+---
+
+### 3.5.7 Señales de comprensión
+
+- ¿Esta clase tiene más de un motivo para cambiar?
+    
+- ¿Todo aquí está relacionado?
+    
+- ¿Puedo dividirla?
+    
+
+---
+
+### 3.5.8 Ejercicio práctico mínimo
+
+Diseña una clase:
+
+- Con una sola responsabilidad clara.
+    
+- Sin lógica ajena.
+    
+
+---
+
+## 3.6 GRASP: Bajo Acoplamiento (Low Coupling)
+
+---
+
+### 3.6.1 Contexto
+
+El acoplamiento excesivo fue históricamente una de las mayores causas de sistemas frágiles:
+
+- Cambios pequeños rompían todo.
+    
+- Dependencias circulares.
+    
+- Código imposible de testear.
+    
+
+---
+
+### 3.6.2 Definición extensa y desglosada
+
+**Bajo acoplamiento** significa:
+
+> **Reducir dependencias innecesarias entre clases.**
+
+Una clase con bajo acoplamiento:
+
+- Conoce pocas clases.
+    
+- Depende de abstracciones.
+    
+- Es fácil de cambiar.
+    
+
+---
+
+### 3.6.3 Modelo mental
+
+Piensa en enchufes:
+
+- No conoces la central eléctrica.
+    
+- Solo usas la interfaz.
+    
+
+---
+
+### 3.6.4 Ejemplo correcto (obligatorio)
+
+```java
+public class NotificationService {
+    private final MessageSender sender;
+
+    public NotificationService(MessageSender sender) {
+        this.sender = sender;
+    }
+}
+```
+
+---
+
+### 3.6.5 Ejemplo incorrecto (obligatorio)
+
+```java
+public class NotificationService {
+    private EmailSender sender = new EmailSender();
+}
+```
+
+#### Por qué está mal
+
+- Dependencia rígida.
+    
+- Difícil de cambiar.
+    
+- Alto acoplamiento.
+    
+
+---
+
+### 3.6.6 Errores típicos del principiante
+
+- Dependencias concretas.
+    
+- Uso excesivo de `new`.
+    
+- No usar interfaces.
+    
+
+---
+
+### 3.6.7 Señales de comprensión
+
+- ¿Puedo cambiar esta dependencia?
+    
+- ¿Dependo de detalles o contratos?
+    
+- ¿Puedo testear con mocks?
+    
+
+---
+
+### 3.6.8 Ejercicio práctico mínimo
+
+Diseña un servicio que:
+
+- Dependa de una interfaz.
+    
+- No conozca implementación concreta.
+    
+
+---
+
+## 3.7 GRASP: Polimorfismo
+
+_(nota: distinto del concepto OOP, aquí es criterio de asignación)_
+
+---
+
+### 3.7.1 Contexto
+
+Cuando el comportamiento varía según el tipo, muchos trainees usan:
+
+- `if`
+    
+- `switch`
+    
+- `instanceof`
+    
+
+Esto rompe diseño.
+
+---
+
+### 3.7.2 Definición extensa y desglosada
+
+GRASP Polimorfismo dice:
+
+> **Cuando el comportamiento varía, asigna la responsabilidad a las clases variantes usando polimorfismo.**
+
+---
+
+### 3.7.3 Modelo mental
+
+- No preguntes el tipo.
+    
+- Envía el mensaje.
+    
+- Deja que el objeto responda.
+    
+
+---
+
+### 3.7.4 Ejemplo correcto (obligatorio)
+
+```java
+interface Tax {
+    double calculate(double amount);
+}
+```
+
+---
+
+### 3.7.5 Ejemplo incorrecto (obligatorio)
+
+```java
+if(type.equals("IVA")) ...
+```
+
+---
+
+### 3.7.6 Errores típicos del principiante
+
+- Condicionales por tipo.
+    
+- Falta de interfaces.
+    
+- Código rígido.
+    
+
+---
+
+### 3.7.7 Señales de comprensión
+
+- ¿Estoy preguntando tipo?
+    
+- ¿Podría agregar otro sin cambiar código?
+    
+
+---
+
+### 3.7.8 Ejercicio práctico mínimo
+
+Diseña:
+
+- Una interfaz.
+    
+- Varias implementaciones.
+    
+- Sin `if`.
+    
+
+---
+
+## 3.8 GRASP: Fabricación Pura (Pure Fabrication)
+
+---
+
+### 3.8.1 Contexto
+
+A veces **ninguna clase del dominio es un buen lugar** para cierta responsabilidad.
+
+---
+
+### 3.8.2 Definición extensa y desglosada
+
+**Fabricación Pura** dice:
+
+> **Crea una clase artificial para mantener bajo acoplamiento y alta cohesión.**
+
+---
+
+### 3.8.3 Ejemplo correcto (obligatorio)
+
+```java
+public class EmailSender {
+    public void send(String to, String body) {}
+}
+```
+
+---
+
+### 3.8.4 Ejemplo incorrecto (obligatorio)
+
+```java
+public class User {
+    public void sendEmail(){}
+}
+```
+
+---
+
+### 3.8.5 Errores típicos del principiante
+
+- Forzar lógica en entidades.
+    
+- Clases infladas.
+    
+
+---
+
+### 3.8.6 Señales de comprensión
+
+- ¿Esto pertenece al dominio?
+    
+- ¿O es una preocupación técnica?
+    
+
+---
+
+### 3.8.7 Ejercicio práctico mínimo
+
+Crea una clase:
+
+- Técnica.
+    
+- Sin dominio.
+    
+- Bien aislada.
+    
+
+---
+
+## 3.9 GRASP: Indirección
+
+---
+
+### 3.9.1 Contexto
+
+Para reducir acoplamiento, a veces necesitas **un intermediario**.
+
+---
+
+### 3.9.2 Definición extensa y desglosada
+
+**Indirección** introduce una capa intermedia para desacoplar.
+
+---
+
+### 3.9.3 Ejemplo correcto (obligatorio)
+
+```java
+Service -> Interface -> Implementation
+```
+
+---
+
+### 3.9.4 Errores típicos del principiante
+
+- Llamadas directas innecesarias.
+    
+- Acoplamiento fuerte.
+    
+
+---
+
+### 3.9.5 Ejercicio práctico mínimo
+
+Introduce una interfaz entre dos clases acopladas.
+
+---
+
+## 3.10 GRASP: Variaciones Protegidas
+
+---
+
+### 3.10.1 Contexto
+
+El cambio es inevitable.
+
+---
+
+### 3.10.2 Definición extensa y desglosada
+
+**Variaciones Protegidas** dice:
+
+> **Identifica puntos de cambio y protégelos con abstracciones.**
+
+---
+
+### 3.10.3 Ejemplo correcto (obligatorio)
+
+```java
+PaymentMethod
+```
+
+---
+
+### 3.10.4 Errores típicos del principiante
+
+- Código rígido.
+    
+- Sin puntos de extensión.
+    
+
+---
+
+### 3.10.5 Ejercicio práctico mínimo
+
+Identifica un punto de cambio y protégelo.
+
+---
+
+
+# 4. Principios – Código Limpio en Backend
+
+_(KISS, DRY, YAGNI, SOLID)_
+
+> **Advertencia pedagógica clave**  
+> Código limpio **no es código bonito**, **no es código corto**, **no es código “pro”**.  
+> Código limpio es **código que puede mantenerse, entenderse y cambiarse sin romper el sistema**.  
+> Un trainee backend **fracasa más por código sucio que por falta de conocimiento técnico**.
+
+---
+
+## 4.1 Principio KISS (Keep It Simple, Stupid)
+
+---
+
+### 4.1.1 Contexto
+
+En los primeros años de la ingeniería de software, muchos desarrolladores creían que:
+
+- Código complejo = código inteligente
+    
+- Más abstracciones = mejor diseño
+    
+- Soluciones “elegantes” = calidad
+    
+
+Esto produjo sistemas:
+
+- Difíciles de entender
+    
+- Imposibles de mantener
+    
+- Llenos de bugs sutiles
+    
+
+El principio **KISS** surge como una reacción directa a esto.
+
+---
+
+### 4.1.2 Definición extensa y desglosada
+
+**KISS** significa:
+
+> **Mantén las soluciones lo más simples posible, pero no más simples de lo necesario.**
+
+No significa:
+
+- Código pobre
+    
+- Código sin estructura
+    
+- Código improvisado
+    
+
+Significa:
+
+- Resolver el problema actual
+    
+- Con la menor complejidad posible
+    
+- Sin anticipar escenarios inexistentes
+    
+
+KISS es un **principio de diseño**, no de estilo.
+
+---
+
+### 4.1.3 Modelo mental
+
+#### Modelo incorrecto del principiante
+
+> “Si lo hago más complejo, se ve más profesional”
+
+Resultado:
+
+- Overengineering
+    
+- Abstracciones innecesarias
+    
+- Código frágil
+    
+
+#### Modelo correcto
+
+> “¿Cuál es la solución más directa y clara que resuelve este problema hoy?”
+
+#### Analogía
+
+Si necesitas cruzar la calle:
+
+- No construyes un puente colgante
+    
+- Miras a ambos lados y cruzas
+    
+
+Eso es KISS.
+
+---
+
+### 4.1.4 Ejemplo correcto (obligatorio)
+
+```java
+public boolean isAdult(int age) {
+    return age >= 18;
+}
+```
+
+#### Explicación paso a paso
+
+1. Una sola responsabilidad
+    
+2. Lógica clara
+    
+3. Fácil de entender
+    
+4. Fácil de testear
+    
+
+---
+
+### 4.1.5 Ejemplo incorrecto (obligatorio)
+
+```java
+public boolean isAdult(int age) {
+    return Optional.of(age)
+        .filter(a -> a >= 18)
+        .map(a -> true)
+        .orElse(false);
+}
+```
+
+#### Por qué está mal
+
+- Complejidad innecesaria
+    
+- Difícil de leer
+    
+- No aporta valor
+    
+- Viola KISS
+    
+
+---
+
+### 4.1.6 Errores típicos del principiante
+
+- Abusar de patrones sin necesidad
+    
+- Usar streams para todo
+    
+- Crear jerarquías innecesarias
+    
+- Complicar validaciones simples
+    
+
+---
+
+### 4.1.7 Señales de comprensión
+
+- ¿Esto se puede explicar fácil?
+    
+- ¿Hay una forma más directa?
+    
+- ¿Estoy complicando por ego técnico?
+    
+
+---
+
+### 4.1.8 Ejercicio práctico mínimo
+
+Refactoriza mentalmente un método:
+
+- Elimina abstracciones innecesarias
+    
+- Mantén solo lo esencial
+    
+- Sin cambiar funcionalidad
+    
+
+---
+
+## 4.2 Principio DRY (Don’t Repeat Yourself)
+
+---
+
+### 4.2.1 Contexto
+
+Uno de los mayores enemigos del mantenimiento es la **duplicación de lógica**.
+
+Antes de DRY:
+
+- Código copiado y pegado
+    
+- Cambios inconsistentes
+    
+- Bugs repetidos
+    
+
+El problema real:
+
+> **Cuando una regla cambia, debes cambiarla en muchos lugares.**
+
+---
+
+### 4.2.2 Definición extensa y desglosada
+
+**DRY** significa:
+
+> **Cada pieza de conocimiento debe tener una única representación en el sistema.**
+
+No significa:
+
+- Todo en un método gigante
+    
+- Abstracción prematura
+    
+
+Significa:
+
+- Una regla = un lugar
+    
+- Un concepto = una implementación
+    
+
+---
+
+### 4.2.3 Modelo mental
+
+#### Modelo incorrecto
+
+> “Copio esto y luego lo arreglo”
+
+#### Modelo correcto
+
+> “Si esto se repite, probablemente es una responsabilidad propia”
+
+---
+
+### 4.2.4 Ejemplo correcto (obligatorio)
+
+```java
+public class AgeValidator {
+    public static void validateAdult(int age) {
+        if(age < 18) {
+            throw new IllegalArgumentException();
+        }
+    }
+}
+```
+
+Uso:
+
+```java
+AgeValidator.validateAdult(user.getAge());
+```
+
+---
+
+### 4.2.5 Ejemplo incorrecto (obligatorio)
+
+```java
+if(user.getAge() < 18) { ... }
+// en otro lado
+if(customer.getAge() < 18) { ... }
+```
+
+#### Por qué está mal
+
+- Lógica duplicada
+    
+- Alto riesgo de inconsistencia
+    
+- Difícil mantenimiento
+    
+
+---
+
+### 4.2.6 Errores típicos del principiante
+
+- Copiar validaciones
+    
+- Repetir lógica en capas distintas
+    
+- No detectar patrones repetidos
+    
+
+---
+
+### 4.2.7 Señales de comprensión
+
+- ¿Esta regla aparece más de una vez?
+    
+- ¿Qué pasa si cambia?
+    
+- ¿Dónde debería vivir?
+    
+
+---
+
+### 4.2.8 Ejercicio práctico mínimo
+
+Identifica una validación repetida y:
+
+- Extrae su responsabilidad
+    
+- Centralízala
+    
+
+---
+
+## 4.3 Principio YAGNI (You Aren’t Gonna Need It)
+
+---
+
+### 4.3.1 Contexto
+
+Uno de los errores más caros en software es **programar para el futuro imaginado**.
+
+Antes de YAGNI:
+
+- Funcionalidades “por si acaso”
+    
+- Código muerto
+    
+- Complejidad innecesaria
+    
+
+---
+
+### 4.3.2 Definición extensa y desglosada
+
+**YAGNI** significa:
+
+> **No implementes algo hasta que realmente lo necesites.**
+
+No significa:
+
+- Falta de visión
+    
+- Código mediocre
+    
+
+Significa:
+
+- Resolver el problema actual
+    
+- Basado en requerimientos reales
+    
+- No en suposiciones
+    
+
+---
+
+### 4.3.3 Modelo mental
+
+#### Modelo incorrecto
+
+> “Después seguro lo vamos a necesitar”
+
+#### Modelo correcto
+
+> “Cuando el requerimiento exista, lo implementamos bien”
+
+---
+
+### 4.3.4 Ejemplo correcto (obligatorio)
+
+```java
+public class ReportService {
+    public Report generateBasic() {
+        return new Report();
+    }
+}
+```
+
+---
+
+### 4.3.5 Ejemplo incorrecto (obligatorio)
+
+```java
+public class ReportService {
+    public Report generateBasic(){}
+    public Report generateAdvanced(){}
+    public Report generateCustom(){}
+}
+```
+
+_(sin requerimientos reales)_
+
+---
+
+### 4.3.6 Errores típicos del principiante
+
+- Anticipar escenarios
+    
+- Crear hooks innecesarios
+    
+- Código muerto
+    
+
+---
+
+### 4.3.7 Señales de comprensión
+
+- ¿Esto es un requerimiento real?
+    
+- ¿Quién lo pidió?
+    
+- ¿Cuándo se usará?
+    
+
+---
+
+### 4.3.8 Ejercicio práctico mínimo
+
+Elimina mentalmente:
+
+- Código no usado
+    
+- Métodos “por si acaso”
+    
+
+---
+
+## 4.4 Principios SOLID (Introducción)
+
+> **Nota importante**  
+> SOLID **no se memoriza**, **se practica**.  
+> Aquí se introduce el marco mental.  
+> Cada principio se desarrollará **uno por uno**, con profundidad.
+
+---
+
+### 4.4.1 Contexto
+
+SOLID surge porque:
+
+- OOP sin principios produce código frágil
+    
+- Las clases crecen sin control
+    
+- El cambio se vuelve costoso
+    
+
+SOLID busca:
+
+> **Diseñar sistemas fáciles de mantener y extender.**
+
+---
+
+### 4.4.2 ¿Qué es SOLID?
+
+SOLID es un acrónimo de cinco principios:
+
+- **S**: Single Responsibility Principle
+    
+- **O**: Open/Closed Principle
+    
+- **L**: Liskov Substitution Principle
+    
+- **I**: Interface Segregation Principle
+    
+- **D**: Dependency Inversion Principle
+    
+
+Cada uno ataca un problema real.
+
+---
+
+
+## 4.5 SOLID – Single Responsibility Principle (SRP)
+
+---
+
+### 4.5.1 Contexto
+
+Cuando los sistemas backend crecen, uno de los primeros problemas graves que aparecen es este:
+
+> **Una sola clase cambia por muchas razones distintas.**
+
+Antes de aplicar SRP, era común encontrar:
+
+- Clases gigantes.
+    
+- Servicios que hacen de todo.
+    
+- Cambios pequeños que rompen partes no relacionadas.
+    
+- Dificultad para testear.
+    
+
+Ejemplo histórico típico:
+
+```java
+public class UserService {
+    public void createUser(){}
+    public void validateUser(){}
+    public void sendEmail(){}
+    public void generateReport(){}
+    public void saveToDatabase(){}
+}
+```
+
+El problema **no es que funcione**, es que **no es sostenible**.
+
+SRP surge para resolver esto.
+
+---
+
+### 4.5.2 Definición extensa y desglosada
+
+El **Single Responsibility Principle** dice:
+
+> **Una clase debe tener una sola razón para cambiar.**
+
+Esto NO significa:
+
+- Una clase con un solo método.
+    
+- Clases diminutas sin sentido.
+    
+
+Significa:
+
+- Una clase = un concepto claro.
+    
+- Todas sus responsabilidades están relacionadas.
+    
+- Cambia solo cuando ese concepto cambia.
+    
+
+SRP es sobre **cohesión**, no tamaño.
+
+---
+
+### 4.5.3 Modelo mental
+
+#### Modelo incorrecto del principiante
+
+> “Si todo está en una clase, es más fácil”
+
+Resultado:
+
+- Clases frágiles.
+    
+- Dificultad de cambio.
+    
+- Efectos colaterales.
+    
+
+#### Modelo correcto
+
+> “Si cambia el motivo A, ¿esta clase debería cambiar?”
+
+Si la respuesta es “sí” para muchos motivos → SRP violado.
+
+#### Analogía
+
+Una navaja suiza:
+
+- Tiene muchas funciones.
+    
+- Pero no es buena en ninguna.
+    
+
+Un cuchillo:
+
+- Hace una cosa.
+    
+- La hace bien.
+    
+
+---
+
+### 4.5.4 Ejemplo correcto (obligatorio)
+
+```java
+public class UserCreator {
+    public User create(UserData data) {
+        return new User(data);
+    }
+}
+```
+
+```java
+public class UserNotifier {
+    public void notify(User user) {
+        // enviar email
+    }
+}
+```
+
+```java
+public class UserRepository {
+    public void save(User user) {}
+}
+```
+
+#### Explicación paso a paso
+
+- Cada clase tiene una razón clara para cambiar.
+    
+- Responsabilidades separadas.
+    
+- Fácil de testear.
+    
+- Fácil de mantener.
+    
+
+---
+
+### 4.5.5 Ejemplo incorrecto (obligatorio)
+
+```java
+public class UserService {
+    public void createUser(){}
+    public void sendEmail(){}
+    public void save(){}
+}
+```
+
+#### Por qué está mal
+
+- Múltiples razones de cambio.
+    
+- Alta fragilidad.
+    
+- Difícil evolución.
+    
+
+---
+
+### 4.5.6 Errores típicos del principiante
+
+- Clases “Service” gigantes.
+    
+- Mezclar lógica técnica y de negocio.
+    
+- Ignorar motivos de cambio.
+    
+
+---
+
+### 4.5.7 Señales de comprensión
+
+- ¿Cuántas razones de cambio tiene esta clase?
+    
+- ¿Todo aquí está relacionado?
+    
+- ¿Podría dividirla?
+    
+
+---
+
+### 4.5.8 Ejercicio práctico mínimo
+
+Toma una clase grande y:
+
+- Identifica responsabilidades.
+    
+- Sepáralas conceptualmente.
+    
+
+---
+
+## 4.6 SOLID – Open/Closed Principle (OCP)
+
+---
+
+### 4.6.1 Contexto
+
+Uno de los mayores problemas en backend es este:
+
+> **Cada nueva funcionalidad obliga a modificar código existente.**
+
+Antes de OCP:
+
+- Clases llenas de `if`.
+    
+- Riesgo constante de romper código.
+    
+- Pruebas regresivas costosas.
+    
+
+---
+
+### 4.6.2 Definición extensa y desglosada
+
+El **Open/Closed Principle** dice:
+
+> **El software debe estar abierto para extensión, pero cerrado para modificación.**
+
+No significa:
+
+- Nunca tocar el código.
+    
+- No refactorizar.
+    
+
+Significa:
+
+- Agregar comportamiento sin modificar lógica existente.
+    
+- Usar abstracciones y polimorfismo.
+    
+
+---
+
+### 4.6.3 Modelo mental
+
+#### Modelo incorrecto
+
+> “Agrego otro if”
+
+#### Modelo correcto
+
+> “Agrego otra implementación”
+
+---
+
+### 4.6.4 Ejemplo correcto (obligatorio)
+
+```java
+interface Discount {
+    double apply(double price);
+}
+```
+
+```java
+class SeasonalDiscount implements Discount {
+    public double apply(double price) {
+        return price * 0.9;
+    }
+}
+```
+
+```java
+class LoyaltyDiscount implements Discount {
+    public double apply(double price) {
+        return price * 0.8;
+    }
+}
+```
+
+Uso:
+
+```java
+public class PriceCalculator {
+    public double calculate(double price, Discount discount) {
+        return discount.apply(price);
+    }
+}
+```
+
+---
+
+### 4.6.5 Ejemplo incorrecto (obligatorio)
+
+```java
+if(type.equals("SEASONAL")) ...
+else if(type.equals("LOYALTY")) ...
+```
+
+#### Por qué está mal
+
+- Cada nuevo tipo modifica código.
+    
+- Violación directa de OCP.
+    
+
+---
+
+### 4.6.6 Errores típicos del principiante
+
+- Abusar de condicionales.
+    
+- No usar polimorfismo.
+    
+- Código rígido.
+    
+
+---
+
+### 4.6.7 Señales de comprensión
+
+- ¿Puedo agregar comportamiento sin modificar?
+    
+- ¿Dónde está el punto de extensión?
+    
+
+---
+
+### 4.6.8 Ejercicio práctico mínimo
+
+Diseña una solución:
+
+- Sin `if`.
+    
+- Usando interfaces.
+    
+- Extensible.
+    
+
+---
+
+## 4.7 SOLID – Liskov Substitution Principle (LSP)
+
+---
+
+### 4.7.1 Contexto
+
+Muchos errores aparecen cuando:
+
+- Una subclase rompe el comportamiento esperado.
+    
+- El código deja de funcionar al usar herencia.
+    
+
+---
+
+### 4.7.2 Definición extensa y desglosada
+
+**LSP** dice:
+
+> **Las subclases deben poder sustituir a sus clases base sin romper el sistema.**
+
+No se trata de sintaxis, sino de **contratos de comportamiento**.
+
+---
+
+### 4.7.3 Modelo mental
+
+> “Si uso una subclase, nada debería romperse”
+
+---
+
+### 4.7.4 Ejemplo correcto (obligatorio)
+
+```java
+class Bird {
+    public void fly(){}
+}
+```
+
+```java
+class Sparrow extends Bird {}
+```
+
+---
+
+### 4.7.5 Ejemplo incorrecto (obligatorio)
+
+```java
+class Penguin extends Bird {
+    public void fly() {
+        throw new UnsupportedOperationException();
+    }
+}
+```
+
+#### Por qué está mal
+
+- Viola expectativas.
+    
+- Rompe LSP.
+    
+- Diseño incorrecto.
+    
+
+---
+
+### 4.7.6 Errores típicos del principiante
+
+- Forzar herencia.
+    
+- Romper contratos.
+    
+- Usar excepciones para esconder errores de diseño.
+    
+
+---
+
+### 4.7.7 Señales de comprensión
+
+- ¿La subclase se comporta como la base?
+    
+- ¿Rompe expectativas?
+    
+
+---
+
+### 4.7.8 Ejercicio práctico mínimo
+
+Replantea una jerarquía incorrecta:
+
+- Usa composición o interfaces.
+    
+
+---
+
+## 4.8 SOLID – Interface Segregation Principle (ISP)
+
+---
+
+### 4.8.1 Contexto
+
+Interfaces gigantes generan:
+
+- Clases forzadas a implementar métodos inútiles.
+    
+- Código frágil.
+    
+
+---
+
+### 4.8.2 Definición extensa y desglosada
+
+**ISP** dice:
+
+> **Los clientes no deben depender de métodos que no usan.**
+
+---
+
+### 4.8.3 Ejemplo correcto (obligatorio)
+
+```java
+interface Printer {
+    void print();
+}
+```
+
+```java
+interface Scanner {
+    void scan();
+}
+```
+
+---
+
+### 4.8.4 Ejemplo incorrecto (obligatorio)
+
+```java
+interface Machine {
+    void print();
+    void scan();
+    void fax();
+}
+```
+
+---
+
+### 4.8.5 Errores típicos del principiante
+
+- Interfaces enormes.
+    
+- Falta de cohesión.
+    
+
+---
+
+### 4.8.6 Ejercicio práctico mínimo
+
+Divide una interfaz grande en varias pequeñas.
+
+---
+
+## 4.9 SOLID – Dependency Inversion Principle (DIP)
+
+---
+
+### 4.9.1 Contexto
+
+El acoplamiento a implementaciones concretas es una de las mayores fuentes de rigidez.
+
+---
+
+### 4.9.2 Definición extensa y desglosada
+
+**DIP** dice:
+
+> **Depende de abstracciones, no de implementaciones.**
+
+---
+
+### 4.9.3 Ejemplo correcto (obligatorio)
+
+```java
+class Service {
+    private final Repository repo;
+}
+```
+
+---
+
+### 4.9.4 Ejemplo incorrecto (obligatorio)
+
+```java
+class Service {
+    private MySqlRepository repo = new MySqlRepository();
+}
+```
+
+---
+
+### 4.9.5 Errores típicos del principiante
+
+- Dependencias concretas.
+    
+- Uso excesivo de `new`.
+    
+
+---
+
+### 4.9.6 Ejercicio práctico mínimo
+
+Reemplaza dependencias concretas por abstracciones.
+
+---
+
+
+
+---
+
+# 5. Codificación – Manejo de Excepciones y Depuración Efectiva
+
+> **Advertencia pedagógica clave**  
+> Un backend trainee **no falla porque el código no funcione**,  
+> falla porque **cuando algo falla, no sabe qué hacer**.  
+> El manejo de excepciones y la depuración **no son temas secundarios**,  
+> son **habilidades críticas de supervivencia profesional**.
+
+---
+
+## 5.1 Manejo de Excepciones
+
+---
+
+### 5.1.1 Contexto
+
+Antes de que existieran mecanismos formales de manejo de excepciones:
+
+- Los errores se manejaban con códigos de retorno.
+    
+- Se ignoraban errores silenciosamente.
+    
+- El flujo normal se mezclaba con errores.
+    
+- El código era ilegible y frágil.
+    
+
+Ejemplo antiguo típico:
+
+```c
+if(result == -1) {
+   // error
+}
+```
+
+Problemas reales:
+
+- Fácil olvidar validar.
+    
+- Difícil saber qué falló.
+    
+- Flujo confuso.
+    
+
+Las **excepciones** surgen para resolver esto:
+
+> **Separar el flujo normal del flujo de error de forma explícita y estructurada.**
+
+---
+
+### 5.1.2 Definición extensa y desglosada
+
+Una **excepción** es un evento que:
+
+- Ocurre durante la ejecución.
+    
+- Indica una situación anómala.
+    
+- Interrumpe el flujo normal.
+    
+- Debe ser manejada explícitamente.
+    
+
+Las excepciones:
+
+- **No son errores lógicos** (bugs).
+    
+- Son **condiciones excepcionales**.
+    
+- Deben representar situaciones **no esperadas pero posibles**.
+    
+
+Ejemplos:
+
+- Archivo no encontrado.
+    
+- Conexión fallida.
+    
+- Violación de una regla crítica.
+    
+
+---
+
+### 5.1.3 Modelo mental
+
+#### Modelo incorrecto del principiante
+
+> “Las excepciones son errores que hay que evitar a toda costa”
+
+Resultado:
+
+- `try/catch` vacíos.
+    
+- Excepciones ignoradas.
+    
+- Sistemas silenciosamente rotos.
+    
+
+#### Modelo correcto
+
+> “Las excepciones son señales claras de que algo salió mal y debe manejarse”
+
+Las excepciones **informan**, no **estorban**.
+
+#### Analogía
+
+Una alarma:
+
+- No evita el incendio.
+    
+- Te avisa que algo va mal.
+    
+- Te permite reaccionar.
+    
+
+---
+
+## 5.2 Tipos de Excepciones
+
+---
+
+### 5.2.1 Contexto
+
+No todas las excepciones son iguales.
+
+Confundirlas genera:
+
+- Mal manejo.
+    
+- Código frágil.
+    
+- Errores ocultos.
+    
+
+---
+
+### 5.2.2 Definición extensa y desglosada
+
+En backend (ej. Java), existen principalmente:
+
+1. **Excepciones comprobadas (Checked)**
+    
+    - Obligan a manejo explícito.
+        
+    - Representan condiciones recuperables.
+        
+    - Ej: `IOException`
+        
+2. **Excepciones no comprobadas (Unchecked)**
+    
+    - Derivan de `RuntimeException`.
+        
+    - Representan errores de programación o reglas violadas.
+        
+    - Ej: `IllegalArgumentException`
+        
+
+---
+
+### 5.2.3 Modelo mental
+
+- Checked → “puede pasar y debo manejarlo”
+    
+- Unchecked → “esto no debería pasar si el código está bien”
+    
+
+---
+
+### 5.2.4 Ejemplo correcto (obligatorio)
+
+```java
+public void readFile(String path) throws IOException {
+    Files.readAllLines(Path.of(path));
+}
+```
+
+---
+
+### 5.2.5 Ejemplo incorrecto (obligatorio)
+
+```java
+try {
+    readFile(path);
+} catch (Exception e) {
+    // nada
+}
+```
+
+#### Por qué está mal
+
+- Error silenciado.
+    
+- Sistema inconsistente.
+    
+- Debug imposible.
+    
+
+---
+
+### 5.2.6 Errores típicos del principiante
+
+- Capturar `Exception` genérico.
+    
+- Ignorar excepciones.
+    
+- Usar excepciones para flujo normal.
+    
+- No diferenciar tipos.
+    
+
+---
+
+### 5.2.7 Señales de comprensión
+
+- ¿Esta excepción es recuperable?
+    
+- ¿Quién debe manejarla?
+    
+- ¿Qué información aporta?
+    
+
+---
+
+### 5.2.8 Ejercicio práctico mínimo
+
+Clasifica:
+
+- Error de validación
+    
+- Error de red
+    
+- Error de programación
+    
+
+Decide:
+
+- ¿Checked o unchecked?
+    
+
+---
+
+## 5.3 Lanzar Excepciones Correctamente
+
+---
+
+### 5.3.1 Contexto
+
+Muchos trainees:
+
+- No lanzan excepciones cuando deberían.
+    
+- O lanzan excepciones genéricas.
+    
+
+Ambos extremos son malos.
+
+---
+
+### 5.3.2 Definición extensa y desglosada
+
+Lanzar una excepción significa:
+
+> **Detener la ejecución normal porque una condición crítica no se cumple.**
+
+Debe hacerse cuando:
+
+- Una regla del dominio se viola.
+    
+- El sistema no puede continuar correctamente.
+    
+- Ignorar el problema causaría corrupción de estado.
+    
+
+---
+
+### 5.3.3 Modelo mental
+
+> “Si continúo, rompo el sistema → lanzo excepción”
+
+---
+
+### 5.3.4 Ejemplo correcto (obligatorio)
+
+```java
+public void withdraw(double amount) {
+    if(amount <= 0) {
+        throw new IllegalArgumentException("Monto inválido");
+    }
+}
+```
+
+---
+
+### 5.3.5 Ejemplo incorrecto (obligatorio)
+
+```java
+if(amount <= 0) {
+    return;
+}
+```
+
+#### Por qué está mal
+
+- Error silencioso.
+    
+- Estado inconsistente.
+    
+- Difícil de detectar.
+    
+
+---
+
+### 5.3.6 Errores típicos del principiante
+
+- `return` silencioso.
+    
+- Mensajes pobres.
+    
+- Excepciones genéricas.
+    
+
+---
+
+### 5.3.7 Señales de comprensión
+
+- ¿Este error debe detener el flujo?
+    
+- ¿El mensaje explica qué pasó?
+    
+- ¿Es el tipo correcto?
+    
+
+---
+
+### 5.3.8 Ejercicio práctico mínimo
+
+Identifica una regla crítica y:
+
+- Lanza una excepción clara.
+    
+- Con mensaje significativo.
+    
+
+---
+
+## 5.4 Manejo de Excepciones (try / catch / finally)
+
+---
+
+### 5.4.1 Contexto
+
+El manejo incorrecto de `try/catch` es una de las causas principales de:
+
+- Bugs ocultos.
+    
+- Logs inútiles.
+    
+- Sistemas frágiles.
+    
+
+---
+
+### 5.4.2 Definición extensa y desglosada
+
+El bloque `try/catch` permite:
+
+- Encapsular código riesgoso.
+    
+- Manejar errores específicos.
+    
+- Limpiar recursos.
+    
+
+---
+
+### 5.4.3 Modelo mental
+
+- `try` → “esto puede fallar”
+    
+- `catch` → “sé cómo reaccionar”
+    
+- `finally` → “esto siempre se ejecuta”
+    
+
+---
+
+### 5.4.4 Ejemplo correcto (obligatorio)
+
+```java
+try {
+    service.process();
+} catch (BusinessException e) {
+    log.warn(e.getMessage());
+    throw e;
+}
+```
+
+---
+
+### 5.4.5 Ejemplo incorrecto (obligatorio)
+
+```java
+try {
+    process();
+} catch (Exception e) {
+    e.printStackTrace();
+}
+```
+
+#### Por qué está mal
+
+- Manejo genérico.
+    
+- No hay recuperación.
+    
+- No hay decisión clara.
+    
+
+---
+
+### 5.4.6 Errores típicos del principiante
+
+- `catch` vacío.
+    
+- `printStackTrace`.
+    
+- Manejar demasiado pronto.
+    
+
+---
+
+### 5.4.7 Señales de comprensión
+
+- ¿Estoy manejando o escondiendo?
+    
+- ¿Este `catch` aporta valor?
+    
+- ¿Quién debería manejar esto?
+    
+
+---
+
+### 5.4.8 Ejercicio práctico mínimo
+
+Refactoriza un `try/catch`:
+
+- Elimina capturas genéricas.
+    
+- Mejora mensajes.
+    
+- Decide correctamente.
+    
+
+---
+
+## 5.5 Depuración (Debugging)
+
+---
+
+### 5.5.1 Contexto
+
+Depurar no es:
+
+- Adivinar.
+    
+- Poner `println` al azar.
+    
+- Reiniciar esperando que funcione.
+    
+
+Depurar es **un proceso sistemático**.
+
+---
+
+### 5.5.2 Definición extensa y desglosada
+
+**Depuración** es el proceso de:
+
+- Entender qué está pasando realmente.
+    
+- Comparar expectativa vs realidad.
+    
+- Identificar la causa raíz.
+    
+- Corregir, no parchear.
+    
+
+---
+
+### 5.5.3 Modelo mental
+
+> “No arregles el síntoma, encuentra la causa”
+
+---
+
+### 5.5.4 Ejemplo correcto (obligatorio)
+
+- Reproducir el error.
+    
+- Usar logs.
+    
+- Usar debugger paso a paso.
+    
+- Confirmar hipótesis.
+    
+
+---
+
+### 5.5.5 Ejemplo incorrecto (obligatorio)
+
+- Cambiar código al azar.
+    
+- Comentar bloques.
+    
+- “Funciona en mi máquina”.
+    
+
+---
+
+### 5.5.6 Errores típicos del principiante
+
+- No reproducir el error.
+    
+- Depurar sin logs.
+    
+- No entender el flujo.
+    
+
+---
+
+### 5.5.7 Señales de comprensión
+
+- ¿Puedo reproducir el error?
+    
+- ¿Sé dónde ocurre?
+    
+- ¿Entiendo por qué ocurre?
+    
+
+---
+
+### 5.5.8 Ejercicio práctico mínimo
+
+Ante un bug:
+
+- Escríbelo.
+    
+- Reprodúcelo.
+    
+- Explica la causa raíz.
+    
+
+---
+
+
+
+---
+
+# 6. Bases de Datos – Normalización y Modelo Entidad-Relación (ER)
+
+> **Advertencia pedagógica clave**  
+> Un backend trainee **no falla por no saber SQL**,  
+> falla por **modelar mal los datos**.  
+> Un modelo de datos incorrecto **condena** al sistema desde el inicio:  
+> genera bugs, datos corruptos, rendimiento pobre y lógica innecesaria.
+
+---
+
+## 6.1 ¿Por qué el diseño de datos es crítico en Backend?
+
+---
+
+### 6.1.1 Contexto
+
+Antes de que se formalizara el diseño de bases de datos, era común:
+
+- Crear tablas “como se nos ocurriera”.
+    
+- Mezclar información distinta en una sola tabla.
+    
+- Repetir datos en múltiples filas.
+    
+- Resolver problemas de diseño con código.
+    
+
+Ejemplo histórico típico (muy común aún):
+
+```
+PEDIDOS
+---------------------------------
+id | cliente | telefono | producto | precio | cantidad
+```
+
+Problemas reales:
+
+- Datos duplicados.
+    
+- Inconsistencias.
+    
+- Dificultad para actualizar.
+    
+- Errores silenciosos.
+    
+
+La **normalización** y el **modelo entidad-relación** nacen para resolver esto:
+
+> **Diseñar datos coherentes, consistentes y mantenibles antes de escribir código.**
+
+---
+
+### 6.1.2 Definición extensa y desglosada
+
+El **diseño de datos** busca responder:
+
+- ¿Qué datos existen?
+    
+- ¿Cómo se relacionan?
+    
+- ¿Qué reglas deben cumplirse?
+    
+- ¿Qué no debe repetirse?
+    
+
+En backend:
+
+- El código se apoya en el modelo de datos.
+    
+- Un mal modelo obliga a lógica extra.
+    
+- Un buen modelo simplifica el sistema completo.
+    
+
+---
+
+### 6.1.3 Modelo mental
+
+#### Modelo incorrecto del principiante
+
+> “Primero hago las tablas, luego arreglo con código”
+
+Resultado:
+
+- Parche sobre parche.
+    
+- Código complejo.
+    
+- Datos rotos.
+    
+
+#### Modelo correcto
+
+> “Diseño bien los datos → el código se simplifica solo”
+
+#### Analogía
+
+Construir una casa:
+
+- Si la base está mal, todo lo demás falla.
+    
+- No arreglas cimientos con pintura.
+    
+
+---
+
+## 6.2 Modelo Entidad-Relación (ER)
+
+---
+
+### 6.2.1 Contexto
+
+Cuando los sistemas crecieron, se hizo evidente que:
+
+- Las tablas no podían diseñarse “a ojo”.
+    
+- Se necesitaba una forma visual y conceptual.
+    
+- El equipo debía hablar el mismo lenguaje.
+    
+
+El **Modelo Entidad-Relación (ER)** surge para:
+
+> **Representar conceptualmente los datos y sus relaciones antes de implementarlos en una base de datos.**
+
+---
+
+### 6.2.2 Definición extensa y desglosada
+
+Un **Modelo ER** es una representación conceptual que describe:
+
+- **Entidades** → cosas del mundo real.
+    
+- **Atributos** → propiedades de esas cosas.
+    
+- **Relaciones** → cómo se conectan.
+    
+- **Cardinalidades** → cuántos se relacionan.
+    
+
+No es SQL.  
+No es código.  
+Es **pensamiento estructurado**.
+
+---
+
+### 6.2.3 Modelo mental
+
+Piensa el modelo ER como:
+
+- Un mapa del dominio.
+    
+- Un contrato entre negocio y tecnología.
+    
+- La verdad del sistema.
+    
+
+---
+
+## 6.3 Entidades
+
+---
+
+### 6.3.1 Contexto
+
+Antes de identificar entidades, muchos trainees:
+
+- Crean tablas por campos.
+    
+- Confunden atributos con entidades.
+    
+- Mezclan conceptos distintos.
+    
+
+Ejemplo incorrecto común:
+
+- Tabla `Direccion` con datos de usuario, pedido y proveedor.
+    
+
+---
+
+### 6.3.2 Definición extensa y desglosada
+
+Una **entidad** es:
+
+> **Un objeto del mundo real que tiene identidad propia y significado independiente.**
+
+Características:
+
+- Tiene un identificador único.
+    
+- Puede existir por sí misma.
+    
+- Tiene atributos propios.
+    
+
+Ejemplos:
+
+- Usuario
+    
+- Pedido
+    
+- Producto
+    
+- Cliente
+    
+
+---
+
+### 6.3.3 Modelo mental
+
+Pregunta clave:
+
+> “¿Esto puede existir sin depender de otra cosa?”
+
+Si la respuesta es sí → probablemente es una entidad.
+
+---
+
+### 6.3.4 Ejemplo correcto (obligatorio)
+
+Entidad: **Usuario**
+
+Atributos:
+
+- id
+    
+- nombre
+    
+- email
+    
+- edad
+    
+
+---
+
+### 6.3.5 Ejemplo incorrecto (obligatorio)
+
+Entidad: **Edad**
+
+Por qué está mal:
+
+- Edad no existe por sí sola.
+    
+- Es una propiedad, no una entidad.
+    
+
+---
+
+### 6.3.6 Errores típicos del principiante
+
+- Crear entidades para todo.
+    
+- Confundir atributos con entidades.
+    
+- No definir identidad.
+    
+
+---
+
+### 6.3.7 Señales de comprensión
+
+- ¿Tiene identidad?
+    
+- ¿Puede existir sola?
+    
+- ¿Tiene significado propio?
+    
+
+---
+
+### 6.3.8 Ejercicio práctico mínimo
+
+Identifica:
+
+- 5 entidades reales de un sistema de ventas.
+    
+- Justifica por qué lo son.
+    
+
+---
+
+## 6.4 Atributos
+
+---
+
+### 6.4.1 Contexto
+
+Un error común es:
+
+- Poner demasiados atributos en una entidad.
+    
+- O atributos que pertenecen a otra entidad.
+    
+
+---
+
+### 6.4.2 Definición extensa y desglosada
+
+Un **atributo** es:
+
+> **Una característica que describe una entidad.**
+
+Características:
+
+- No tiene identidad propia.
+    
+- Depende de una entidad.
+    
+- Describe, no actúa.
+    
+
+---
+
+### 6.4.3 Modelo mental
+
+> “¿Esto describe algo o es algo?”
+
+Si describe → atributo.
+
+---
+
+### 6.4.4 Ejemplo correcto (obligatorio)
+
+Entidad: Usuario  
+Atributos:
+
+- nombre
+    
+- email
+    
+- edad
+    
+
+---
+
+### 6.4.5 Ejemplo incorrecto (obligatorio)
+
+Entidad: Usuario  
+Atributo: lista_de_pedidos
+
+Por qué está mal:
+
+- Los pedidos son otra entidad.
+    
+- Deben relacionarse, no incrustarse.
+    
+
+---
+
+### 6.4.6 Errores típicos del principiante
+
+- Atributos compuestos mal definidos.
+    
+- Atributos redundantes.
+    
+- Mezclar relaciones con atributos.
+    
+
+---
+
+### 6.4.7 Señales de comprensión
+
+- ¿Este dato describe a la entidad?
+    
+- ¿Depende totalmente de ella?
+    
+
+---
+
+### 6.4.8 Ejercicio práctico mínimo
+
+Dada una entidad `Producto`, define:
+
+- Atributos correctos.
+    
+- Atributos incorrectos (y por qué).
+    
+
+---
+
+## 6.5 Relaciones
+
+---
+
+### 6.5.1 Contexto
+
+Antes de entender relaciones, muchos trainees:
+
+- Duplican datos.
+    
+- Guardan listas dentro de tablas.
+    
+- Usan campos texto para relaciones.
+    
+
+---
+
+### 6.5.2 Definición extensa y desglosada
+
+Una **relación** describe:
+
+> **Cómo dos entidades se conectan entre sí.**
+
+Tipos comunes:
+
+- Uno a uno (1-1)
+    
+- Uno a muchos (1-N)
+    
+- Muchos a muchos (N-M)
+    
+
+---
+
+### 6.5.3 Modelo mental
+
+Pregunta clave:
+
+> “¿Cómo se relaciona esto con aquello?”
+
+---
+
+### 6.5.4 Ejemplo correcto (obligatorio)
+
+- Un **Cliente** realiza muchos **Pedidos**
+    
+- Un **Pedido** pertenece a un **Cliente**
+    
+
+Relación: Cliente 1-N Pedido
+
+---
+
+### 6.5.5 Ejemplo incorrecto (obligatorio)
+
+Guardar:
+
+```
+cliente: "Juan (Pedido1, Pedido2, Pedido3)"
+```
+
+Por qué está mal:
+
+- No es relacional.
+    
+- No es consultable.
+    
+- No escala.
+    
+
+---
+
+### 6.5.6 Errores típicos del principiante
+
+- Relaciones implícitas en texto.
+    
+- No definir cardinalidad.
+    
+- Mezclar relaciones y atributos.
+    
+
+---
+
+### 6.5.7 Señales de comprensión
+
+- ¿Puedo consultar esta relación fácilmente?
+    
+- ¿Está normalizada?
+    
+
+---
+
+### 6.5.8 Ejercicio práctico mínimo
+
+Define:
+
+- Entidades Cliente y Pedido.
+    
+- Tipo de relación.
+    
+- Cardinalidad correcta.
+    
+
+---
+
+
+## 6.6 Claves Primarias y Claves Foráneas
+
+---
+
+### 6.6.1 Contexto
+
+Cuando los datos comenzaron a crecer y relacionarse, surgió un problema crítico:
+
+> **¿Cómo identifico de forma única cada registro y cómo garantizo que las relaciones sean válidas?**
+
+Antes del uso correcto de claves:
+
+- Se usaban campos “naturales” como nombre o email sin control.
+    
+- Se duplicaban registros.
+    
+- Las relaciones se rompían fácilmente.
+    
+- Aparecían datos huérfanos.
+    
+
+Ejemplo típico incorrecto del pasado:
+
+```
+USUARIOS
+----------------
+nombre | email
+```
+
+Problemas:
+
+- Dos personas pueden llamarse igual.
+    
+- El email puede cambiar.
+    
+- No hay garantía de unicidad estable.
+    
+
+Las **claves primarias y foráneas** existen para resolver esto.
+
+---
+
+### 6.6.2 Definición extensa y desglosada
+
+#### Clave Primaria (Primary Key)
+
+Una **clave primaria** es:
+
+> **Un atributo (o conjunto de atributos) que identifica de manera única a cada registro de una entidad.**
+
+Características obligatorias:
+
+- Única
+    
+- No nula
+    
+- Estable en el tiempo
+    
+- No ambigua
+    
+
+Ejemplos comunes:
+
+- `id`
+    
+- `user_id`
+    
+- `order_id`
+    
+
+#### Clave Foránea (Foreign Key)
+
+Una **clave foránea** es:
+
+> **Un atributo que referencia la clave primaria de otra entidad, creando una relación entre ambas.**
+
+Su función principal es:
+
+- Garantizar integridad referencial.
+    
+- Evitar relaciones inválidas.
+    
+- Mantener coherencia de datos.
+    
+
+---
+
+### 6.6.3 Modelo mental
+
+#### Modelo incorrecto del principiante
+
+> “Uso el nombre como identificador, es más fácil”
+
+Resultado:
+
+- Datos duplicados.
+    
+- Relaciones frágiles.
+    
+- Errores silenciosos.
+    
+
+#### Modelo correcto
+
+> “Cada entidad tiene un ID interno que nadie más toca”
+
+#### Analogía
+
+Piensa en una cédula:
+
+- Tu nombre puede repetirse.
+    
+- Tu número de documento no.
+    
+- Ese número te identifica siempre.
+    
+
+---
+
+### 6.6.4 Ejemplo correcto (obligatorio)
+
+Entidad **Usuario**:
+
+```
+USUARIOS
+-------------------
+id (PK)
+nombre
+email
+```
+
+Entidad **Pedido**:
+
+```
+PEDIDOS
+-------------------
+id (PK)
+fecha
+usuario_id (FK)
+```
+
+Aquí:
+
+- `usuario_id` referencia a `usuarios.id`
+    
+- La relación es consistente y validable.
+    
+
+---
+
+### 6.6.5 Ejemplo incorrecto (obligatorio)
+
+```
+PEDIDOS
+-------------------
+id
+usuario_nombre
+```
+
+#### Por qué está mal
+
+- No garantiza unicidad.
+    
+- No hay integridad referencial.
+    
+- Cambios rompen relaciones.
+    
+- Diseño frágil.
+    
+
+---
+
+### 6.6.6 Errores típicos del principiante
+
+- Usar claves naturales sin análisis.
+    
+- No definir claves primarias.
+    
+- No usar claves foráneas.
+    
+- Permitir valores nulos en relaciones críticas.
+    
+
+---
+
+### 6.6.7 Señales de comprensión
+
+- ¿Este registro se puede identificar sin ambigüedad?
+    
+- ¿Qué pasa si el dato “visible” cambia?
+    
+- ¿Esta relación puede romperse?
+    
+
+---
+
+### 6.6.8 Ejercicio práctico mínimo
+
+Diseña:
+
+- Entidades Cliente y Factura.
+    
+- Define claves primarias.
+    
+- Define clave foránea correcta.
+    
+
+---
+
+## 6.7 Normalización de Bases de Datos
+
+---
+
+### 6.7.1 Contexto
+
+Uno de los mayores problemas históricos en bases de datos es la **redundancia**.
+
+Antes de la normalización:
+
+- Datos duplicados.
+    
+- Actualizaciones inconsistentes.
+    
+- Borrados peligrosos.
+    
+- Inserciones imposibles.
+    
+
+Ejemplo clásico no normalizado:
+
+```
+PEDIDOS
+-----------------------------------------
+pedido_id | cliente | telefono | producto | precio
+```
+
+Problemas:
+
+- Teléfono repetido.
+    
+- Producto repetido.
+    
+- Precio duplicado.
+    
+
+La **normalización** surge para resolver esto.
+
+---
+
+### 6.7.2 Definición extensa y desglosada
+
+La **normalización** es un proceso de diseño que:
+
+> **Organiza los datos para reducir redundancia y mejorar integridad.**
+
+Se basa en **formas normales**:
+
+- Primera Forma Normal (1FN)
+    
+- Segunda Forma Normal (2FN)
+    
+- Tercera Forma Normal (3FN)
+    
+
+Cada forma corrige un tipo de problema.
+
+---
+
+## 6.7.3 Primera Forma Normal (1FN)
+
+---
+
+### 6.7.3.1 Contexto
+
+Antes de 1FN, era común:
+
+- Guardar listas en campos.
+    
+- Usar valores compuestos.
+    
+- Campos no atómicos.
+    
+
+Ejemplo incorrecto:
+
+```
+CLIENTES
+-------------------------
+id | telefonos
+1  | 300123, 301456
+```
+
+---
+
+### 6.7.3.2 Definición extensa y desglosada
+
+Una tabla está en **1FN** si:
+
+- Cada campo contiene valores **atómicos**.
+    
+- No hay listas ni grupos repetidos.
+    
+- Cada fila es única.
+    
+
+---
+
+### 6.7.3.3 Modelo mental
+
+> “Un campo = un solo dato”
+
+---
+
+### 6.7.3.4 Ejemplo correcto (obligatorio)
+
+```
+CLIENTES
+-----------------
+id | nombre
+
+TELEFONOS
+-----------------
+id | cliente_id | telefono
+```
+
+---
+
+### 6.7.3.5 Ejemplo incorrecto (obligatorio)
+
+```
+telefonos = "300123,301456"
+```
+
+#### Por qué está mal
+
+- No es consultable.
+    
+- No es relacional.
+    
+- No escala.
+    
+
+---
+
+### 6.7.3.6 Errores típicos del principiante
+
+- Campos con listas.
+    
+- Valores concatenados.
+    
+- Falta de entidades auxiliares.
+    
+
+---
+
+### 6.7.3.7 Señales de comprensión
+
+- ¿Este campo puede dividirse?
+    
+- ¿Puedo buscar un solo valor?
+    
+
+---
+
+### 6.7.3.8 Ejercicio práctico mínimo
+
+Detecta campos no atómicos y sepáralos.
+
+---
+
+## 6.7.4 Segunda Forma Normal (2FN)
+
+---
+
+### 6.7.4.1 Contexto
+
+La 2FN aparece cuando:
+
+- Se usan claves compuestas.
+    
+- Algunos campos dependen solo de una parte de la clave.
+    
+
+---
+
+### 6.7.4.2 Definición extensa y desglosada
+
+Una tabla está en **2FN** si:
+
+- Está en 1FN.
+    
+- Todos los atributos no clave dependen **completamente** de la clave primaria.
+    
+
+---
+
+### 6.7.4.3 Ejemplo incorrecto
+
+```
+DETALLE_PEDIDO
+-----------------------------
+pedido_id | producto_id | producto_nombre
+```
+
+`producto_nombre` no depende del pedido.
+
+---
+
+### 6.7.4.4 Ejemplo correcto
+
+```
+PRODUCTOS
+----------------
+producto_id | nombre
+
+DETALLE_PEDIDO
+----------------
+pedido_id | producto_id
+```
+
+---
+
+### 6.7.4.5 Errores típicos
+
+- Dependencias parciales.
+    
+- Mezclar datos de distintas entidades.
+    
+
+---
+
+### 6.7.4.6 Ejercicio práctico mínimo
+
+Identifica dependencias parciales y sepáralas.
+
+---
+
+## 6.7.5 Tercera Forma Normal (3FN)
+
+---
+
+### 6.7.5.1 Contexto
+
+La 3FN aparece para eliminar:
+
+- Dependencias transitivas.
+    
+- Datos que dependen de otros datos no clave.
+    
+
+---
+
+### 6.7.5.2 Definición extensa y desglosada
+
+Una tabla está en **3FN** si:
+
+- Está en 2FN.
+    
+- No existen dependencias transitivas.
+    
+
+---
+
+### 6.7.5.3 Ejemplo incorrecto
+
+```
+USUARIOS
+------------------------------
+id | ciudad | codigo_postal
+```
+
+El código postal depende de la ciudad, no del usuario.
+
+---
+
+### 6.7.5.4 Ejemplo correcto
+
+```
+CIUDADES
+----------------
+id | nombre | codigo_postal
+
+USUARIOS
+----------------
+id | ciudad_id
+```
+
+---
+
+### 6.7.5.5 Errores típicos
+
+- Datos derivados.
+    
+- Dependencias ocultas.
+    
+
+---
+
+### 6.7.5.6 Ejercicio práctico mínimo
+
+Detecta dependencias transitivas y normaliza.
+
+---
+
+## 6.8 Errores comunes de normalización
+
+---
+
+### 6.8.1 Errores frecuentes
+
+- Normalizar de menos → datos duplicados.
+    
+- Normalizar de más → complejidad innecesaria.
+    
+- No entender el dominio.
+    
+- Usar normalización para “arreglar” mal dominio.
+    
+
+---
+
+### 6.8.2 Señales de mal diseño
+
+- Muchas columnas vacías.
+    
+- Datos repetidos.
+    
+- Consultas complejas para cosas simples.
+    
+
+---
+
+### 6.8.3 Ejercicio práctico mínimo
+
+Evalúa un esquema y detecta:
+
+- Redundancias.
+    
+- Dependencias incorrectas.
+    
+
+---
+
+## 6.9 Relación entre Modelo de Datos y Código Backend
+
+---
+
+### 6.9.1 Contexto
+
+Muchos trainees ven:
+
+- Base de datos por un lado.
+    
+- Código por otro.
+    
+
+Eso es un error grave.
+
+---
+
+### 6.9.2 Definición extensa y desglosada
+
+El modelo de datos:
+
+- Influye directamente en entidades.
+    
+- Define relaciones en código.
+    
+- Simplifica o complica servicios.
+    
+
+Un buen modelo:
+
+- Reduce lógica.
+    
+- Facilita consultas.
+    
+- Mejora rendimiento.
+    
+
+---
+
+### 6.9.3 Modelo mental
+
+> “Si el modelo está bien, el código fluye”
+
+---
+
+### 6.9.4 Ejemplo correcto (obligatorio)
+
+- Entidades bien definidas.
+    
+- Relaciones claras.
+    
+- Repositorios simples.
+    
+
+---
+
+### 6.9.5 Ejemplo incorrecto (obligatorio)
+
+- Modelo caótico.
+    
+- Servicios llenos de lógica para compensar.
+    
+
+---
+
+### 6.9.6 Errores típicos del principiante
+
+- Arreglar datos con código.
+    
+- Ignorar integridad referencial.
+    
+- No pensar en consultas.
+    
+
+---
+
+### 6.9.7 Señales de comprensión
+
+- ¿Mi código compensa errores de diseño?
+    
+- ¿La base me ayuda o me estorba?
+    
+
+---
+
+### 6.9.8 Ejercicio práctico mínimo
+
+Dado un modelo:
+
+- Analiza impacto en código.
+    
+- Identifica mejoras.
+    
+
+---
+
+
+# 7. Integración de Todo lo Aprendido – Pensamiento Backend Trainee
+
+> **Advertencia pedagógica clave**  
+> Un backend trainee **no falla por no saber OOP, SQL o patrones**.  
+> Falla porque **no sabe unir todo en un sistema coherente**.  
+> Este bloque existe para formar **criterio**, **no recetas**.
+
+---
+
+## 7.1 Pensar en Sistemas, no en Archivos ni Clases
+
+---
+
+### 7.1.1 Contexto
+
+Muchos trainees programan así:
+
+- “Este archivo compila”
+    
+- “Este método funciona”
+    
+- “Este endpoint responde”
+    
+
+Pero **un backend no es una suma de archivos**, es un **sistema vivo**.
+
+Antes de desarrollar pensamiento sistémico:
+
+- Se arreglan bugs localmente.
+    
+- Se rompen otras partes.
+    
+- Se agregan parches.
+    
+- El sistema se vuelve frágil.
+    
+
+---
+
+### 7.1.2 Definición extensa y desglosada
+
+Pensar como backend significa:
+
+> **Entender cómo cada decisión afecta al sistema completo.**
+
+Esto incluye:
+
+- Código
+    
+- Datos
+    
+- Flujo
+    
+- Errores
+    
+- Cambios futuros
+    
+- Mantenimiento
+    
+
+Una clase **nunca existe sola**.
+
+---
+
+### 7.1.3 Modelo mental
+
+#### Modelo incorrecto del principiante
+
+> “Mi tarea termina cuando pasa el test”
+
+#### Modelo correcto
+
+> “¿Qué impacto tiene esto en el sistema completo?”
+
+#### Analogía
+
+Un órgano:
+
+- Puede funcionar solo.
+    
+- Pero si afecta al resto, el cuerpo enferma.
+    
+
+---
+
+### 7.1.4 Ejemplo correcto (obligatorio)
+
+Un cambio en:
+
+- Modelo de datos  
+    → afecta
+    
+- Dominio  
+    → afecta
+    
+- Servicios  
+    → afecta
+    
+- APIs
+    
+
+El backend trainee **prevé esto**.
+
+---
+
+### 7.1.5 Ejemplo incorrecto (obligatorio)
+
+- Cambiar una columna
+    
+- No actualizar dominio
+    
+- Romper producción
+    
+
+---
+
+### 7.1.6 Errores típicos del principiante
+
+- Cambios locales sin análisis global
+    
+- Falta de pruebas de impacto
+    
+- Ignorar dependencias
+    
+
+---
+
+### 7.1.7 Señales de comprensión
+
+- ¿Qué se rompe si cambio esto?
+    
+- ¿Quién depende de este componente?
+    
+- ¿Esto escala?
+    
+
+---
+
+### 7.1.8 Ejercicio práctico mínimo
+
+Antes de cambiar algo:
+
+- Lista componentes afectados.
+    
+- Analiza consecuencias.
+    
+
+---
+
+## 7.2 Flujo Completo de una Solicitud Backend
+
+---
+
+### 7.2.1 Contexto
+
+Muchos trainees no saben responder:
+
+> “¿Qué pasa realmente cuando llega una request?”
+
+Esto provoca:
+
+- Bugs mal diagnosticados.
+    
+- Mal manejo de errores.
+    
+- Logs inútiles.
+    
+
+---
+
+### 7.2.2 Definición extensa y desglosada
+
+Un flujo backend típico:
+
+1. Llega una solicitud (HTTP, evento)
+    
+2. Controlador recibe
+    
+3. Servicio orquesta
+    
+4. Dominio decide
+    
+5. Persistencia guarda o consulta
+    
+6. Resultado vuelve
+    
+7. Respuesta se construye
+    
+
+Cada paso tiene **responsabilidad clara**.
+
+---
+
+### 7.2.3 Modelo mental
+
+> “La request viaja por capas, no salta”
+
+---
+
+### 7.2.4 Ejemplo correcto (obligatorio)
+
+```
+Controller → Service → Domain → Repository → DB
+                    ←
+```
+
+---
+
+### 7.2.5 Ejemplo incorrecto (obligatorio)
+
+```
+Controller → DB
+```
+
+---
+
+### 7.2.6 Errores típicos del principiante
+
+- Saltar capas
+    
+- Mezclar responsabilidades
+    
+- Lógica duplicada
+    
+
+---
+
+### 7.2.7 Señales de comprensión
+
+- ¿En qué capa estoy?
+    
+- ¿Qué debo hacer aquí?
+    
+- ¿Qué NO debo hacer aquí?
+    
+
+---
+
+### 7.2.8 Ejercicio práctico mínimo
+
+Dibuja el flujo completo de un endpoint sencillo.
+
+---
+
+## 7.3 Integración OOP + GRASP + SOLID + Capas
+
+---
+
+### 7.3.1 Contexto
+
+Muchos trainees ven estos temas como separados:
+
+- OOP por un lado
+    
+- SOLID por otro
+    
+- GRASP aparte
+    
+- Capas “porque toca”
+    
+
+Esto es un error.
+
+---
+
+### 7.3.2 Definición extensa y desglosada
+
+Estos conceptos **no compiten**, **se complementan**:
+
+- OOP → modela objetos
+    
+- GRASP → asigna responsabilidades
+    
+- SOLID → mantiene diseño sano
+    
+- Capas → ordenan el sistema
+    
+
+Juntos forman **criterio de diseño**.
+
+---
+
+### 7.3.3 Modelo mental
+
+> “No escribo código, diseño comportamiento”
+
+---
+
+### 7.3.4 Ejemplo correcto (obligatorio)
+
+- Dominio encapsula reglas
+    
+- Servicio orquesta
+    
+- Repositorio persiste
+    
+- Controlador coordina
+    
+
+Cada principio refuerza al otro.
+
+---
+
+### 7.3.5 Ejemplo incorrecto (obligatorio)
+
+- Todo en el service
+    
+- Dominio anémico
+    
+- Repositorio con lógica
+    
+- Controller inflado
+    
+
+---
+
+### 7.3.6 Errores típicos del principiante
+
+- Memorizar sin integrar
+    
+- Aplicar principios sin entender problema
+    
+- Sobre-diseñar
+    
+
+---
+
+### 7.3.7 Señales de comprensión
+
+- ¿Puedo justificar esta decisión?
+    
+- ¿Qué principio aplica aquí?
+    
+- ¿Esto es simple y extensible?
+    
+
+---
+
+### 7.3.8 Ejercicio práctico mínimo
+
+Toma un caso de uso y:
+
+- Ubica responsabilidades
+    
+- Aplica al menos 2 GRASP
+    
+- Aplica al menos 1 SOLID
+    
+
+---
+
+## 7.4 Errores Mentales Comunes del Backend Trainee
+
+---
+
+### 7.4.1 Contexto
+
+Los errores más peligrosos **no son de sintaxis**, son de **pensamiento**.
+
+---
+
+### 7.4.2 Errores comunes
+
+- “Funciona, entonces está bien”
+    
+- “Copié esto de internet”
+    
+- “Después lo refactorizamos”
+    
+- “El framework lo hace”
+    
+
+---
+
+### 7.4.3 Modelo mental correcto
+
+> “Entiendo lo que pasa, entonces lo uso”
+
+---
+
+### 7.4.4 Ejemplo correcto (obligatorio)
+
+- Sabes qué hace una anotación
+    
+- Sabes quién la procesa
+    
+- Sabes cuándo actúa
+    
+
+---
+
+### 7.4.5 Ejemplo incorrecto (obligatorio)
+
+- “Esto funciona, no sé por qué”
+    
+
+---
+
+### 7.4.6 Señales de madurez trainee
+
+- Haces preguntas correctas
+    
+- Lees errores con calma
+    
+- Diseñas antes de codificar
+    
+
+---
+
+### 7.4.7 Ejercicio práctico mínimo
+
+Ante un error:
+
+- Describe qué pasa
+    
+- Describe qué debería pasar
+    
+- Encuentra la diferencia
+    
+
+---
+
+## 7.5 Qué Significa Realmente “Ser Trainee Backend”
+
+---
+
+### 7.5.1 Contexto
+
+Ser trainee **no significa saber poco**, significa:
+
+- Estar aprendiendo bien
+    
+- Construir bases sólidas
+    
+- No improvisar diseño
+    
+
+---
+
+### 7.5.2 Definición extensa y desglosada
+
+Un backend trainee:
+
+- Es respetuoso del sistema
+    
+- Es cuidadoso con cambios
+    
+- Aprende constantemente
+    
+- Pregunta antes de asumir
+    
+- Piensa en mantenimiento
+    
+
+No se mide por velocidad, sino por **calidad de pensamiento**.
+
+---
+
+### 7.5.3 Modelo mental
+
+> “Hoy aprendo a hacer sistemas que duren”
+
+---
+
+### 7.5.4 Señales de que vas bien
+
+- Menos parches
+    
+- Más diseño previo
+    
+- Código más simple
+    
+- Bugs más fáciles de entender
+    
+
+---
+
+### 7.5.5 Ejercicio práctico mínimo (integrador)
+
+Diseña mentalmente un sistema sencillo:
+
+- Usuarios
+    
+- Pedidos
+    
+- Productos
+    
+
+Define:
+
+- Capas
+    
+- Entidades
+    
+- Reglas
+    
+- Relaciones
+    
+- Responsabilidades
+    
+
+**Sin escribir código aún.**
+
+---
+
+
+## 7.6 Caso Integral Guiado – Sistema de Pedidos (Visión Backend Trainee)
+
+---
+
+### 7.6.1 Contexto
+
+Muchos trainees entienden los conceptos **por separado**, pero fallan cuando enfrentan un sistema real porque:
+
+- No saben por dónde empezar.
+    
+- Se lanzan a escribir código sin diseño.
+    
+- Mezclan decisiones técnicas con decisiones de negocio.
+    
+
+Este caso existe para responder una pregunta clave:
+
+> **¿Cómo piensa un backend trainee ANTES de escribir una sola línea de código?**
+
+---
+
+### 7.6.2 Definición del problema (sin código)
+
+Se necesita un sistema backend que permita:
+
+- Registrar usuarios
+    
+- Crear pedidos
+    
+- Agregar productos a pedidos
+    
+- Calcular totales
+    
+- Persistir información
+    
+- Manejar errores correctamente
+    
+
+Restricciones:
+
+- Usuarios deben ser mayores de edad
+    
+- Un pedido no puede tener total negativo
+    
+- Un pedido pasa por estados válidos
+    
+- Los datos deben estar normalizados
+    
+
+---
+
+### 7.6.3 Modelo mental del trainee correcto
+
+Antes de pensar en:
+
+- Framework
+    
+- Lenguaje
+    
+- Base de datos
+    
+
+El trainee piensa:
+
+1. ¿Cuáles son las **entidades reales**?
+    
+2. ¿Qué **reglas del negocio** existen?
+    
+3. ¿Qué **cambia** y qué **no cambia**?
+    
+4. ¿Dónde vive cada responsabilidad?
+    
+
+---
+
+### 7.6.4 Identificación de Entidades
+
+Entidades claras:
+
+- Usuario
+    
+- Pedido
+    
+- Producto
+    
+- DetallePedido
+    
+
+Cada una:
+
+- Tiene identidad
+    
+- Tiene reglas propias
+    
+- No se mezclan
+    
+
+**Señal de buen pensamiento**:  
+No aparecen entidades “raras” como `PedidoProductoUsuario`.
+
+---
+
+### 7.6.5 Reglas del Dominio (NO del servicio)
+
+Reglas claras:
+
+- Usuario:
+    
+    - No puede crearse con edad < 18
+        
+- Pedido:
+    
+    - No puede estar vacío
+        
+    - No puede tener total negativo
+        
+    - No puede pasar de CREATED → SHIPPED sin PAID
+        
+- Producto:
+    
+    - Precio > 0
+        
+
+Estas reglas **NO van**:
+
+- En el controlador
+    
+- En la base de datos únicamente
+    
+- En validaciones dispersas
+    
+
+Van en el **dominio**.
+
+---
+
+### 7.6.6 Aplicación de GRASP en el Caso
+
+#### Experto en Información
+
+- Pedido calcula su total
+    
+- DetallePedido calcula subtotales
+    
+
+❌ El servicio no calcula totales.
+
+---
+
+#### Creador
+
+- Pedido crea sus DetallePedido
+    
+- No se agregan desde afuera
+    
+
+---
+
+#### Controlador
+
+- Recibe la request
+    
+- No decide reglas
+    
+- No toca persistencia directamente
+    
+
+---
+
+#### Alta Cohesión
+
+- Clases pequeñas
+    
+- Responsabilidades claras
+    
+- Nada “multiuso”
+    
+
+---
+
+#### Bajo Acoplamiento
+
+- Servicios dependen de interfaces
+    
+- Repositorios abstraídos
+    
+- Infraestructura aislada
+    
+
+---
+
+### 7.6.7 Aplicación de SOLID en el Caso
+
+- **SRP**  
+    Usuario no envía emails  
+    Pedido no se guarda solo
+    
+- **OCP**  
+    Nuevos tipos de descuento sin modificar código existente
+    
+- **LSP**  
+    Estados de pedido no rompen comportamiento esperado
+    
+- **ISP**  
+    Interfaces pequeñas: `PaymentProcessor`, no `MegaService`
+    
+- **DIP**  
+    Servicios dependen de interfaces, no de implementaciones
+    
+
+---
+
+### 7.6.8 Arquitectura de Capas Aplicada
+
+Flujo claro:
+
+```
+Request
+ → Controller
+   → Application Service
+     → Domain
+       → Repository (interface)
+         → Infrastructure
+```
+
+**Nunca**:
+
+```
+Controller → DB
+Domain → HTTP
+```
+
+---
+
+### 7.6.9 Manejo de Excepciones en el Caso
+
+- Regla rota → Excepción de dominio
+    
+- Error técnico → Excepción técnica
+    
+- Controlador traduce a respuesta adecuada
+    
+
+Ejemplo mental:
+
+- Edad inválida → `DomainException`
+    
+- DB caída → `InfrastructureException`
+    
+
+Nunca:
+
+- `try/catch` vacío
+    
+- `return null`
+    
+
+---
+
+### 7.6.10 Modelo de Datos Derivado (no al revés)
+
+El modelo ER surge **del dominio**, no del framework.
+
+- Usuario (id)
+    
+- Pedido (id, usuario_id)
+    
+- DetallePedido (pedido_id, producto_id)
+    
+- Producto (id)
+    
+
+Normalizado hasta 3FN.
+
+---
+
+### 7.6.11 Errores típicos en este caso (y por qué son graves)
+
+- Calcular totales en el controller
+    
+- Guardar pedido sin validar estado
+    
+- Poner lógica en repositorio
+    
+- Resolver reglas con SQL
+    
+- Usar `if` por tipo de estado
+    
+
+Cada uno rompe:
+
+- Diseño
+    
+- Testeabilidad
+    
+- Evolución
+    
+
+---
+
+### 7.6.12 Señales de que el trainee **sí está pensando bien**
+
+- Puede explicar el diseño sin código
+    
+- Sabe por qué una clase existe
+    
+- Justifica decisiones con principios
+    
+- Detecta mal diseño antes de bugs
+    
+
+---
+
+### 7.6.13 Ejercicio práctico integrador (obligatorio)
+
+Sin escribir código:
+
+1. Diseña el dominio del sistema
+    
+2. Lista reglas críticas
+    
+3. Asigna responsabilidades
+    
+4. Dibuja capas
+    
+5. Identifica puntos de cambio
+    
+6. Decide dónde aplicar:
+    
+    - 2 GRASP
+        
+    - 2 SOLID
+        
+
+**Si puedes hacer esto, estás pensando como backend.**
+
+---
+
+## 7.7 Transición Natural del Nivel Trainee al Junior (sin adelantar nivel)
+
+---
+
+### 7.7.1 Contexto
+
+Un trainee **no asciende** por:
+
+- Saber más frameworks
+    
+- Escribir más rápido
+    
+
+Asciende cuando:
+
+- Comete menos errores estructurales
+    
+- Diseña antes de codificar
+    
+- Entiende impacto de cambios
+    
+
+---
+
+### 7.7.2 Señales reales de madurez Trainee
+
+- Menos código, más intención
+    
+- Menos parches, más diseño
+    
+- Menos “copiar”, más entender
+    
+- Menos miedo a refactorizar
+    
+
+---
+
+### 7.7.3 Lo que **NO** se espera aún
+
+- Microservicios complejos
+    
+- Optimizaciones prematuras
+    
+- Arquitecturas distribuidas
+    
+- Overengineering
+    
+
+---
+
+### 7.7.4 Lo que **SÍ** se espera dominar
+
+- Capas
+    
+- Dominio
+    
+- GRASP
+    
+- SOLID básico
+    
+- Manejo de errores
+    
+- Modelo de datos sano
+    
+
+---
+
+
+## 7.6 Caso Integral Guiado – Sistema de Pedidos (Visión Backend Trainee)
+
+---
+
+### 7.6.1 Contexto
+
+Muchos trainees entienden los conceptos **por separado**, pero fallan cuando enfrentan un sistema real porque:
+
+- No saben por dónde empezar.
+    
+- Se lanzan a escribir código sin diseño.
+    
+- Mezclan decisiones técnicas con decisiones de negocio.
+    
+
+Este caso existe para responder una pregunta clave:
+
+> **¿Cómo piensa un backend trainee ANTES de escribir una sola línea de código?**
+
+---
+
+### 7.6.2 Definición del problema (sin código)
+
+Se necesita un sistema backend que permita:
+
+- Registrar usuarios
+    
+- Crear pedidos
+    
+- Agregar productos a pedidos
+    
+- Calcular totales
+    
+- Persistir información
+    
+- Manejar errores correctamente
+    
+
+Restricciones:
+
+- Usuarios deben ser mayores de edad
+    
+- Un pedido no puede tener total negativo
+    
+- Un pedido pasa por estados válidos
+    
+- Los datos deben estar normalizados
+    
+
+---
+
+### 7.6.3 Modelo mental del trainee correcto
+
+Antes de pensar en:
+
+- Framework
+    
+- Lenguaje
+    
+- Base de datos
+    
+
+El trainee piensa:
+
+1. ¿Cuáles son las **entidades reales**?
+    
+2. ¿Qué **reglas del negocio** existen?
+    
+3. ¿Qué **cambia** y qué **no cambia**?
+    
+4. ¿Dónde vive cada responsabilidad?
+    
+
+---
+
+### 7.6.4 Identificación de Entidades
+
+Entidades claras:
+
+- Usuario
+    
+- Pedido
+    
+- Producto
+    
+- DetallePedido
+    
+
+Cada una:
+
+- Tiene identidad
+    
+- Tiene reglas propias
+    
+- No se mezclan
+    
+
+**Señal de buen pensamiento**:  
+No aparecen entidades “raras” como `PedidoProductoUsuario`.
+
+---
+
+### 7.6.5 Reglas del Dominio (NO del servicio)
+
+Reglas claras:
+
+- Usuario:
+    
+    - No puede crearse con edad < 18
+        
+- Pedido:
+    
+    - No puede estar vacío
+        
+    - No puede tener total negativo
+        
+    - No puede pasar de CREATED → SHIPPED sin PAID
+        
+- Producto:
+    
+    - Precio > 0
+        
+
+Estas reglas **NO van**:
+
+- En el controlador
+    
+- En la base de datos únicamente
+    
+- En validaciones dispersas
+    
+
+Van en el **dominio**.
+
+---
+
+### 7.6.6 Aplicación de GRASP en el Caso
+
+#### Experto en Información
+
+- Pedido calcula su total
+    
+- DetallePedido calcula subtotales
+    
+
+❌ El servicio no calcula totales.
+
+---
+
+#### Creador
+
+- Pedido crea sus DetallePedido
+    
+- No se agregan desde afuera
+    
+
+---
+
+#### Controlador
+
+- Recibe la request
+    
+- No decide reglas
+    
+- No toca persistencia directamente
+    
+
+---
+
+#### Alta Cohesión
+
+- Clases pequeñas
+    
+- Responsabilidades claras
+    
+- Nada “multiuso”
+    
+
+---
+
+#### Bajo Acoplamiento
+
+- Servicios dependen de interfaces
+    
+- Repositorios abstraídos
+    
+- Infraestructura aislada
+    
+
+---
+
+### 7.6.7 Aplicación de SOLID en el Caso
+
+- **SRP**  
+    Usuario no envía emails  
+    Pedido no se guarda solo
+    
+- **OCP**  
+    Nuevos tipos de descuento sin modificar código existente
+    
+- **LSP**  
+    Estados de pedido no rompen comportamiento esperado
+    
+- **ISP**  
+    Interfaces pequeñas: `PaymentProcessor`, no `MegaService`
+    
+- **DIP**  
+    Servicios dependen de interfaces, no de implementaciones
+    
+
+---
+
+### 7.6.8 Arquitectura de Capas Aplicada
+
+Flujo claro:
+
+```
+Request
+ → Controller
+   → Application Service
+     → Domain
+       → Repository (interface)
+         → Infrastructure
+```
+
+**Nunca**:
+
+```
+Controller → DB
+Domain → HTTP
+```
+
+---
+
+### 7.6.9 Manejo de Excepciones en el Caso
+
+- Regla rota → Excepción de dominio
+    
+- Error técnico → Excepción técnica
+    
+- Controlador traduce a respuesta adecuada
+    
+
+Ejemplo mental:
+
+- Edad inválida → `DomainException`
+    
+- DB caída → `InfrastructureException`
+    
+
+Nunca:
+
+- `try/catch` vacío
+    
+- `return null`
+    
+
+---
+
+### 7.6.10 Modelo de Datos Derivado (no al revés)
+
+El modelo ER surge **del dominio**, no del framework.
+
+- Usuario (id)
+    
+- Pedido (id, usuario_id)
+    
+- DetallePedido (pedido_id, producto_id)
+    
+- Producto (id)
+    
+
+Normalizado hasta 3FN.
+
+---
+
+### 7.6.11 Errores típicos en este caso (y por qué son graves)
+
+- Calcular totales en el controller
+    
+- Guardar pedido sin validar estado
+    
+- Poner lógica en repositorio
+    
+- Resolver reglas con SQL
+    
+- Usar `if` por tipo de estado
+    
+
+Cada uno rompe:
+
+- Diseño
+    
+- Testeabilidad
+    
+- Evolución
+    
+
+---
+
+### 7.6.12 Señales de que el trainee **sí está pensando bien**
+
+- Puede explicar el diseño sin código
+    
+- Sabe por qué una clase existe
+    
+- Justifica decisiones con principios
+    
+- Detecta mal diseño antes de bugs
+    
+
+---
+
+### 7.6.13 Ejercicio práctico integrador (obligatorio)
+
+Sin escribir código:
+
+1. Diseña el dominio del sistema
+    
+2. Lista reglas críticas
+    
+3. Asigna responsabilidades
+    
+4. Dibuja capas
+    
+5. Identifica puntos de cambio
+    
+6. Decide dónde aplicar:
+    
+    - 2 GRASP
+        
+    - 2 SOLID
+        
+
+**Si puedes hacer esto, estás pensando como backend.**
+
+---
+
+## 7.7 Transición Natural del Nivel Trainee al Junior (sin adelantar nivel)
+
+---
+
+### 7.7.1 Contexto
+
+Un trainee **no asciende** por:
+
+- Saber más frameworks
+    
+- Escribir más rápido
+    
+
+Asciende cuando:
+
+- Comete menos errores estructurales
+    
+- Diseña antes de codificar
+    
+- Entiende impacto de cambios
+    
+
+---
+
+### 7.7.2 Señales reales de madurez Trainee
+
+- Menos código, más intención
+    
+- Menos parches, más diseño
+    
+- Menos “copiar”, más entender
+    
+- Menos miedo a refactorizar
+    
+
+---
+
+### 7.7.3 Lo que **NO** se espera aún
+
+- Microservicios complejos
+    
+- Optimizaciones prematuras
+    
+- Arquitecturas distribuidas
+    
+- Overengineering
+    
+
+---
+
+### 7.7.4 Lo que **SÍ** se espera dominar
+
+- Capas
+    
+- Dominio
+    
+- GRASP
+    
+- SOLID básico
+    
+- Manejo de errores
+    
+- Modelo de datos sano
+    
+
+---
+
+
+# 7.8 Antipatrones Comunes en Backend Trainee
+
+_(Lo que parece “funcionar”, pero destruye el sistema a mediano plazo)_
+
+> **Advertencia pedagógica clave**  
+> Los antipatrones **no son errores de novato**,  
+> son **formas incorrectas de pensar** que, si no se corrigen temprano,  
+> acompañan al desarrollador durante años.
+> 
+> Un buen trainee **aprende a reconocerlos antes de escribir código**.
+
+---
+
+## 7.8.1 Antipatrón: _“Funciona, entonces está bien”_
+
+---
+
+### Contexto
+
+Este es **el antipatrón más peligroso**.
+
+Aparece cuando:
+
+- El código compila
+    
+- El endpoint responde
+    
+- El test pasa
+    
+
+Y el trainee concluye:
+
+> “Listo, está bien”
+
+Históricamente, este pensamiento ha creado:
+
+- Sistemas frágiles
+    
+- Código imposible de mantener
+    
+- Deuda técnica silenciosa
+    
+
+---
+
+### Definición extensa
+
+Este antipatrón consiste en:
+
+> **Evaluar la calidad del backend únicamente por su funcionamiento inmediato, ignorando diseño, mantenibilidad y evolución.**
+
+Funcionar **no implica**:
+
+- Buen diseño
+    
+- Buen modelo de datos
+    
+- Buen uso de capas
+    
+- Buen manejo de errores
+    
+
+---
+
+### Modelo mental incorrecto
+
+> “Si responde 200 OK, no hay problema”
+
+---
+
+### Modelo mental correcto
+
+> “¿Esto seguirá funcionando cuando cambie el requerimiento?”
+
+---
+
+### Ejemplo incorrecto (obligatorio)
+
+```java
+@PostMapping("/order")
+public void createOrder(@RequestBody OrderDTO dto) {
+    jdbcTemplate.execute("INSERT INTO orders VALUES (...)");
+}
+```
+
+Funciona hoy.  
+Falla mañana.
+
+---
+
+### Por qué está mal
+
+- Salta capas
+    
+- Acoplamiento extremo
+    
+- No hay dominio
+    
+- No hay validaciones reales
+    
+- No es testeable
+    
+
+---
+
+### Errores típicos asociados
+
+- Saltarse servicios
+    
+- SQL en controllers
+    
+- Validaciones incompletas
+    
+- Código “rápido”
+    
+
+---
+
+### Señales de que estás cayendo aquí
+
+- No puedes explicar el diseño
+    
+- No sabes dónde vive una regla
+    
+- Cambiar algo te da miedo
+    
+
+---
+
+### Ejercicio mental
+
+Antes de decir _“ya funciona”_, pregúntate:
+
+- ¿Dónde vive esta regla?
+    
+- ¿Qué pasa si cambia?
+    
+- ¿Quién mantiene esto en 6 meses?
+    
+
+---
+
+## 7.8.2 Antipatrón: _Service Dios (God Service)_
+
+---
+
+### Contexto
+
+Uno de los más comunes en trainees backend.
+
+Empieza pequeño:
+
+```java
+UserService
+```
+
+Termina así:
+
+```java
+UserService {
+   createUser()
+   updateUser()
+   deleteUser()
+   validateUser()
+   sendEmail()
+   generateReport()
+   hashPassword()
+   exportCSV()
+}
+```
+
+---
+
+### Definición extensa
+
+Un **Service Dios** es una clase que:
+
+- Centraliza demasiadas responsabilidades
+    
+- Viola SRP
+    
+- Se vuelve punto único de cambio
+    
+- Es imposible de testear correctamente
+    
+
+---
+
+### Modelo mental incorrecto
+
+> “Todo lo del usuario va en UserService”
+
+---
+
+### Modelo mental correcto
+
+> “¿Esto pertenece al concepto usuario o es otra responsabilidad?”
+
+---
+
+### Ejemplo incorrecto (obligatorio)
+
+```java
+public class OrderService {
+    public void createOrder(){}
+    public void calculateTotal(){}
+    public void save(){}
+    public void sendEmail(){}
+}
+```
+
+---
+
+### Por qué está mal
+
+- Baja cohesión
+    
+- Alto acoplamiento
+    
+- Cambios peligrosos
+    
+- Tests frágiles
+    
+
+---
+
+### Antipatrón relacionado
+
+👉 _Clases multiuso_  
+👉 _Managers que hacen todo_
+
+---
+
+### Señales de alerta
+
+- Clases con cientos de líneas
+    
+- Muchos métodos no relacionados
+    
+- Difícil de leer completa
+    
+
+---
+
+### Ejercicio mental
+
+Divide mentalmente el servicio en:
+
+- Dominio
+    
+- Aplicación
+    
+- Infraestructura
+    
+
+Si puedes dividirlo → está mal diseñado.
+
+---
+
+## 7.8.3 Antipatrón: Dominio Anémico
+
+---
+
+### Contexto
+
+Muy común cuando el trainee aprendió OOP “solo de forma sintáctica”.
+
+Se ven clases así:
+
+```java
+class Order {
+   private double total;
+   // getters y setters
+}
+```
+
+Toda la lógica vive fuera.
+
+---
+
+### Definición extensa
+
+Un **dominio anémico** es aquel donde:
+
+- Las entidades solo contienen datos
+    
+- No protegen invariantes
+    
+- No tienen comportamiento
+    
+- El negocio vive en servicios
+    
+
+---
+
+### Modelo mental incorrecto
+
+> “Las entidades solo guardan datos”
+
+---
+
+### Modelo mental correcto
+
+> “Las entidades representan reglas del negocio”
+
+---
+
+### Ejemplo incorrecto (obligatorio)
+
+```java
+order.setTotal(calculate(order));
+```
+
+---
+
+### Ejemplo correcto (contraste conceptual)
+
+```java
+order.calculateTotal();
+```
+
+---
+
+### Por qué está mal
+
+- Reglas dispersas
+    
+- Estados inválidos posibles
+    
+- Código duplicado
+    
+- Difícil evolución
+    
+
+---
+
+### Errores típicos asociados
+
+- Uso excesivo de setters
+    
+- Validaciones solo en servicios
+    
+- Falta de invariantes
+    
+
+---
+
+### Señales de alerta
+
+- Entidades sin métodos
+    
+- Servicios que “saben demasiado”
+    
+- Dominio pasivo
+    
+
+---
+
+### Ejercicio mental
+
+Pregunta:
+
+- ¿Este objeto se puede poner en un estado inválido?
+    
+
+Si sí → dominio anémico.
+
+---
+
+## 7.8.4 Antipatrón: Repositorio con Lógica de Negocio
+
+---
+
+### Contexto
+
+Sucede cuando el trainee piensa:
+
+> “Como el repositorio ya consulta, que también valide”
+
+---
+
+### Definición extensa
+
+Este antipatrón ocurre cuando:
+
+- El repositorio decide reglas
+    
+- El repositorio filtra lógica de negocio
+    
+- Se mezclan persistencia y dominio
+    
+
+---
+
+### Ejemplo incorrecto (obligatorio)
+
+```java
+public List<Order> findValidOrders() {
+    return jdbc.query("SELECT * FROM orders WHERE total > 0");
+}
+```
+
+---
+
+### Por qué está mal
+
+- El negocio depende de SQL
+    
+- Reglas escondidas
+    
+- Difícil cambio
+    
+- Testeo complejo
+    
+
+---
+
+### Modelo mental correcto
+
+> “El repositorio trae datos, el dominio decide”
+
+---
+
+### Señales de alerta
+
+- SQL con reglas de negocio
+    
+- Métodos con nombres ambiguos
+    
+- Dependencias cruzadas
+    
+
+---
+
+### Ejercicio mental
+
+Pregunta:
+
+- ¿Esto es un criterio técnico o una regla del negocio?
+    
+
+---
+
+## 7.8.5 Antipatrón: Validaciones Dispersas
+
+---
+
+### Contexto
+
+Muy común en sistemas pequeños que crecen.
+
+Validaciones aparecen en:
+
+- Controller
+    
+- Service
+    
+- Repository
+    
+- Frontend
+    
+
+---
+
+### Definición extensa
+
+Este antipatrón consiste en:
+
+> **Repetir o dispersar reglas del negocio en múltiples capas.**
+
+---
+
+### Ejemplo incorrecto (obligatorio)
+
+```java
+// controller
+if(age < 18) ...
+
+// service
+if(age < 18) ...
+
+// db constraint
+CHECK(age >= 18)
+```
+
+---
+
+### Por qué está mal
+
+- DRY violado
+    
+- Cambios inconsistentes
+    
+- Bugs silenciosos
+    
+
+---
+
+### Modelo correcto
+
+- Regla vive en dominio
+    
+- Capas externas delegan
+    
+
+---
+
+### Señales de alerta
+
+- Mismo `if` repetido
+    
+- Cambios en muchos lugares
+    
+- Inconsistencias
+    
+
+---
+
+### Ejercicio mental
+
+Ubica una regla y pregúntate:
+
+- ¿Dónde debería vivir realmente?
+    
+
+---
+
+## 7.8.6 Antipatrón: Usar Excepciones como Flujo Normal
+
+---
+
+### Contexto
+
+Muchos trainees usan excepciones así:
+
+```java
+try {
+   findUser()
+} catch(Exception e) {
+   createUser()
+}
+```
+
+---
+
+### Definición extensa
+
+Este antipatrón ocurre cuando:
+
+- Las excepciones controlan lógica normal
+    
+- Se usan para decisiones esperadas
+    
+- El flujo se vuelve opaco
+    
+
+---
+
+### Por qué está mal
+
+- Excepciones son costosas
+    
+- Dificultan lectura
+    
+- Ocultan errores reales
+    
+
+---
+
+### Modelo correcto
+
+> “Las excepciones son para lo excepcional”
+
+---
+
+### Señales de alerta
+
+- `try/catch` enormes
+    
+- Lógica dentro de `catch`
+    
+- Difícil entender el flujo
+    
+
+---
+
+## 7.8.7 Antipatrón: Sobre-diseño Prematuro (Overengineering)
+
+---
+
+### Contexto
+
+El trainee aprende patrones y quiere usarlos todos.
+
+Resultado:
+
+- 10 interfaces
+    
+- 5 capas
+    
+- 2 implementaciones
+    
+- 1 requerimiento simple
+    
+
+---
+
+### Definición extensa
+
+Este antipatrón consiste en:
+
+> **Diseñar para un futuro que no existe aún.**
+
+Viola:
+
+- KISS
+    
+- YAGNI
+    
+
+---
+
+### Modelo mental incorrecto
+
+> “Después seguro lo vamos a necesitar”
+
+---
+
+### Modelo mental correcto
+
+> “Cuando llegue el cambio, lo diseño bien”
+
+---
+
+### Señales de alerta
+
+- Código sin uso
+    
+- Abstracciones sin necesidad
+    
+- Complejidad innecesaria
+    
+
+---
+
+## 7.8.8 Antipatrón: “El Framework lo Hace”
+
+---
+
+### Contexto
+
+Uno de los más peligrosos a largo plazo.
+
+El trainee:
+
+- Usa anotaciones
+    
+- Copia configuraciones
+    
+- No sabe qué ocurre detrás
+    
+
+---
+
+### Definición extensa
+
+Este antipatrón ocurre cuando:
+
+> **Se delega el entendimiento al framework.**
+
+---
+
+### Por qué está mal
+
+- Debug imposible
+    
+- Dependencia ciega
+    
+- Falta de criterio técnico
+    
+
+---
+
+### Modelo correcto
+
+> “Uso el framework porque entiendo qué hace”
+
+---
+
+### Señales de alerta
+
+- “No sé por qué funciona”
+    
+- Miedo a tocar código
+    
+- Configuración copiada
+    
+
+---
+
+## 7.8.9 Antipatrón: Arreglar Datos con Código
+
+---
+
+### Contexto
+
+Modelo de datos mal diseñado →  
+servicios llenos de lógica compensatoria.
+
+---
+
+### Definición extensa
+
+> **Usar código backend para compensar errores de modelado de datos.**
+
+---
+
+### Por qué está mal
+
+- Código innecesario
+    
+- Bugs recurrentes
+    
+- Performance pobre
+    
+
+---
+
+### Modelo correcto
+
+> “Si el modelo está bien, el código se simplifica”
+
+---
+
+## 7.8.10 Señales Globales de que un Trainee está Atrapado en Antipatrones
+
+- Mucho código, poca claridad
+    
+- Miedo a refactorizar
+    
+- Bugs recurrentes
+    
+- Diseño que nadie entiende
+    
+- Dependencia extrema del framework
+    
+
+---
+
+
+# 7.8 Antipatrones Comunes en Backend Trainee
+
+_(Lo que parece “funcionar”, pero destruye el sistema a mediano plazo)_
+
+> **Advertencia pedagógica clave**  
+> Los antipatrones **no son errores de novato**,  
+> son **formas incorrectas de pensar** que, si no se corrigen temprano,  
+> acompañan al desarrollador durante años.
+> 
+> Un buen trainee **aprende a reconocerlos antes de escribir código**.
+
+---
+
+## 7.8.1 Antipatrón: _“Funciona, entonces está bien”_
+
+---
+
+### Contexto
+
+Este es **el antipatrón más peligroso**.
+
+Aparece cuando:
+
+- El código compila
+    
+- El endpoint responde
+    
+- El test pasa
+    
+
+Y el trainee concluye:
+
+> “Listo, está bien”
+
+Históricamente, este pensamiento ha creado:
+
+- Sistemas frágiles
+    
+- Código imposible de mantener
+    
+- Deuda técnica silenciosa
+    
+
+---
+
+### Definición extensa
+
+Este antipatrón consiste en:
+
+> **Evaluar la calidad del backend únicamente por su funcionamiento inmediato, ignorando diseño, mantenibilidad y evolución.**
+
+Funcionar **no implica**:
+
+- Buen diseño
+    
+- Buen modelo de datos
+    
+- Buen uso de capas
+    
+- Buen manejo de errores
+    
+
+---
+
+### Modelo mental incorrecto
+
+> “Si responde 200 OK, no hay problema”
+
+---
+
+### Modelo mental correcto
+
+> “¿Esto seguirá funcionando cuando cambie el requerimiento?”
+
+---
+
+### Ejemplo incorrecto (obligatorio)
+
+```java
+@PostMapping("/order")
+public void createOrder(@RequestBody OrderDTO dto) {
+    jdbcTemplate.execute("INSERT INTO orders VALUES (...)");
+}
+```
+
+Funciona hoy.  
+Falla mañana.
+
+---
+
+### Por qué está mal
+
+- Salta capas
+    
+- Acoplamiento extremo
+    
+- No hay dominio
+    
+- No hay validaciones reales
+    
+- No es testeable
+    
+
+---
+
+### Errores típicos asociados
+
+- Saltarse servicios
+    
+- SQL en controllers
+    
+- Validaciones incompletas
+    
+- Código “rápido”
+    
+
+---
+
+### Señales de que estás cayendo aquí
+
+- No puedes explicar el diseño
+    
+- No sabes dónde vive una regla
+    
+- Cambiar algo te da miedo
+    
+
+---
+
+### Ejercicio mental
+
+Antes de decir _“ya funciona”_, pregúntate:
+
+- ¿Dónde vive esta regla?
+    
+- ¿Qué pasa si cambia?
+    
+- ¿Quién mantiene esto en 6 meses?
+    
+
+---
+
+## 7.8.2 Antipatrón: _Service Dios (God Service)_
+
+---
+
+### Contexto
+
+Uno de los más comunes en trainees backend.
+
+Empieza pequeño:
+
+```java
+UserService
+```
+
+Termina así:
+
+```java
+UserService {
+   createUser()
+   updateUser()
+   deleteUser()
+   validateUser()
+   sendEmail()
+   generateReport()
+   hashPassword()
+   exportCSV()
+}
+```
+
+---
+
+### Definición extensa
+
+Un **Service Dios** es una clase que:
+
+- Centraliza demasiadas responsabilidades
+    
+- Viola SRP
+    
+- Se vuelve punto único de cambio
+    
+- Es imposible de testear correctamente
+    
+
+---
+
+### Modelo mental incorrecto
+
+> “Todo lo del usuario va en UserService”
+
+---
+
+### Modelo mental correcto
+
+> “¿Esto pertenece al concepto usuario o es otra responsabilidad?”
+
+---
+
+### Ejemplo incorrecto (obligatorio)
+
+```java
+public class OrderService {
+    public void createOrder(){}
+    public void calculateTotal(){}
+    public void save(){}
+    public void sendEmail(){}
+}
+```
+
+---
+
+### Por qué está mal
+
+- Baja cohesión
+    
+- Alto acoplamiento
+    
+- Cambios peligrosos
+    
+- Tests frágiles
+    
+
+---
+
+### Antipatrón relacionado
+
+👉 _Clases multiuso_  
+👉 _Managers que hacen todo_
+
+---
+
+### Señales de alerta
+
+- Clases con cientos de líneas
+    
+- Muchos métodos no relacionados
+    
+- Difícil de leer completa
+    
+
+---
+
+### Ejercicio mental
+
+Divide mentalmente el servicio en:
+
+- Dominio
+    
+- Aplicación
+    
+- Infraestructura
+    
+
+Si puedes dividirlo → está mal diseñado.
+
+---
+
+## 7.8.3 Antipatrón: Dominio Anémico
+
+---
+
+### Contexto
+
+Muy común cuando el trainee aprendió OOP “solo de forma sintáctica”.
+
+Se ven clases así:
+
+```java
+class Order {
+   private double total;
+   // getters y setters
+}
+```
+
+Toda la lógica vive fuera.
+
+---
+
+### Definición extensa
+
+Un **dominio anémico** es aquel donde:
+
+- Las entidades solo contienen datos
+    
+- No protegen invariantes
+    
+- No tienen comportamiento
+    
+- El negocio vive en servicios
+    
+
+---
+
+### Modelo mental incorrecto
+
+> “Las entidades solo guardan datos”
+
+---
+
+### Modelo mental correcto
+
+> “Las entidades representan reglas del negocio”
+
+---
+
+### Ejemplo incorrecto (obligatorio)
+
+```java
+order.setTotal(calculate(order));
+```
+
+---
+
+### Ejemplo correcto (contraste conceptual)
+
+```java
+order.calculateTotal();
+```
+
+---
+
+### Por qué está mal
+
+- Reglas dispersas
+    
+- Estados inválidos posibles
+    
+- Código duplicado
+    
+- Difícil evolución
+    
+
+---
+
+### Errores típicos asociados
+
+- Uso excesivo de setters
+    
+- Validaciones solo en servicios
+    
+- Falta de invariantes
+    
+
+---
+
+### Señales de alerta
+
+- Entidades sin métodos
+    
+- Servicios que “saben demasiado”
+    
+- Dominio pasivo
+    
+
+---
+
+### Ejercicio mental
+
+Pregunta:
+
+- ¿Este objeto se puede poner en un estado inválido?
+    
+
+Si sí → dominio anémico.
+
+---
+
+## 7.8.4 Antipatrón: Repositorio con Lógica de Negocio
+
+---
+
+### Contexto
+
+Sucede cuando el trainee piensa:
+
+> “Como el repositorio ya consulta, que también valide”
+
+---
+
+### Definición extensa
+
+Este antipatrón ocurre cuando:
+
+- El repositorio decide reglas
+    
+- El repositorio filtra lógica de negocio
+    
+- Se mezclan persistencia y dominio
+    
+
+---
+
+### Ejemplo incorrecto (obligatorio)
+
+```java
+public List<Order> findValidOrders() {
+    return jdbc.query("SELECT * FROM orders WHERE total > 0");
+}
+```
+
+---
+
+### Por qué está mal
+
+- El negocio depende de SQL
+    
+- Reglas escondidas
+    
+- Difícil cambio
+    
+- Testeo complejo
+    
+
+---
+
+### Modelo mental correcto
+
+> “El repositorio trae datos, el dominio decide”
+
+---
+
+### Señales de alerta
+
+- SQL con reglas de negocio
+    
+- Métodos con nombres ambiguos
+    
+- Dependencias cruzadas
+    
+
+---
+
+### Ejercicio mental
+
+Pregunta:
+
+- ¿Esto es un criterio técnico o una regla del negocio?
+    
+
+---
+
+## 7.8.5 Antipatrón: Validaciones Dispersas
+
+---
+
+### Contexto
+
+Muy común en sistemas pequeños que crecen.
+
+Validaciones aparecen en:
+
+- Controller
+    
+- Service
+    
+- Repository
+    
+- Frontend
+    
+
+---
+
+### Definición extensa
+
+Este antipatrón consiste en:
+
+> **Repetir o dispersar reglas del negocio en múltiples capas.**
+
+---
+
+### Ejemplo incorrecto (obligatorio)
+
+```java
+// controller
+if(age < 18) ...
+
+// service
+if(age < 18) ...
+
+// db constraint
+CHECK(age >= 18)
+```
+
+---
+
+### Por qué está mal
+
+- DRY violado
+    
+- Cambios inconsistentes
+    
+- Bugs silenciosos
+    
+
+---
+
+### Modelo correcto
+
+- Regla vive en dominio
+    
+- Capas externas delegan
+    
+
+---
+
+### Señales de alerta
+
+- Mismo `if` repetido
+    
+- Cambios en muchos lugares
+    
+- Inconsistencias
+    
+
+---
+
+### Ejercicio mental
+
+Ubica una regla y pregúntate:
+
+- ¿Dónde debería vivir realmente?
+    
+
+---
+
+## 7.8.6 Antipatrón: Usar Excepciones como Flujo Normal
+
+---
+
+### Contexto
+
+Muchos trainees usan excepciones así:
+
+```java
+try {
+   findUser()
+} catch(Exception e) {
+   createUser()
+}
+```
+
+---
+
+### Definición extensa
+
+Este antipatrón ocurre cuando:
+
+- Las excepciones controlan lógica normal
+    
+- Se usan para decisiones esperadas
+    
+- El flujo se vuelve opaco
+    
+
+---
+
+### Por qué está mal
+
+- Excepciones son costosas
+    
+- Dificultan lectura
+    
+- Ocultan errores reales
+    
+
+---
+
+### Modelo correcto
+
+> “Las excepciones son para lo excepcional”
+
+---
+
+### Señales de alerta
+
+- `try/catch` enormes
+    
+- Lógica dentro de `catch`
+    
+- Difícil entender el flujo
+    
+
+---
+
+## 7.8.7 Antipatrón: Sobre-diseño Prematuro (Overengineering)
+
+---
+
+### Contexto
+
+El trainee aprende patrones y quiere usarlos todos.
+
+Resultado:
+
+- 10 interfaces
+    
+- 5 capas
+    
+- 2 implementaciones
+    
+- 1 requerimiento simple
+    
+
+---
+
+### Definición extensa
+
+Este antipatrón consiste en:
+
+> **Diseñar para un futuro que no existe aún.**
+
+Viola:
+
+- KISS
+    
+- YAGNI
+    
+
+---
+
+### Modelo mental incorrecto
+
+> “Después seguro lo vamos a necesitar”
+
+---
+
+### Modelo mental correcto
+
+> “Cuando llegue el cambio, lo diseño bien”
+
+---
+
+### Señales de alerta
+
+- Código sin uso
+    
+- Abstracciones sin necesidad
+    
+- Complejidad innecesaria
+    
+
+---
+
+## 7.8.8 Antipatrón: “El Framework lo Hace”
+
+---
+
+### Contexto
+
+Uno de los más peligrosos a largo plazo.
+
+El trainee:
+
+- Usa anotaciones
+    
+- Copia configuraciones
+    
+- No sabe qué ocurre detrás
+    
+
+---
+
+### Definición extensa
+
+Este antipatrón ocurre cuando:
+
+> **Se delega el entendimiento al framework.**
+
+---
+
+### Por qué está mal
+
+- Debug imposible
+    
+- Dependencia ciega
+    
+- Falta de criterio técnico
+    
+
+---
+
+### Modelo correcto
+
+> “Uso el framework porque entiendo qué hace”
+
+---
+
+### Señales de alerta
+
+- “No sé por qué funciona”
+    
+- Miedo a tocar código
+    
+- Configuración copiada
+    
+
+---
+
+## 7.8.9 Antipatrón: Arreglar Datos con Código
+
+---
+
+### Contexto
+
+Modelo de datos mal diseñado →  
+servicios llenos de lógica compensatoria.
+
+---
+
+### Definición extensa
+
+> **Usar código backend para compensar errores de modelado de datos.**
+
+---
+
+### Por qué está mal
+
+- Código innecesario
+    
+- Bugs recurrentes
+    
+- Performance pobre
+    
+
+---
+
+### Modelo correcto
+
+> “Si el modelo está bien, el código se simplifica”
+
+---
+
+## 7.8.10 Señales Globales de que un Trainee está Atrapado en Antipatrones
+
+- Mucho código, poca claridad
+    
+- Miedo a refactorizar
+    
+- Bugs recurrentes
+    
+- Diseño que nadie entiende
+    
+- Dependencia extrema del framework
+    
+
+---
+
+
+# 7.10 Antipatrones Específicos en Java Backend
+
+_(Los errores que parecen “normales” en Java, pero destruyen sistemas backend)_
+
+---
+
+## 7.10.1 Antipatrón: _Anemia + Lombok Abuse_
+
+---
+
+### Contexto
+
+En Java moderno, muchos trainees descubren Lombok (`@Data`, `@Getter`, `@Setter`) y sienten que:
+
+> “Esto es Java profesional”
+
+Empiezan a crear entidades así:
+
+```java
+@Data
+public class Order {
+    private double total;
+    private String status;
+}
+```
+
+Y toda la lógica queda fuera.
+
+---
+
+### Definición extensa
+
+Este antipatrón ocurre cuando:
+
+> **Se usa Lombok para eliminar el dominio en lugar de para reducir ruido.**
+
+Lombok **no es el problema**.  
+El problema es usarlo para:
+
+- Exponer estado sin control
+    
+- Eliminar invariantes
+    
+- Convertir entidades en DTOs glorificados
+    
+
+---
+
+### Modelo mental incorrecto
+
+> “Menos código = mejor diseño”
+
+---
+
+### Modelo mental correcto
+
+> “Menos código repetitivo, pero más dominio explícito”
+
+---
+
+### Ejemplo incorrecto (obligatorio)
+
+```java
+order.setTotal(-500);
+order.setStatus("SHIPPED");
+```
+
+Nada impide estados inválidos.
+
+---
+
+### Por qué está mal
+
+- Dominio no se protege
+    
+- Estados inválidos posibles
+    
+- Reglas dispersas
+    
+- Violación directa de OOP
+    
+
+---
+
+### Señales de alerta
+
+- `@Data` en entidades de dominio
+    
+- Muchos setters públicos
+    
+- Dominio sin métodos
+    
+
+---
+
+### Ejercicio mental
+
+Pregunta:
+
+- ¿Este objeto puede protegerse a sí mismo?
+    
+
+Si no → antipatrón activo.
+
+---
+
+## 7.10.2 Antipatrón: _Entity Equals HashCode Incorrecto_
+
+---
+
+### Contexto
+
+En Java backend, especialmente con JPA/Hibernate, muchos trainees:
+
+- Implementan `equals()` y `hashCode()` mal
+    
+- O dejan que Lombok los genere sin pensar
+    
+
+Esto genera bugs **muy difíciles de detectar**.
+
+---
+
+### Definición extensa
+
+Este antipatrón ocurre cuando:
+
+> **Las entidades usan `equals/hashCode` basados en campos mutables o incorrectos.**
+
+---
+
+### Ejemplo incorrecto (obligatorio)
+
+```java
+@Data
+@Entity
+public class User {
+    @Id
+    private Long id;
+    private String name;
+}
+```
+
+`equals/hashCode` incluyen `name`.
+
+---
+
+### Por qué está mal
+
+- `name` puede cambiar
+    
+- El objeto “desaparece” de colecciones
+    
+- Bugs no deterministas
+    
+- Problemas con caché y sets
+    
+
+---
+
+### Modelo mental correcto
+
+> “La identidad de una entidad no cambia”
+
+---
+
+### Señales de alerta
+
+- `equals` basado en muchos campos
+    
+- Uso de campos mutables
+    
+- Bugs con `Set`, `Map`
+    
+
+---
+
+### Ejercicio mental
+
+Pregunta:
+
+- ¿Qué define realmente la identidad de esta entidad?
+    
+
+---
+
+## 7.10.3 Antipatrón: _LazyInitializationException como Diseño_
+
+---
+
+### Contexto
+
+Muchos trainees ven este error:
+
+```
+LazyInitializationException
+```
+
+Y la solución que adoptan es:
+
+> “Pongo todo en EAGER”
+
+---
+
+### Definición extensa
+
+Este antipatrón ocurre cuando:
+
+> **Se usan configuraciones de fetch para ocultar problemas de diseño.**
+
+---
+
+### Ejemplo incorrecto (obligatorio)
+
+```java
+@OneToMany(fetch = FetchType.EAGER)
+private List<Order> orders;
+```
+
+---
+
+### Por qué está mal
+
+- Carga innecesaria
+    
+- Problemas de performance
+    
+- Queries gigantes
+    
+- Sistema lento
+    
+
+---
+
+### Modelo mental correcto
+
+> “La sesión no es el problema, el diseño del flujo lo es”
+
+---
+
+### Señales de alerta
+
+- Uso excesivo de `EAGER`
+    
+- Queries enormes
+    
+- Performance impredecible
+    
+
+---
+
+### Ejercicio mental
+
+Pregunta:
+
+- ¿En qué capa debería acceder a estos datos?
+    
+
+---
+
+## 7.10.4 Antipatrón: _Transaction God Method_
+
+---
+
+### Contexto
+
+El trainee aprende `@Transactional` y lo usa así:
+
+```java
+@Transactional
+public void processEverything() {
+   // 200 líneas
+}
+```
+
+---
+
+### Definición extensa
+
+Este antipatrón ocurre cuando:
+
+> **Una sola transacción cubre demasiadas responsabilidades.**
+
+---
+
+### Por qué está mal
+
+- Bloqueos largos
+    
+- Riesgo de rollback masivo
+    
+- Difícil debug
+    
+- Pérdida de control
+    
+
+---
+
+### Modelo mental correcto
+
+> “La transacción protege una unidad de trabajo clara”
+
+---
+
+### Señales de alerta
+
+- Métodos largos con `@Transactional`
+    
+- Muchas llamadas internas
+    
+- Side-effects múltiples
+    
+
+---
+
+### Ejercicio mental
+
+Pregunta:
+
+- ¿Cuál es realmente la unidad atómica aquí?
+    
+
+---
+
+## 7.10.5 Antipatrón: _Optional Everywhere_
+
+---
+
+### Contexto
+
+Java introduce `Optional` y el trainee decide:
+
+> “Todo debe ser Optional”
+
+---
+
+### Definición extensa
+
+Este antipatrón ocurre cuando:
+
+> **Optional se usa como reemplazo de diseño en lugar de expresar ausencia real.**
+
+---
+
+### Ejemplo incorrecto (obligatorio)
+
+```java
+public Optional<User> createUser(...) {
+   ...
+}
+```
+
+---
+
+### Por qué está mal
+
+- Confusión semántica
+    
+- Flujos innecesarios
+    
+- Código más complejo
+    
+- Mal uso del concepto
+    
+
+---
+
+### Modelo mental correcto
+
+> “Optional expresa ausencia, no evita pensar”
+
+---
+
+### Señales de alerta
+
+- Optional como parámetro
+    
+- Optional en setters
+    
+- Optional sin sentido semántico
+    
+
+---
+
+## 7.10.6 Antipatrón: _Capa Service Dependiente de Spring_
+
+---
+
+### Contexto
+
+El trainee escribe servicios así:
+
+```java
+@Service
+public class OrderService {
+}
+```
+
+Y usa:
+
+- `@Autowired`
+    
+- `ApplicationContext`
+    
+- Beans dentro del dominio
+    
+
+---
+
+### Definición extensa
+
+Este antipatrón ocurre cuando:
+
+> **La lógica de aplicación depende directamente del framework.**
+
+---
+
+### Por qué está mal
+
+- Difícil testear
+    
+- Acoplamiento fuerte
+    
+- Dominio contaminado
+    
+
+---
+
+### Modelo mental correcto
+
+> “Spring conecta, el dominio vive solo”
+
+---
+
+### Señales de alerta
+
+- Uso de anotaciones en dominio
+    
+- Servicios imposibles de instanciar sin Spring
+    
+
+---
+
+## 7.10.7 Antipatrón: _DTO Mapping en el Controller_
+
+---
+
+### Contexto
+
+Muchos trainees hacen:
+
+```java
+@PostMapping
+public void create(OrderDTO dto) {
+   Order o = new Order();
+   o.setX(dto.getX());
+}
+```
+
+---
+
+### Definición extensa
+
+Este antipatrón ocurre cuando:
+
+> **El controller hace trabajo de transformación de dominio.**
+
+---
+
+### Por qué está mal
+
+- Controller inflado
+    
+- Lógica duplicada
+    
+- Difícil mantenimiento
+    
+
+---
+
+### Modelo mental correcto
+
+> “El controller coordina, no transforma”
+
+---
+
+### Señales de alerta
+
+- Controllers largos
+    
+- Lógica de negocio ligera en controllers
+    
+
+---
+
+## 7.10.8 Antipatrón: _Exception Swallowing_
+
+---
+
+### Contexto
+
+El trainee quiere “que no falle” y escribe:
+
+```java
+try {
+   ...
+} catch(Exception e) {
+}
+```
+
+---
+
+### Definición extensa
+
+> **Atrapar excepciones sin manejar significado.**
+
+---
+
+### Por qué está mal
+
+- Bugs invisibles
+    
+- Producción inestable
+    
+- Logs inútiles
+    
+
+---
+
+### Modelo mental correcto
+
+> “Si no sabes manejarla, no la atrapes”
+
+---
+
+## 7.10.9 Antipatrón: _Big Bang Refactor en Java Backend_
+
+---
+
+### Contexto
+
+El trainee detecta mal diseño y decide:
+
+> “Voy a refactorizar TODO”
+
+---
+
+### Definición extensa
+
+> **Cambios masivos sin control ni estrategia.**
+
+---
+
+### Por qué está mal
+
+- Riesgo alto
+    
+- Bugs nuevos
+    
+- Pérdida de estabilidad
+    
+
+---
+
+### Modelo mental correcto
+
+> “Refactor es incremental y seguro”
+
+---
+
+## 7.10.10 Antipatrón: _Pensar que Java = Verbosidad_
+
+---
+
+### Contexto
+
+Muchos trainees justifican mal diseño con:
+
+> “Java es así, es verboso”
+
+---
+
+### Definición extensa
+
+> **Confundir lenguaje con diseño.**
+
+---
+
+### Por qué está mal
+
+- Diseño pobre
+    
+- Clases infladas
+    
+- Falta de criterio
+    
+
+---
+
+### Modelo mental correcto
+
+> “La verbosidad no excusa el mal diseño”
+
+---
+
+## 7.10.11 Señales Claras de Antipatrones Java Backend
+
+- Entidades llenas de setters
+    
+- Servicios gigantes
+    
+- Repositorios genéricos
+    
+- Uso excesivo de anotaciones
+    
+- Excepciones genéricas
+    
+- EAGER por defecto
+    
+
+---
+
+
+# 7.10 Antipatrones Específicos en Java Backend
+
+_(Los errores que parecen “normales” en Java, pero destruyen sistemas backend)_
+
+---
+
+## 7.10.1 Antipatrón: _Anemia + Lombok Abuse_
+
+---
+
+### Contexto
+
+En Java moderno, muchos trainees descubren Lombok (`@Data`, `@Getter`, `@Setter`) y sienten que:
+
+> “Esto es Java profesional”
+
+Empiezan a crear entidades así:
+
+```java
+@Data
+public class Order {
+    private double total;
+    private String status;
+}
+```
+
+Y toda la lógica queda fuera.
+
+---
+
+### Definición extensa
+
+Este antipatrón ocurre cuando:
+
+> **Se usa Lombok para eliminar el dominio en lugar de para reducir ruido.**
+
+Lombok **no es el problema**.  
+El problema es usarlo para:
+
+- Exponer estado sin control
+    
+- Eliminar invariantes
+    
+- Convertir entidades en DTOs glorificados
+    
+
+---
+
+### Modelo mental incorrecto
+
+> “Menos código = mejor diseño”
+
+---
+
+### Modelo mental correcto
+
+> “Menos código repetitivo, pero más dominio explícito”
+
+---
+
+### Ejemplo incorrecto (obligatorio)
+
+```java
+order.setTotal(-500);
+order.setStatus("SHIPPED");
+```
+
+Nada impide estados inválidos.
+
+---
+
+### Por qué está mal
+
+- Dominio no se protege
+    
+- Estados inválidos posibles
+    
+- Reglas dispersas
+    
+- Violación directa de OOP
+    
+
+---
+
+### Señales de alerta
+
+- `@Data` en entidades de dominio
+    
+- Muchos setters públicos
+    
+- Dominio sin métodos
+    
+
+---
+
+### Ejercicio mental
+
+Pregunta:
+
+- ¿Este objeto puede protegerse a sí mismo?
+    
+
+Si no → antipatrón activo.
+
+---
+
+## 7.10.2 Antipatrón: _Entity Equals HashCode Incorrecto_
+
+---
+
+### Contexto
+
+En Java backend, especialmente con JPA/Hibernate, muchos trainees:
+
+- Implementan `equals()` y `hashCode()` mal
+    
+- O dejan que Lombok los genere sin pensar
+    
+
+Esto genera bugs **muy difíciles de detectar**.
+
+---
+
+### Definición extensa
+
+Este antipatrón ocurre cuando:
+
+> **Las entidades usan `equals/hashCode` basados en campos mutables o incorrectos.**
+
+---
+
+### Ejemplo incorrecto (obligatorio)
+
+```java
+@Data
+@Entity
+public class User {
+    @Id
+    private Long id;
+    private String name;
+}
+```
+
+`equals/hashCode` incluyen `name`.
+
+---
+
+### Por qué está mal
+
+- `name` puede cambiar
+    
+- El objeto “desaparece” de colecciones
+    
+- Bugs no deterministas
+    
+- Problemas con caché y sets
+    
+
+---
+
+### Modelo mental correcto
+
+> “La identidad de una entidad no cambia”
+
+---
+
+### Señales de alerta
+
+- `equals` basado en muchos campos
+    
+- Uso de campos mutables
+    
+- Bugs con `Set`, `Map`
+    
+
+---
+
+### Ejercicio mental
+
+Pregunta:
+
+- ¿Qué define realmente la identidad de esta entidad?
+    
+
+---
+
+## 7.10.3 Antipatrón: _LazyInitializationException como Diseño_
+
+---
+
+### Contexto
+
+Muchos trainees ven este error:
+
+```
+LazyInitializationException
+```
+
+Y la solución que adoptan es:
+
+> “Pongo todo en EAGER”
+
+---
+
+### Definición extensa
+
+Este antipatrón ocurre cuando:
+
+> **Se usan configuraciones de fetch para ocultar problemas de diseño.**
+
+---
+
+### Ejemplo incorrecto (obligatorio)
+
+```java
+@OneToMany(fetch = FetchType.EAGER)
+private List<Order> orders;
+```
+
+---
+
+### Por qué está mal
+
+- Carga innecesaria
+    
+- Problemas de performance
+    
+- Queries gigantes
+    
+- Sistema lento
+    
+
+---
+
+### Modelo mental correcto
+
+> “La sesión no es el problema, el diseño del flujo lo es”
+
+---
+
+### Señales de alerta
+
+- Uso excesivo de `EAGER`
+    
+- Queries enormes
+    
+- Performance impredecible
+    
+
+---
+
+### Ejercicio mental
+
+Pregunta:
+
+- ¿En qué capa debería acceder a estos datos?
+    
+
+---
+
+## 7.10.4 Antipatrón: _Transaction God Method_
+
+---
+
+### Contexto
+
+El trainee aprende `@Transactional` y lo usa así:
+
+```java
+@Transactional
+public void processEverything() {
+   // 200 líneas
+}
+```
+
+---
+
+### Definición extensa
+
+Este antipatrón ocurre cuando:
+
+> **Una sola transacción cubre demasiadas responsabilidades.**
+
+---
+
+### Por qué está mal
+
+- Bloqueos largos
+    
+- Riesgo de rollback masivo
+    
+- Difícil debug
+    
+- Pérdida de control
+    
+
+---
+
+### Modelo mental correcto
+
+> “La transacción protege una unidad de trabajo clara”
+
+---
+
+### Señales de alerta
+
+- Métodos largos con `@Transactional`
+    
+- Muchas llamadas internas
+    
+- Side-effects múltiples
+    
+
+---
+
+### Ejercicio mental
+
+Pregunta:
+
+- ¿Cuál es realmente la unidad atómica aquí?
+    
+
+---
+
+## 7.10.5 Antipatrón: _Optional Everywhere_
+
+---
+
+### Contexto
+
+Java introduce `Optional` y el trainee decide:
+
+> “Todo debe ser Optional”
+
+---
+
+### Definición extensa
+
+Este antipatrón ocurre cuando:
+
+> **Optional se usa como reemplazo de diseño en lugar de expresar ausencia real.**
+
+---
+
+### Ejemplo incorrecto (obligatorio)
+
+```java
+public Optional<User> createUser(...) {
+   ...
+}
+```
+
+---
+
+### Por qué está mal
+
+- Confusión semántica
+    
+- Flujos innecesarios
+    
+- Código más complejo
+    
+- Mal uso del concepto
+    
+
+---
+
+### Modelo mental correcto
+
+> “Optional expresa ausencia, no evita pensar”
+
+---
+
+### Señales de alerta
+
+- Optional como parámetro
+    
+- Optional en setters
+    
+- Optional sin sentido semántico
+    
+
+---
+
+## 7.10.6 Antipatrón: _Capa Service Dependiente de Spring_
+
+---
+
+### Contexto
+
+El trainee escribe servicios así:
+
+```java
+@Service
+public class OrderService {
+}
+```
+
+Y usa:
+
+- `@Autowired`
+    
+- `ApplicationContext`
+    
+- Beans dentro del dominio
+    
+
+---
+
+### Definición extensa
+
+Este antipatrón ocurre cuando:
+
+> **La lógica de aplicación depende directamente del framework.**
+
+---
+
+### Por qué está mal
+
+- Difícil testear
+    
+- Acoplamiento fuerte
+    
+- Dominio contaminado
+    
+
+---
+
+### Modelo mental correcto
+
+> “Spring conecta, el dominio vive solo”
+
+---
+
+### Señales de alerta
+
+- Uso de anotaciones en dominio
+    
+- Servicios imposibles de instanciar sin Spring
+    
+
+---
+
+## 7.10.7 Antipatrón: _DTO Mapping en el Controller_
+
+---
+
+### Contexto
+
+Muchos trainees hacen:
+
+```java
+@PostMapping
+public void create(OrderDTO dto) {
+   Order o = new Order();
+   o.setX(dto.getX());
+}
+```
+
+---
+
+### Definición extensa
+
+Este antipatrón ocurre cuando:
+
+> **El controller hace trabajo de transformación de dominio.**
+
+---
+
+### Por qué está mal
+
+- Controller inflado
+    
+- Lógica duplicada
+    
+- Difícil mantenimiento
+    
+
+---
+
+### Modelo mental correcto
+
+> “El controller coordina, no transforma”
+
+---
+
+### Señales de alerta
+
+- Controllers largos
+    
+- Lógica de negocio ligera en controllers
+    
+
+---
+
+## 7.10.8 Antipatrón: _Exception Swallowing_
+
+---
+
+### Contexto
+
+El trainee quiere “que no falle” y escribe:
+
+```java
+try {
+   ...
+} catch(Exception e) {
+}
+```
+
+---
+
+### Definición extensa
+
+> **Atrapar excepciones sin manejar significado.**
+
+---
+
+### Por qué está mal
+
+- Bugs invisibles
+    
+- Producción inestable
+    
+- Logs inútiles
+    
+
+---
+
+### Modelo mental correcto
+
+> “Si no sabes manejarla, no la atrapes”
+
+---
+
+## 7.10.9 Antipatrón: _Big Bang Refactor en Java Backend_
+
+---
+
+### Contexto
+
+El trainee detecta mal diseño y decide:
+
+> “Voy a refactorizar TODO”
+
+---
+
+### Definición extensa
+
+> **Cambios masivos sin control ni estrategia.**
+
+---
+
+### Por qué está mal
+
+- Riesgo alto
+    
+- Bugs nuevos
+    
+- Pérdida de estabilidad
+    
+
+---
+
+### Modelo mental correcto
+
+> “Refactor es incremental y seguro”
+
+---
+
+## 7.10.10 Antipatrón: _Pensar que Java = Verbosidad_
+
+---
+
+### Contexto
+
+Muchos trainees justifican mal diseño con:
+
+> “Java es así, es verboso”
+
+---
+
+### Definición extensa
+
+> **Confundir lenguaje con diseño.**
+
+---
+
+### Por qué está mal
+
+- Diseño pobre
+    
+- Clases infladas
+    
+- Falta de criterio
+    
+
+---
+
+### Modelo mental correcto
+
+> “La verbosidad no excusa el mal diseño”
+
+---
+
+## 7.10.11 Señales Claras de Antipatrones Java Backend
+
+- Entidades llenas de setters
+    
+- Servicios gigantes
+    
+- Repositorios genéricos
+    
+- Uso excesivo de anotaciones
+    
+- Excepciones genéricas
+    
+- EAGER por defecto
+    
+
+---
+
+
+# 7.11 Antipatrones Específicos de Spring Boot (Backend Trainee)
+
+---
+
+## 7.11.1 Antipatrón: _Spring Boot como Arquitectura_
+
+---
+
+### Contexto
+
+Muchos trainees creen que usar Spring Boot **ya define la arquitectura**.
+
+Piensan:
+
+> “Si uso Spring Boot, ya estoy bien diseñado”
+
+Entonces:
+
+- Todo es `@Service`
+    
+- Todo es `@Component`
+    
+- Todo depende de Spring
+    
+
+---
+
+### Definición extensa
+
+Este antipatrón ocurre cuando:
+
+> **El framework reemplaza el pensamiento arquitectónico.**
+
+Spring Boot:
+
+- Es una **herramienta**
+    
+- No es una arquitectura
+    
+- No decide capas ni responsabilidades
+    
+
+---
+
+### Ejemplo incorrecto (obligatorio)
+
+```java
+@Service
+public class OrderService {
+    @Autowired
+    private OrderRepository repo;
+
+    @Autowired
+    private EmailService email;
+
+    @Autowired
+    private PaymentService payment;
+}
+```
+
+Todo vive “porque Spring”.
+
+---
+
+### Por qué está mal
+
+- Alto acoplamiento al framework
+    
+- Difícil testear sin contexto
+    
+- Dominio inexistente
+    
+- Lógica dependiente de Spring
+    
+
+---
+
+### Modelo mental correcto
+
+> “Spring conecta objetos, no define el diseño”
+
+---
+
+### Señales de alerta
+
+- No puedes instanciar clases sin Spring
+    
+- Todo tiene anotaciones
+    
+- No existe dominio puro
+    
+
+---
+
+## 7.11.2 Antipatrón: _@Autowired Field Injection_
+
+---
+
+### Contexto
+
+Spring lo permite, el trainee lo usa:
+
+```java
+@Autowired
+private UserService userService;
+```
+
+---
+
+### Definición extensa
+
+Este antipatrón ocurre cuando:
+
+> **Se inyectan dependencias por campos en lugar de por constructor.**
+
+---
+
+### Por qué está mal
+
+- Dependencias ocultas
+    
+- Clases no instanciables manualmente
+    
+- Tests más difíciles
+    
+- Violación de DIP
+    
+
+---
+
+### Modelo mental correcto
+
+> “Las dependencias deben ser explícitas”
+
+---
+
+### Ejemplo correcto (conceptual)
+
+```java
+public class UserService {
+    private final UserRepository repo;
+
+    public UserService(UserRepository repo) {
+        this.repo = repo;
+    }
+}
+```
+
+---
+
+### Señales de alerta
+
+- Muchos `@Autowired`
+    
+- Clases sin constructor
+    
+- Dependencias invisibles
+    
+
+---
+
+## 7.11.3 Antipatrón: _Controllers Inteligentes_
+
+---
+
+### Contexto
+
+El trainee piensa:
+
+> “El controller recibe la request, ahí hago todo”
+
+---
+
+### Definición extensa
+
+Este antipatrón ocurre cuando:
+
+> **El controller contiene lógica de negocio o de aplicación.**
+
+---
+
+### Ejemplo incorrecto (obligatorio)
+
+```java
+@PostMapping("/orders")
+public void create(OrderDTO dto) {
+    if(dto.amount <= 0) throw ...
+    Order o = new Order(...);
+    repo.save(o);
+}
+```
+
+---
+
+### Por qué está mal
+
+- Violación de capas
+    
+- Duplicación futura
+    
+- Controllers inflados
+    
+- Difícil evolución
+    
+
+---
+
+### Modelo mental correcto
+
+> “El controller solo traduce y delega”
+
+---
+
+### Señales de alerta
+
+- Controllers largos
+    
+- Validaciones complejas en controller
+    
+- Acceso directo a repositorios
+    
+
+---
+
+## 7.11.4 Antipatrón: _Exceso de @Transactional_
+
+---
+
+### Contexto
+
+El trainee descubre `@Transactional` y lo pone:
+
+- En controllers
+    
+- En repositorios
+    
+- En métodos privados
+    
+- En todo
+    
+
+---
+
+### Definición extensa
+
+Este antipatrón ocurre cuando:
+
+> **Se pierde el control de la unidad de trabajo transaccional.**
+
+---
+
+### Por qué está mal
+
+- Transacciones gigantes
+    
+- Locks innecesarios
+    
+- Rollbacks inesperados
+    
+- Performance pobre
+    
+
+---
+
+### Modelo mental correcto
+
+> “La transacción vive en la capa de aplicación”
+
+---
+
+### Señales de alerta
+
+- `@Transactional` en controllers
+    
+- Métodos enormes transaccionales
+    
+- Efectos secundarios múltiples
+    
+
+---
+
+# 7.12 Antipatrones Profundos de JPA / Hibernate
+
+---
+
+## 7.12.1 Antipatrón: _EAGER por Defecto_
+
+---
+
+### Contexto
+
+El trainee se cansa de:
+
+```
+LazyInitializationException
+```
+
+Solución “rápida”:
+
+```java
+fetch = FetchType.EAGER
+```
+
+---
+
+### Definición extensa
+
+Este antipatrón ocurre cuando:
+
+> **Se cargan datos sin criterio para evitar errores de sesión.**
+
+---
+
+### Por qué está mal
+
+- Consultas gigantes
+    
+- Problemas de memoria
+    
+- Performance impredecible
+    
+- N+1 ocultos
+    
+
+---
+
+### Modelo mental correcto
+
+> “Cargo solo lo que necesito, cuando lo necesito”
+
+---
+
+### Señales de alerta
+
+- EAGER en casi todo
+    
+- Queries enormes
+    
+- Respuestas lentas
+    
+
+---
+
+## 7.12.2 Antipatrón: _N+1 Normalizado_
+
+---
+
+### Contexto
+
+El sistema funciona… pero lento.
+
+El trainee no ve el problema.
+
+---
+
+### Definición extensa
+
+Este antipatrón ocurre cuando:
+
+> **Se ejecuta una consulta por cada registro relacionado.**
+
+---
+
+### Ejemplo conceptual
+
+- 1 query para pedidos
+    
+- N queries para ítems
+    
+
+---
+
+### Por qué está mal
+
+- Performance terrible
+    
+- Escala mal
+    
+- Producción lenta
+    
+
+---
+
+### Modelo mental correcto
+
+> “Las relaciones deben pensarse desde la consulta”
+
+---
+
+### Señales de alerta
+
+- Muchas queries similares
+    
+- Logs SQL enormes
+    
+- Lento con datos reales
+    
+
+---
+
+## 7.12.3 Antipatrón: _Entidad como API_
+
+---
+
+### Contexto
+
+El trainee expone entidades directamente en REST.
+
+---
+
+### Definición extensa
+
+> **Usar entidades JPA como contratos externos.**
+
+---
+
+### Por qué está mal
+
+- Acoplamiento fuerte
+    
+- Cambios rompen APIs
+    
+- Fugas de información
+    
+- Problemas de serialización
+    
+
+---
+
+### Modelo mental correcto
+
+> “Entidad ≠ DTO ≠ API”
+
+---
+
+## 7.12.4 Antipatrón: _Cascade All Sin Pensar_
+
+---
+
+### Contexto
+
+El trainee usa:
+
+```java
+cascade = CascadeType.ALL
+```
+
+En todo.
+
+---
+
+### Definición extensa
+
+> **Delegar decisiones críticas al ORM sin criterio.**
+
+---
+
+### Por qué está mal
+
+- Borrados en cascada peligrosos
+    
+- Datos perdidos
+    
+- Efectos colaterales graves
+    
+
+---
+
+### Modelo mental correcto
+
+> “Cada cascade debe justificarse”
+
+---
+
+# 7.13 Antipatrones de Bases de Datos en Backend
+
+---
+
+## 7.13.1 Antipatrón: _Modelo de Datos Dirigido por la UI_
+
+---
+
+### Contexto
+
+El modelo se diseña para “que sea fácil en el frontend”.
+
+---
+
+### Definición extensa
+
+> **Diseñar la base según pantallas, no según dominio.**
+
+---
+
+### Por qué está mal
+
+- Modelo frágil
+    
+- Cambios constantes
+    
+- Lógica duplicada
+    
+
+---
+
+### Modelo mental correcto
+
+> “El modelo representa el negocio, no la pantalla”
+
+---
+
+## 7.13.2 Antipatrón: _Campos Mágicos_
+
+---
+
+### Contexto
+
+Campos tipo:
+
+```
+status = 1, 2, 3, 4
+```
+
+Sin significado claro.
+
+---
+
+### Definición extensa
+
+> **Datos sin semántica explícita.**
+
+---
+
+### Por qué está mal
+
+- Código ilegible
+    
+- Errores frecuentes
+    
+- Reglas implícitas
+    
+
+---
+
+### Modelo mental correcto
+
+> “Los datos deben explicarse solos”
+
+---
+
+## 7.13.3 Antipatrón: _Datos Duplicados para “Performance”_
+
+---
+
+### Contexto
+
+El trainee duplica columnas:
+
+> “Así no hago joins”
+
+---
+
+### Definición extensa
+
+> **Optimizar antes de medir.**
+
+---
+
+### Por qué está mal
+
+- Inconsistencias
+    
+- Bugs silenciosos
+    
+- Mantenimiento costoso
+    
+
+---
+
+### Modelo mental correcto
+
+> “Primero diseño bien, luego optimizo”
+
+---
+
+## 7.13.4 Antipatrón: _Resolver Reglas de Negocio con SQL_
+
+---
+
+### Contexto
+
+Reglas críticas en:
+
+- Triggers
+    
+- Views
+    
+- Stored Procedures
+    
+
+---
+
+### Definición extensa
+
+> **Esconder el negocio en la base de datos.**
+
+---
+
+### Por qué está mal
+
+- Difícil testear
+    
+- Difícil versionar
+    
+- Negocio invisible
+    
+
+---
+
+### Modelo mental correcto
+
+> “El negocio vive en el dominio”
+
+---
+
+## 7.13.5 Antipatrón: _Base de Datos como Estado Global_
+
+---
+
+### Contexto
+
+La DB se usa como:
+
+- Cache
+    
+- Cola
+    
+- Lock
+    
+- Coordinador
+    
+
+---
+
+### Definición extensa
+
+> **Usar la base como solución a todo.**
+
+---
+
+### Por qué está mal
+
+- Contención
+    
+- Problemas de concurrencia
+    
+- Escala pobre
+    
+
+---
+
+### Modelo mental correcto
+
+> “La DB guarda datos, no coordina el sistema”
+
+---
+
+## 7.13.6 Señales Globales de Antipatrones en Backend
+
+- Queries gigantes
+    
+- Mucha lógica en SQL
+    
+- Entidades infladas
+    
+- Controllers inteligentes
+    
+- Servicios gigantes
+    
+- Dependencia extrema del framework
+    
+
+---
+
+⬇️ **NO CIERRO NADA.**  
+Puedo continuar con:
+
+- **Ejercicios guiados para detectar antipatrones**
+    
+- **Casos reales de refactor paso a paso**
+    
+- **Comparación Trainee vs Junior en antipatrones**
+    
+- **Checklist profesional para code review**
+    
+- **Simulación de entrevista técnica sobre antipatrones**
+    
+
+Di **“más”** y continúo exactamente desde aquí.
